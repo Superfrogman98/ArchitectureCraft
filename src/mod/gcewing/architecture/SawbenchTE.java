@@ -191,10 +191,8 @@ public class SawbenchTE extends BaseTileInventory {
 						Block materialBlock = Block.getBlockFromItem(materialItem);
 						//System.out.printf("SawbenchTE.updateResultSlot: material block id = %d\n",
 						//	materialBlock.blockID);
-						if (materialBlock.isOpaqueCube()) {
-//							ShapeTE resultTE = new ShapeTE(resultShape, materialBlock, materialStack.getItemDamage());
-//							resultStack = BaseUtils.blockStackWithTileEntity(ArchitectureCraft.blockShape,
-//								resultShape.itemsProduced, resultTE);
+						//if (materialBlock.isOpaqueCube()) {
+						if (!materialBlock.hasTileEntity()) {
 							resultStack = resultShape.kind.newStack(resultShape, materialBlock,
 								materialStack.getItemDamage(), resultShape.itemsProduced);
 						}

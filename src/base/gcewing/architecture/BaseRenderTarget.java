@@ -39,7 +39,7 @@ public abstract class BaseRenderTarget implements BaseModClient.IRenderTarget {
     protected boolean expandTrianglesToQuads;
     protected boolean textureOverride;
 
-    public BaseRenderTarget(double x, double y, double z, TextureAtlasSprite overrideIcon) {
+    public BaseRenderTarget(double x, double y, double z, IIcon overrideIcon) {
         blockX = x;
         blockY = y;
         blockZ = z;

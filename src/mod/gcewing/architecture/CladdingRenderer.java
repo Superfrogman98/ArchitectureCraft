@@ -32,7 +32,7 @@ public class CladdingRenderer implements ICustomRenderer {
 			if (block != null) {
 				IBlockState state = getBlockStateFromMeta(block, meta);
 				if (state != null) {
-					TextureAtlasSprite sprite = getSpriteForBlockState(state);
+					IIcon sprite = getSpriteForBlockState(state);
 					if (sprite != null) {
 						ITexture texture = BaseTexture.fromSprite(sprite);
 						IModel model = ArchitectureCraft.mod.client.getModel("shape/cladding.smeg");

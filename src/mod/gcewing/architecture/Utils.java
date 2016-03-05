@@ -89,11 +89,6 @@ public class Utils {
 			&& ((EntityPlayerMP)player).theItemInWorldManager.isCreative();
 	}
 	
-// 	public static TextureAtlasSprite getSpriteForBlockState(IBlockState state) {
-// 		return Minecraft.getMinecraft().getBlockRendererDispatcher()
-// 			.getBlockModelShapes().getTexture(state);
-// 	}
-	
 	public static String displayNameOfBlock(Block block, int meta) {
 		String name = null;
 		Item item = Item.getItemFromBlock(block);

@@ -54,13 +54,13 @@ public class ShapeRenderDispatch implements ICustomRenderer {
 		if (te.shape != null && (renderBase || renderSecondary)) {
 			IBlockState base = te.baseBlockState;
 			if (base != null) {
-				TextureAtlasSprite icon = getSpriteForBlockState(base);
+				IIcon icon = getSpriteForBlockState(base);
 				if (icon != null) {
 					ITexture[] textures = new ITexture[3];
 					textures[0] = BaseTexture.fromSprite(icon);
 					textures[1] = textures[0].projected();
 					if (renderSecondary) {
-						TextureAtlasSprite icon2 = getSpriteForBlockState(te.secondaryBlockState);
+						IIcon icon2 = getSpriteForBlockState(te.secondaryBlockState);
 						if (icon2 != null)
 							textures[2] = BaseTexture.fromSprite(icon2);
 						else
