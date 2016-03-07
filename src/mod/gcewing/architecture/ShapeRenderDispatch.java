@@ -61,7 +61,7 @@ public class ShapeRenderDispatch implements ICustomRenderer {
 					textures[1] = textures[0].projected();
 					if (renderSecondary) {
 						IIcon icon2 = getSpriteForBlockState(te.secondaryBlockState);
-						if (icon2 != null)
+						if (icon2 != null) {
 							textures[2] = BaseTexture.fromSprite(icon2);
 							textures[3] = textures[2].projected();
 						}
