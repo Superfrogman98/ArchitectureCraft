@@ -56,8 +56,8 @@ public class ShapeRenderDispatch implements ICustomRenderer {
 			if (base != null) {
 			    //System.out.printf("ShapeRenderDispatch.renderShapeTE: in layer %s renderBase = %s renderSecondary = %s\n",
 			    //    MinecraftForgeClient.getRenderLayer(), renderBase, renderSecondary);
-				TextureAtlasSprite icon = Utils.getSpriteForBlockState(base);
-				TextureAtlasSprite icon2 = Utils.getSpriteForBlockState(te.secondaryBlockState);
+				IIcon icon = getSpriteForBlockState(base);
+				IIcon icon2 = getSpriteForBlockState(te.secondaryBlockState);
 				if (icon != null) {
 					ITexture[] textures = new ITexture[4];
 					if (renderBase) {
@@ -74,7 +74,7 @@ public class ShapeRenderDispatch implements ICustomRenderer {
 					}
 					if (renderBase && te.shape.kind.secondaryDefaultsToBase()) {
 					    if (icon2 == null || (te.secondaryBlockState != null &&
-					        te.secondaryBlockState.getBlock().getBlockLayer() != EnumWorldBlockLayer.SOLID)) {
+					        te.secondaryBlockState.getBlock().getRenderBlockPass() != 0)) {
                                 textures[2] = textures[0];
                                 textures[3] = textures[1];
                                 renderSecondary = renderBase;
