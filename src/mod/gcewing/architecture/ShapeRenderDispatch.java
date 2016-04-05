@@ -16,6 +16,8 @@ import net.minecraft.tileentity.*;
 import net.minecraft.world.*;
 import net.minecraft.util.*;
 
+import net.minecraftforge.client.MinecraftForgeClient;
+
 import static gcewing.architecture.BaseBlockUtils.*;
 import static gcewing.architecture.BaseUtils.*;
 import gcewing.architecture.BaseModClient.*;
@@ -54,8 +56,8 @@ public class ShapeRenderDispatch implements ICustomRenderer {
 		if (te.shape != null && (renderBase || renderSecondary)) {
 			IBlockState base = te.baseBlockState;
 			if (base != null) {
-			    //System.out.printf("ShapeRenderDispatch.renderShapeTE: in layer %s renderBase = %s renderSecondary = %s\n",
-			    //    MinecraftForgeClient.getRenderLayer(), renderBase, renderSecondary);
+			    //System.out.printf("ShapeRenderDispatch.renderShapeTE: in pass %s renderBase = %s renderSecondary = %s\n",
+			    //    MinecraftForgeClient.getRenderPass(), renderBase, renderSecondary);
 				IIcon icon = getSpriteForBlockState(base);
 				IIcon icon2 = getSpriteForBlockState(te.secondaryBlockState);
 				if (icon != null) {
