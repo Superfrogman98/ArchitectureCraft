@@ -620,10 +620,10 @@ public abstract class ShapeKind {
 			    boolean placedOnStair = false;
 			    int nside = -1; // Side that the neighbouring block is placed on
 			    int nturn = -1; // Turn of the neighbouring block
-				if (BlockStairs.isBlockStairs(nblock) && (otherFace == UP || otherFace == DOWN)) {
+				if (nblock instanceof BlockStairs && (otherFace == F_UP || otherFace == F_DOWN)) {
 				    placedOnStair = true;
 				    nside = stairsSide(nstate);
-				    nturn = BaseUtils.turnToFace(SOUTH, stairsFacing(nstate));
+				    nturn = BaseUtils.turnToFace(F_SOUTH, stairsFacing(nstate));
 				    if (nside == 1 && (nturn & 1) == 0)
 				        nturn ^= 2;
 				}
@@ -635,7 +635,7 @@ public abstract class ShapeKind {
 				    }
 				}
 				if (placedOnStair) {
-					int side = otherFace.getOpposite().ordinal();
+					int side = oppositeFacing(otherFace).ordinal();
 					if (side == nside) {
 						Vector3 h = Trans3.sideTurn(side, 0).ip(hit);
 						double offx = te.shape.offsetXForPlacementHit(side, nturn, hit);
