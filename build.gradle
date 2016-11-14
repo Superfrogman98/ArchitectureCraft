@@ -19,9 +19,9 @@ apply plugin: 'forge'
 
 //include "config.gradle"
 
-//version = "1.0"
+version = "1.7.10-1.4.2"
 //group= "com.yourname.modid" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "jarName"
+archivesBaseName = "ArchitectureCraft"
 
 minecraft {
     version = "1.7.10-10.13.0.1180"
@@ -49,7 +49,7 @@ processResources {
         include 'mcmod.info'
 
         // replace version and mcversion
-        expand 'version':project.version, 'mcversion':project.minecraft.version, 'modid':project.jarName
+        expand 'version':project.version, 'mcversion':project.minecraft.version, 'modid':project.ArchitectureCraft
     }
         
     // copy everything else, thats not the mcmod.info
