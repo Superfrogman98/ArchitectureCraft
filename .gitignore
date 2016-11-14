@@ -1,0 +1,7 @@
+.gradle/
+eclipse/
+out/
+*.bat
+ArchitectureCraft.iml
+ArchitectureCraft.ipr
+ArchitectureCraft.iws
