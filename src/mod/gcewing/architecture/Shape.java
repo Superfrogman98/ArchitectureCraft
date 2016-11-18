@@ -87,7 +87,7 @@ public enum Shape {
 	CorniceValley(55, "Cornice Valley", Model("cornice_valley"), Bilateral, 1, 4, 0xcc),
 	CorniceBottom(56, "Cornice Bottom", Model("cornice_bottom"), Bilateral, 1, 4, 0x0c),
 
-	CladdingSheet(60, "Cladding", Cladding, null, 1, 16, 0),
+	CladdingSheet(60, "Cladding", Cladding, null, 1, 1, 0),
 	
 	ArchD1(61, "Arch Diameter 1", Model("arch_d1"), Bilateral, 1, 1, 0xff, placeUnderneath),
 	ArchD2(62, "Arch Diameter 2", Model("arch_d2"), Bilateral, 1, 2, 0xfc, placeUnderneath),
