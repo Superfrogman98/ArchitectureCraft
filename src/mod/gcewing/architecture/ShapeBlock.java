@@ -10,7 +10,6 @@ import java.util.*;
 
 import net.minecraft.block.*;
 import net.minecraft.block.material.*;
-//import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.texture.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
@@ -20,7 +19,6 @@ import net.minecraft.tileentity.*;
 import net.minecraft.world.*;
 import net.minecraft.util.*;
 
-import net.minecraft.client.particle.EffectRenderer;
 import net.minecraftforge.common.ForgeHooks;
 import cpw.mods.fml.relauncher.*;
 
@@ -31,6 +29,19 @@ import static gcewing.architecture.Shape.*;
 public class ShapeBlock extends BaseBlock<ShapeTE> {
 
 	protected AxisAlignedBB boxHit;
+
+    public static IProperty<Integer> LIGHT = PropertyInteger.create("light", 0, 15);
+
+ 	@Override
+    protected void defineProperties() {
+        super.defineProperties();
+        addProperty(LIGHT);
+    }
+
+	@Override
+    public int getNumSubtypes() {
+        return 16;
+    }
 
 	public ShapeBlock() {
 		super(Material.rock, ShapeTE.class);
@@ -169,26 +180,25 @@ public class ShapeBlock extends BaseBlock<ShapeTE> {
 	}
 	
 	@Override
-	public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity te) {
-		//System.out.printf("ShapeBlock.harvestBlock: by %s\n", player);
+	protected ArrayList<ItemStack> getDropsFromTileEntity(IBlockAccess world, BlockPos pos, IBlockState state, TileEntity te, int fortune) {
+	    ArrayList<ItemStack> result = new ArrayList<ItemStack>();
 		if (te instanceof ShapeTE) {
 			ShapeTE ste = (ShapeTE)te;
-			ItemStack stack = BaseUtils.blockStackWithTileEntity(this, 1, ste);
-			//System.out.printf("ShapeBlock.harvestBlock: spawning %s\n", stack);
-			spawnAsEntity(world, pos, stack);
+            ItemStack stack = ste.shape.kind.newStack(ste.shape, ste.baseBlockState, 1);
+			result.add(stack);
 			if (ste.secondaryBlockState != null) {
 				stack = ste.shape.kind.newSecondaryMaterialStack(ste.secondaryBlockState);
-				//System.out.printf("ShapeBlock.harvestBlock: spawning %s\n", stack);
-				spawnAsEntity(world, pos, stack);
+				result.add(stack);
 			}
 		}
+		return result;
 	}
 
 	@Override
 	public ItemStack getPickBlock(MovingObjectPosition target, World world, BlockPos pos) {
 		ShapeTE te = ShapeTE.get(world, pos);
 		if (te != null)
-			return BaseUtils.blockStackWithTileEntity(this, 1, te);
+			return te.newItemStack(1);
 		else
 			return null;
 	}
@@ -269,5 +279,12 @@ public class ShapeBlock extends BaseBlock<ShapeTE> {
 	public float getAmbientOcclusionLightValue() {
 		return 0.8f;
 	}
+
+    @Override
+    public int getLightValue(IBlockAccess world, int x, int y, int z) {
+        int result = world.getBlockMetadata(x, y, z);
+//         System.out.printf("ShapeBlock.getLightValue: at (%s, %s, %s) --> %s\n", x, y, z, result);
+        return result;
+    }
 
 }
