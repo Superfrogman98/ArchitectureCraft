@@ -11,22 +11,40 @@ import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 
+import static gcewing.architecture.BaseUtils.*;
+
 public class BaseContainer extends Container {
 
     int xSize, ySize;
-    SlotRange playerSlotRange;
-    
-//  public BaseContainer() {}
+    SlotRange playerSlotRange; // Slots containing player inventory
+    SlotRange containerSlotRange; // Default slot range for shift-clicking into from player inventory
     
     public BaseContainer(int width, int height) {
         xSize = width;
         ySize = height;
     }
+    
+    // Slots added between beginContainerSlots and endContainerSlots will be included in
+    // containerSlotRange.
+    
+    protected void beginContainerSlots() {
+        containerSlotRange = new SlotRange();
+    }
+    
+    protected void endContainerSlots() {
+        containerSlotRange.end();
+    }
+        
+    // Call one of the addPlayerSlots methods from the constructor to add player inventory
+    // slots and set playerSlotRange.
 
+    // Add player inventory slots in the standard position and layout at bottom centre
+    // of the gui.
     public void addPlayerSlots(EntityPlayer player) {
         addPlayerSlots(player, (xSize - 160) / 2, ySize - 82);
     }
 
+    // Add player inventory slots in the standard layout with top left corner at x, y.
     public void addPlayerSlots(EntityPlayer player, int x, int y) {
         playerSlotRange = new SlotRange();
         InventoryPlayer inventory = player.inventory;
@@ -69,7 +87,7 @@ public class BaseContainer extends Container {
         range.end();
         return range;
     }
-
+    
     @Override
     public boolean canInteractWith(EntityPlayer var1) {
         return true;
@@ -108,13 +126,69 @@ public class BaseContainer extends Container {
     }
 
     protected boolean mergeItemStackIntoRange(ItemStack stack, SlotRange range) {
-        return mergeItemStack(stack, range.firstSlot, range.numSlots, range.reverseMerge);
+        return mergeItemStack(stack, range.firstSlot, range.firstSlot + range.numSlots, range.reverseMerge);
     }
     
-    // Return the range of slots into which the given stack should be moved by
-    // a shift-click.
+    // A better version of mergeItemStack that respects Slot.isItemValid() and Slot.getStackLimit().
+    @Override
+    protected boolean mergeItemStack(ItemStack stack, int startSlot, int endSlot, boolean reverse) {
+        boolean result = false;
+        int n = endSlot - startSlot;
+        if (stack.isStackable()) {
+            for (int i = 0; i < n && stack.stackSize > 0; i++) {
+                int k = reverse ? endSlot - 1 - i : startSlot + i;
+                Slot slot = (Slot)this.inventorySlots.get(k);
+                ItemStack slotStack = slot.getStack();
+                if (slotStack != null
+                    && slotStack.isStackable()
+                    && slotStack.getItem() == stack.getItem()
+                    && (!stack.getHasSubtypes() || stack.getItemDamage() == slotStack.getItemDamage())
+                    && ItemStack.areItemStackTagsEqual(stack, slotStack))
+                {
+                    if (transferToSlot(stack, slot))
+                        result = true;
+                }
+            }
+        }
+        for (int i = 0; i < n && stack.stackSize > 0; i++) {
+            int k = reverse ? endSlot - 1 - i : startSlot + i;
+            Slot slot = (Slot)this.inventorySlots.get(k);
+            if (!slot.getHasStack() && slot.isItemValid(stack)) {
+                ItemStack newStack = stack.copy();
+                newStack.stackSize = 0;
+                slot.putStack(newStack);
+                if (transferToSlot(stack, slot))
+                    result = true;
+            }
+        }
+        return result;
+    }
+    
+    protected boolean transferToSlot(ItemStack stack, Slot slot) {
+        ItemStack slotStack = slot.getStack();
+        int slotLimit = min(stack.getMaxStackSize(), slot.getSlotStackLimit());
+        int oldSlotSize = slotStack.stackSize;
+        int newSlotSize = min(oldSlotSize + stack.stackSize, slotLimit);
+        int transferSize = newSlotSize - oldSlotSize;
+        if (transferSize > 0) {
+            stack.stackSize -= transferSize;
+            slotStack.stackSize += transferSize;
+            slot.onSlotChanged();
+            return true;
+        }
+        else
+            return false;
+    }   
+    
+    // Return the range of slots into which the given stack should be moved by a shift-click.
+    // Default implementation transfers between playerSlotRange and containerSlotRange.
     protected SlotRange transferSlotRange(int srcSlotIndex, ItemStack stack) {
-        return null;
+        if (playerSlotRange.contains(srcSlotIndex))
+            return containerSlotRange;
+        else if (containerSlotRange.contains(srcSlotIndex))
+            return playerSlotRange;
+        else
+            return null;
     }
 
     void sendStateTo(ICrafting crafter) {
@@ -138,6 +212,11 @@ public class BaseContainer extends Container {
         
         public boolean contains(int slot) {
             return slot >= firstSlot && slot < firstSlot + numSlots;
+        }
+        
+        @Override
+        public String toString() {
+            return String.format("SlotRange(%s to %s)", firstSlot, firstSlot + numSlots - 1);
         }
     }
 
