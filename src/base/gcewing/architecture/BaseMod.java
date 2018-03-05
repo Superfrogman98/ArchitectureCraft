@@ -86,9 +86,9 @@ public class BaseMod<CLIENT extends BaseModClient<? extends BaseMod>>
     }
     
     public static class ModelSpec {
-        String modelName;
-        String[] textureNames;
-        Vector3 origin;
+        public String modelName;
+        public String[] textureNames;
+        public Vector3 origin;
         public ModelSpec(String model, String... textures) {
             this(model, Vector3.zero, textures);
         }
@@ -270,18 +270,29 @@ public class BaseMod<CLIENT extends BaseModClient<? extends BaseMod>>
 
     //--------------- Third-party mod integration ------------------------------------------------
 
-    public BaseSubsystem integrateWith(String modId, String className) {
-        BaseSubsystem sub = null;
-        if (isModLoaded(modId)) {
-            sub = newSubsystem(className);
-            sub.mod = this;
-            sub.client = client;
-            subsystems.add(sub);
-        }
+    public BaseSubsystem integrateWithMod(String modId, String subsystemClassName) {
+        if (isModLoaded(modId))
+            return loadSubsystem(subsystemClassName);
+        else
+            return null;
+    }
+    
+    public BaseSubsystem integrateWithClass(String className, String subsystemClassName) {
+        if (classAvailable(className))
+            return loadSubsystem(subsystemClassName);
+        else
+            return null;
+    }
+
+    public BaseSubsystem loadSubsystem(String className) {
+        BaseSubsystem sub = newSubsystem(className);
+        sub.mod = this;
+        sub.client = client;
+        subsystems.add(sub);
         return sub;
     }
     
-    BaseSubsystem newSubsystem(String className) {
+    protected BaseSubsystem newSubsystem(String className) {
         try {
             return (BaseSubsystem)Class.forName(className).newInstance();
         }
@@ -290,6 +301,19 @@ public class BaseMod<CLIENT extends BaseModClient<? extends BaseMod>>
         }
     }
     
+    public static boolean classAvailable(String name) {
+        try {
+            Class.forName(name);
+            return true;
+        }
+        catch (ClassNotFoundException e) {
+            return false;
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     //--------------- Item registration ----------------------------------------------------------
     
     public Item newItem(String name) {
@@ -346,6 +370,10 @@ public class BaseMod<CLIENT extends BaseModClient<? extends BaseMod>>
         return addBlock(block, name, itemClass);
     }
     
+    public <BLOCK extends Block> BLOCK addBlock(String name, BLOCK block) {
+        return addBlock(block, name);
+    }
+
     public <BLOCK extends Block> BLOCK addBlock(BLOCK block, String name) {
         return addBlock(block, name, null);
     }
@@ -360,6 +388,8 @@ public class BaseMod<CLIENT extends BaseModClient<? extends BaseMod>>
             //System.out.printf("BaseMod.addBlock: Setting creativeTab to %s\n", creativeTab);
             block.setCreativeTab(creativeTab);
         }
+        if (block instanceof BaseBlock)
+            ((BaseBlock)block).mod = this;
         registeredBlocks.add(block);
         return block;
     }
@@ -511,7 +541,10 @@ public class BaseMod<CLIENT extends BaseModClient<? extends BaseMod>>
     //--------------- Resources ----------------------------------------------------------
 
     public ResourceLocation resourceLocation(String path) {
-        return new ResourceLocation(assetKey, path);
+        if (path.contains(":"))
+            return new ResourceLocation(path);
+        else
+            return new ResourceLocation(assetKey, path);
     }
     
     public String soundName(String name) {

@@ -47,9 +47,15 @@ public abstract class ShapeKind {
 		ITexture[] textures, IRenderTarget target, Trans3 t,
 		boolean renderBase, boolean renderSecondary);
 	
+	public ItemStack newStack(Shape shape, IBlockState materialState, int stackSize) {
+	    return newStack(shape, materialState.getBlock(), getMetaFromBlockState(materialState), stackSize);
+    }
+    
 	public ItemStack newStack(Shape shape, Block materialBlock, int materialMeta, int stackSize) {
 		ShapeTE te = new ShapeTE(shape, materialBlock, materialMeta);
-		return BaseUtils.blockStackWithTileEntity(ArchitectureCraft.blockShape, stackSize, te);
+		int light = materialBlock.getLightValue();
+		ItemStack result = BaseTileEntity.blockStackWithTileEntity(ArchitectureCraft.blockShape, stackSize, light, te);
+		return result;
 	}
 	
 	public boolean orientOnPlacement(EntityPlayer player, ShapeTE te,
@@ -108,7 +114,6 @@ public abstract class ShapeKind {
 	}
 	
 	public void chiselUsedOnSide(ShapeTE te, EntityPlayer player, EnumFacing side) {
-		//System.out.printf("ShapeKind.chiselUsedOnSide: %s\n", side);
 		te.toggleConnectionGlobal(side);
 	}
 
@@ -496,7 +501,7 @@ public abstract class ShapeKind {
 
 		@Override
 		protected ItemStack newSecondaryMaterialStack(IBlockState state) {
-			return blockStackWithState(state, 1);
+			return BaseBlockUtils.blockStackWithState(state, 1);
 		}
 		
 		@Override

@@ -31,7 +31,8 @@ import net.minecraftforge.common.util.ForgeDirection;
 import cpw.mods.fml.common.registry.*;
 import cpw.mods.fml.relauncher.*;
 
-import gcewing.architecture.BaseMod.ModelSpec;
+import static gcewing.architecture.BaseMod.*;
+import static gcewing.architecture.BaseModClient.*;
 import static gcewing.architecture.BaseUtils.*;
 import static gcewing.architecture.BaseBlockUtils.*;
 
@@ -42,7 +43,7 @@ public class BaseBlock<TE extends TileEntity>
     public static boolean debugState = false;
     
     protected static Random RANDOM = new Random();
-    private static TileEntity tileEntityHarvested;
+//     private static TileEntity tileEntityHarvested;
     
     public Class getDefaultItemClass() {
         return BaseItemBlock.class;
@@ -90,6 +91,8 @@ public class BaseBlock<TE extends TileEntity>
     protected IOrientationHandler orientationHandler = orient1Way;
     protected String[] textureNames;
     protected ModelSpec modelSpec;
+    protected BaseMod mod;
+    protected AxisAlignedBB boxHit;
 
 
     // --------------------------- Constructors -------------------------------
@@ -132,6 +135,19 @@ public class BaseBlock<TE extends TileEntity>
         }
         blockState = createBlockState();
         defaultBlockState = blockState.getBaseState();
+        opaque = true;
+    }
+
+    // --------------------------- Accessors ----------------------------
+    
+    public BaseBlock setOpaque(boolean state) {
+        opaque = state;
+        return this;
+    }
+    
+    @Override
+    public boolean isOpaqueCube() {
+        return opaque;
     }
 
     // --------------------------- States -------------------------------
@@ -253,6 +269,46 @@ public class BaseBlock<TE extends TileEntity>
     
     public int getNumSubtypes() {
         return 1;
+    }
+    
+    // -------------------------- Harvesting ----------------------------
+    
+    protected ThreadLocal<TileEntity> harvestingTileEntity = new ThreadLocal();
+    
+    @Override
+    public void onBlockHarvested(World world, int x, int y, int z, int meta, EntityPlayer player) {
+        TileEntity te = world.getTileEntity(x, y, z);
+        harvestingTileEntity.set(te);
+    }
+
+    @Override
+    public void harvestBlock(World world, EntityPlayer player, int x, int y, int z, int meta) {
+        TileEntity te = harvestingTileEntity.get();
+        harvestBlock(world, player, new BlockPos(x, y, z), getStateFromMeta(meta), te);
+    }
+    
+    public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity te) {
+        super.harvestBlock(world, player, pos.x, pos.y, pos.z, getMetaFromState(state));
+    }
+
+    @Override    
+    public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int meta, int fortune) {
+        IBlockState state = getStateFromMeta(meta);
+        ArrayList<ItemStack> result = getDrops(world, new BlockPos(x, y, z), state, fortune);
+        harvestingTileEntity.set(null);
+        return result;
+    }
+    
+    public ArrayList<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+        TileEntity te = getWorldTileEntity(world, pos);
+        if (te == null)
+            te = harvestingTileEntity.get();
+        return getDropsFromTileEntity(world, pos, state, te, fortune);
+    }
+
+    protected ArrayList<ItemStack> getDropsFromTileEntity(IBlockAccess world, BlockPos pos, IBlockState state, TileEntity te, int fortune) {
+        int meta = getMetaFromState(state);
+        return super.getDrops((World)world, pos.x, pos.y, pos.z, meta, fortune);
     }
     
     // -------------------------- Rendering -----------------------------
@@ -525,17 +581,6 @@ public class BaseBlock<TE extends TileEntity>
         return super.getItemDropped(getMetaFromState(state), random, fortune);
     }
 
-    @Override    
-    public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int meta, int fortune) {
-        IBlockState state = getStateFromMeta(meta);
-        return getDrops(world, new BlockPos(x, y, z), state, fortune);
-    }
-    
-    public ArrayList<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-        int meta = getMetaFromState(state);
-        return super.getDrops((World)world, pos.x, pos.y, pos.z, meta, fortune);
-    }
-    
     @Override
     public boolean renderAsNormalBlock() {
         return isFullCube();
@@ -550,19 +595,82 @@ public class BaseBlock<TE extends TileEntity>
         return collisionRayTrace(world, new BlockPos(x, y, z), start, end);
     }
     
-    public MovingObjectPosition collisionRayTrace(World world, BlockPos pos, Vec3 start, Vec3 end) {
-        return super.collisionRayTrace(world, pos.x, pos.y, pos.z, start, end);
-    }
+//     public MovingObjectPosition collisionRayTrace(World world, BlockPos pos, Vec3 start, Vec3 end) {
+//         return super.collisionRayTrace(world, pos.x, pos.y, pos.z, start, end);
+//     }
     
+	public MovingObjectPosition collisionRayTrace(World world, BlockPos pos, Vec3 start, Vec3 end) {
+	    boxHit = null;
+		MovingObjectPosition result = null;
+		double nearestDistance = 0;
+		IBlockState state = getWorldBlockState(world, pos);
+		List<AxisAlignedBB> list = getGlobalCollisionBoxes(world, pos, state, null);
+		if (list != null) {
+			int n = list.size();
+			for (int i = 0; i < n; i++) {
+				AxisAlignedBB box = list.get(i);
+				MovingObjectPosition mp = box.calculateIntercept(start, end);
+				if (mp != null) {
+					mp.subHit = i;
+					double d = start.squareDistanceTo(mp.hitVec);
+					if (result == null || d < nearestDistance) {
+						result = mp;
+						nearestDistance = d;
+					}
+				}
+			}
+		}
+		if (result != null) {
+			//setBlockBounds(list.get(result.subHit));
+			int i = result.subHit;
+			boxHit = list.get(i).offset(-pos.getX(), -pos.getY(), -pos.getZ());
+			result = newMovingObjectPosition(result.hitVec, result.sideHit, pos);
+			result.subHit = i;
+		}
+		return result;
+	}
+
     @Override
     public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z) {
         setBlockBoundsBasedOnState(world, new BlockPos(x, y, z));
     }
     
-    public void setBlockBoundsBasedOnState(IBlockAccess world, BlockPos pos) {
-        super.setBlockBoundsBasedOnState(world, pos.x, pos.y, pos.z);
-    }
-    
+	public void setBlockBoundsBasedOnState(IBlockAccess world, BlockPos pos) {
+	    AxisAlignedBB box = boxHit;
+	    if (box == null) {
+            IBlockState state = getWorldBlockState(world, pos);
+            box = getLocalBounds(world, pos, state, null);
+        }
+		if (box != null)
+			setBlockBounds(box);
+		else
+			super.setBlockBoundsBasedOnState(world, pos.x, pos.y, pos.z);
+	}
+
+	protected AxisAlignedBB getLocalBounds(IBlockAccess world, BlockPos pos, IBlockState state,
+	    Entity entity)
+	{
+	    IModel model = getModel(state);
+	    if (model != null) {
+	        Trans3 t = localToGlobalTransformation(world, pos, state, Vector3.blockCenter);
+	        return t.t(model.getBounds());
+	    }
+	    return null;
+	}
+	
+	public IModel getModel(IBlockState state) {
+	    ModelSpec spec = getModelSpec(state);
+	    if (spec != null)
+	        return mod.getModel(spec.modelName);
+	    else
+	        return null;
+	}   
+
+	public void setBlockBounds(AxisAlignedBB box) {
+		setBlockBounds((float)box.minX, (float)box.minY, (float)box.minZ,
+			(float)box.maxX, (float)box.maxY, (float)box.maxZ);
+	}
+
     @Override
     public void addCollisionBoxesToList(World world, int x, int y, int z, AxisAlignedBB clip,
         List result, Entity entity)
@@ -573,25 +681,43 @@ public class BaseBlock<TE extends TileEntity>
     }
 
     
-    public void addCollisionBoxesToList(World world, BlockPos pos, IBlockState state,  AxisAlignedBB clip,
-        List result, Entity entity)
-    {
-        super.addCollisionBoxesToList(world, pos.x, pos.y, pos.z, clip, result, entity);
-    }
+	public void addCollisionBoxesToList(World world, BlockPos pos, IBlockState state,
+		AxisAlignedBB clip, List result, Entity entity)
+	{
+		List<AxisAlignedBB> list = getGlobalCollisionBoxes(world, pos, state, entity);
+		if (list != null)
+			for (AxisAlignedBB box : list)
+				if (clip.intersectsWith(box))
+					result.add(box);
+	    else
+	        super.addCollisionBoxesToList(world, pos.x, pos.y, pos.z, clip, result, entity);
+	}
 
-    @Override
-    public void onBlockHarvested(World world, int x, int y, int z, int meta, EntityPlayer player) {
-        tileEntityHarvested = world.getTileEntity(x, y, z);
-    }
+	protected List<AxisAlignedBB> getGlobalCollisionBoxes(IBlockAccess world, BlockPos pos,
+		IBlockState state, Entity entity)
+	{
+		Trans3 t = localToGlobalTransformation(world, pos, state);
+		return getCollisionBoxes(world, pos, state, t, entity);
+	}
 
-    @Override
-    public void harvestBlock(World world, EntityPlayer player, int x, int y, int z, int meta) {
-        harvestBlock(world, player, new BlockPos(x, y, z), getStateFromMeta(meta), tileEntityHarvested);
-    }
-    
-    public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity te) {
-        super.harvestBlock(world, player, pos.x, pos.y, pos.z, getMetaFromState(state));
-    }
+	protected List<AxisAlignedBB> getLocalCollisionBoxes(IBlockAccess world, BlockPos pos,
+		IBlockState state, Entity entity)
+	{
+		Trans3 t = localToGlobalTransformation(world, pos, state, Vector3.zero);
+		return getCollisionBoxes(world, pos, state, t, entity);
+	}
+
+	protected List<AxisAlignedBB> getCollisionBoxes(IBlockAccess world, BlockPos pos, IBlockState state,
+	    Trans3 t, Entity entity)
+	{
+	    IModel model = getModel(state);
+	    if (model != null) {
+            List<AxisAlignedBB> list = new ArrayList<AxisAlignedBB>();
+            model.addBoxesToList(t, list);
+            return list;
+        }
+        return null;
+	}
 
     @Override
     public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {

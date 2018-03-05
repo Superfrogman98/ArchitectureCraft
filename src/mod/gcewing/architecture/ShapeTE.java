@@ -119,6 +119,10 @@ public class ShapeTE extends BaseTileEntity {
 		if (blockName != null && blockName.length() > 0) {
 			Block block = Block.getBlockFromName(blockName);
 			int data = nbt.getInteger(dataField);
+			if (block == null) {
+			    block = Blocks.planks;
+			    data = 0;
+			}
 			IBlockState state = getBlockStateFromMeta(block, data);
 			return state;
 		}
