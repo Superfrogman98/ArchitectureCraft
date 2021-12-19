@@ -1,9 +1,9 @@
 [{
-  "modid": "${modid}",
-  "name": "ArchitectureCraft",
+  "modid": "${modId}",
+  "name": "${modName}",
   "description": "Distinguished architectural features for your Minecraft buildings.",
-  "version": "${version}",
-  "mcversion": "${mcversion}",
+  "version": "${modVersion}",
+  "mcversion": "${minecraftVersion}",
   "url": "http://www.cosc.canterbury.ac.nz/greg.ewing/minecraft/mods/ArchitectureCraft/",
   "updateUrl": "",
   "authors": ["Greg Ewing"],
