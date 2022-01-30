@@ -101,32 +101,34 @@ public class ArchitectureCraft extends BaseMod<ArchitectureCraftClient> {
 	}
 
 	protected void registerRecipes() {
-	    ItemStack orangeDye = new ItemStack(Items.dye, 1, 14);
-		newRecipe(blockSawbench, 1,
-			"I*I",
-			"/0/",
-			"/_/",
-			'I', Items.iron_ingot, '*', itemSawblade, '/', Items.stick, 
-			'_', Blocks.wooden_pressure_plate, '0', itemLargePulley);
-		newRecipe(itemSawblade, 1,
-			" I ",
-			"I/I",
-			" I ",
-			'I', Items.iron_ingot, '/', Items.stick);
-		newRecipe(itemLargePulley, 1,
-			" W ",
-			"W/W",
-			" W ",
-			'W', Blocks.planks, '/', Items.stick);
-		newRecipe(itemChisel, 1,
-			"I ",
-			"ds",
-			'I', Items.iron_ingot, 's', Items.stick, 'd', orangeDye);
-		newRecipe(itemHammer, 1,
-			"II ",
-			"dsI",
-			"ds ",
-			'I', Items.iron_ingot, 's', Items.stick, 'd', orangeDye);
+		if (!Loader.isModLoaded("dreamcraft")) {
+			ItemStack orangeDye = new ItemStack(Items.dye, 1, 14);
+			newRecipe(blockSawbench, 1,
+					"I*I",
+					"/0/",
+					"/_/",
+					'I', Items.iron_ingot, '*', itemSawblade, '/', Items.stick,
+					'_', Blocks.wooden_pressure_plate, '0', itemLargePulley);
+			newRecipe(itemSawblade, 1,
+					" I ",
+					"I/I",
+					" I ",
+					'I', Items.iron_ingot, '/', Items.stick);
+			newRecipe(itemLargePulley, 1,
+					" W ",
+					"W/W",
+					" W ",
+					'W', Blocks.planks, '/', Items.stick);
+			newRecipe(itemChisel, 1,
+					"I ",
+					"ds",
+					'I', Items.iron_ingot, 's', Items.stick, 'd', orangeDye);
+			newRecipe(itemHammer, 1,
+					"II ",
+					"dsI",
+					"ds ",
+					'I', Items.iron_ingot, 's', Items.stick, 'd', orangeDye);
+		}
 }
 	
 	//--------------- GUIs ----------------------------------------------------------
