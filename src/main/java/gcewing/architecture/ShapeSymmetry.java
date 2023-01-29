@@ -1,15 +1,15 @@
-//------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------
 //
-//	 ArchitectureCraft - Shape symmetries
+// ArchitectureCraft - Shape symmetries
 //
-//------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------
 
 package gcewing.architecture;
 
 public enum ShapeSymmetry {
 
-	Unilateral,
-	Bilateral,
-	Quadrilateral
+    Unilateral,
+    Bilateral,
+    Quadrilateral
 
 }

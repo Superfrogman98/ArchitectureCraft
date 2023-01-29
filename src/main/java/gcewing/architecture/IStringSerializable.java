@@ -1,6 +1,6 @@
 package gcewing.architecture;
 
-public interface IStringSerializable
-{
+public interface IStringSerializable {
+
     String getName();
 }

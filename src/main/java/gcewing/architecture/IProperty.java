@@ -2,8 +2,8 @@ package gcewing.architecture;
 
 import java.util.Collection;
 
-public interface IProperty<T extends Comparable>
-{
+public interface IProperty<T extends Comparable> {
+
     String getName();
 
     Collection<T> getAllowedValues();
