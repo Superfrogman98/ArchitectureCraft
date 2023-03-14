@@ -63,7 +63,7 @@ public class RenderRoof extends RenderShape {
                 break;
             case SlopeTileB3:
                 renderSlopeB3();
-                break; 
+                break;
             case RoofOuterCorner:
                 renderOuterCorner();
                 break;
@@ -125,8 +125,6 @@ public class RenderRoof extends RenderShape {
         }
         if (renderSecondary) if (ridgeAt(0, 0, -1)) connectRidgeFront();
     }
-
-
 
     protected void renderSlopeA1() {
         renderVariableSlope(1.0, 0.5);
@@ -195,7 +193,6 @@ public class RenderRoof extends RenderShape {
         renderVariableBackFace(0.33333);
     }
 
-
     // -------------------------------------------------------------------------------------
 
     protected void renderVariableSlope(double start, double end) {
@@ -213,8 +210,8 @@ public class RenderRoof extends RenderShape {
         beginPosXFace();
         beginTriangle();
         vertex(1, offset + height, 1, 0, 0);
-        vertex(1, offset, 1, 0, 1-height);
-        vertex(1, offset, 0, 1, 1-height);
+        vertex(1, offset, 1, 0, 1 - height);
+        vertex(1, offset, 0, 1, 1 - height);
         endFace();
     }
 
@@ -222,52 +219,51 @@ public class RenderRoof extends RenderShape {
         beginNegXFace();
         beginTriangle();
         vertex(0, offset + height, 1, 1, 0);
-        vertex(0, offset, 0, 0, 1-height);
-        vertex(0, offset, 1, 1, 1-height);
+        vertex(0, offset, 0, 0, 1 - height);
+        vertex(0, offset, 1, 1, 1 - height);
         endFace();
     }
 
     protected void renderVariableFaceLeft(double offset, double height) {
         beginNegXFace();
         beginQuad();
-        vertex(0, offset+height, 0, 0, 1-height);
+        vertex(0, offset + height, 0, 0, 1 - height);
         vertex(0, offset, 0, 0, 1);
         vertex(0, offset, 1, 1, 1);
-        vertex(0, offset+height, 1, 1, 1-height);
+        vertex(0, offset + height, 1, 1, 1 - height);
         endFace();
     }
 
     protected void renderVariableFaceRight(double offset, double height) {
         beginPosXFace();
         beginQuad();
-        vertex(1, offset+height, 1, 0, 1-height);
+        vertex(1, offset + height, 1, 0, 1 - height);
         vertex(1, offset, 1, 0, 1);
         vertex(1, offset, 0, 1, 1);
-        vertex(1, offset+height, 0, 1, 1-height);
+        vertex(1, offset + height, 0, 1, 1 - height);
         endFace();
     }
 
     protected void renderVariableFrontFace(double height) {
         beginNegZFace();
         beginQuad();
-        vertex(1, height, 0, 0, 1-height);
+        vertex(1, height, 0, 0, 1 - height);
         vertex(1, 0, 0, 0, 1);
         vertex(0, 0, 0, 1, 1);
-        vertex(0, height, 0, 1, 1-height);
+        vertex(0, height, 0, 1, 1 - height);
         endFace();
     }
 
     protected void renderVariableBackFace(double height) {
         beginPosZFace();
         beginQuad();
-        vertex(0, height, 1, 0, 1-height);
+        vertex(0, height, 1, 0, 1 - height);
         vertex(0, 0, 1, 0, 1);
         vertex(1, 0, 1, 1, 1);
-        vertex(1, height, 1, 1, 1-height);
+        vertex(1, height, 1, 1, 1 - height);
         endFace();
     }
 
-    
     // -------------------------------------------------------------------------------------
     protected void renderOuterCorner() {
         if (renderSecondary) {
