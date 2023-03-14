@@ -49,6 +49,33 @@ public class RenderRoof extends RenderShape {
             case RoofTile:
                 renderSlope();
                 break;
+            case SlopeTileA1:
+                renderSlopeA1();
+                break;
+            case SlopeTileA2:
+                renderSlopeA2();
+                break;
+            case SlopeTileB1:
+                renderSlopeB1();
+                break;
+            case SlopeTileB2:
+                renderSlopeB2();
+                break;
+            case SlopeTileB3:
+                renderSlopeB3();
+                break;
+            case SlopeTileC1:
+                renderSlopeC1();
+                break;
+            case SlopeTileC2:
+                renderSlopeC2();
+                break;
+            case SlopeTileC3:
+                renderSlopeC3();
+                break;
+            case SlopeTileC4:
+                renderSlopeC4();
+                break;
             case RoofOuterCorner:
                 renderOuterCorner();
                 break;
@@ -111,6 +138,201 @@ public class RenderRoof extends RenderShape {
         if (renderSecondary) if (ridgeAt(0, 0, -1)) connectRidgeFront();
     }
 
+    protected void renderSlopeA1() {
+        renderVariableSlope(1.0, 0.5);
+
+        renderVariableFaceLeft(0, 0.5);
+        renderVariableTriangleLeft(0.5, 0.5);
+
+        renderVariableFaceRight(0, 0.5);
+        renderVariableTriangleRight(0.5, 0.5);
+
+        renderVariableFrontFace(0.5);
+
+        bottomQuad();
+        backQuad();
+    }
+
+    protected void renderSlopeA2() {
+        renderVariableSlope(0.5, 0);
+
+        renderVariableTriangleLeft(0, 0.5);
+
+        renderVariableTriangleRight(0, 0.5);
+
+        bottomQuad();
+        renderVariableBackFace(0.5);
+    }
+
+    protected void renderSlopeB1() {
+        renderVariableSlope(1.0, 0.66666);
+
+        renderVariableFaceLeft(0, 0.66666);
+        renderVariableTriangleLeft(0.66666, 0.33333);
+
+        renderVariableFaceRight(0, 0.66666);
+        renderVariableTriangleRight(0.66666, 0.33333);
+
+        renderVariableFrontFace(0.66666);
+
+        bottomQuad();
+        backQuad();
+    }
+
+    protected void renderSlopeB2() {
+        renderVariableSlope(0.66666, 0.33333);
+
+        renderVariableFaceLeft(0, 0.33333);
+        renderVariableTriangleLeft(0.33333, 0.33333);
+
+        renderVariableFaceRight(0, 0.33333);
+        renderVariableTriangleRight(0.33333, 0.33333);
+
+        renderVariableFrontFace(0.33333);
+
+        bottomQuad();
+        renderVariableBackFace(0.66666);
+    }
+
+    protected void renderSlopeB3() {
+        renderVariableSlope(0.33333, 0);
+
+        renderVariableTriangleLeft(0, 0.33333);
+
+        renderVariableTriangleRight(0, 0.33333);
+
+        bottomQuad();
+        renderVariableBackFace(0.33333);
+    }
+
+    protected void renderSlopeC1() {
+        renderVariableSlope(1, 0.75);
+
+        renderVariableFaceLeft(0, 0.75);
+        renderVariableTriangleLeft(0.75, 0.25);
+
+        renderVariableFaceRight(0, 0.75);
+        renderVariableTriangleRight(0.75, 0.25);
+
+        renderVariableFrontFace(0.75);
+
+        bottomQuad();
+        backQuad();
+    }
+
+    protected void renderSlopeC2() {
+        renderVariableSlope(0.75, 0.50);
+
+        renderVariableFaceLeft(0, 0.50);
+        renderVariableTriangleLeft(0.50, 0.25);
+
+        renderVariableFaceRight(0, 0.50);
+        renderVariableTriangleRight(0.50, 0.25);
+
+        renderVariableFrontFace(0.50);
+
+        bottomQuad();
+        renderVariableBackFace(0.75);
+    }
+
+    protected void renderSlopeC3() {
+        renderVariableSlope(0.50, 0.25);
+
+        renderVariableFaceLeft(0, 0.25);
+        renderVariableTriangleLeft(0.25, 0.25);
+
+        renderVariableFaceRight(0, 0.25);
+        renderVariableTriangleRight(0.25, 0.25);
+
+        renderVariableFrontFace(0.25);
+
+        bottomQuad();
+        renderVariableBackFace(0.50);
+    }
+
+    protected void renderSlopeC4() {
+        renderVariableSlope(0.25, 0);
+
+        renderVariableTriangleLeft(0, 0.25);
+
+        renderVariableTriangleRight(0, 0.25);
+
+        bottomQuad();
+        renderVariableBackFace(0.25);
+    }
+
+    // -------------------------------------------------------------------------------------
+
+    protected void renderVariableSlope(double start, double end) {
+        beginNegZSlope();
+        // Front slope
+        beginQuad();
+        vertex(1, start, 1, 0, 0);
+        vertex(1, end, 0, 0, 1);
+        vertex(0, end, 0, 1, 1);
+        vertex(0, start, 1, 1, 0);
+        endFace();
+    }
+
+    protected void renderVariableTriangleLeft(double offset, double height) {
+        beginPosXFace();
+        beginTriangle();
+        vertex(1, offset + height, 1, 0, 0);
+        vertex(1, offset, 1, 0, 1 - height);
+        vertex(1, offset, 0, 1, 1 - height);
+        endFace();
+    }
+
+    protected void renderVariableTriangleRight(double offset, double height) {
+        beginNegXFace();
+        beginTriangle();
+        vertex(0, offset + height, 1, 1, 0);
+        vertex(0, offset, 0, 0, 1 - height);
+        vertex(0, offset, 1, 1, 1 - height);
+        endFace();
+    }
+
+    protected void renderVariableFaceLeft(double offset, double height) {
+        beginNegXFace();
+        beginQuad();
+        vertex(0, offset + height, 0, 0, 1 - height);
+        vertex(0, offset, 0, 0, 1);
+        vertex(0, offset, 1, 1, 1);
+        vertex(0, offset + height, 1, 1, 1 - height);
+        endFace();
+    }
+
+    protected void renderVariableFaceRight(double offset, double height) {
+        beginPosXFace();
+        beginQuad();
+        vertex(1, offset + height, 1, 0, 1 - height);
+        vertex(1, offset, 1, 0, 1);
+        vertex(1, offset, 0, 1, 1);
+        vertex(1, offset + height, 0, 1, 1 - height);
+        endFace();
+    }
+
+    protected void renderVariableFrontFace(double height) {
+        beginNegZFace();
+        beginQuad();
+        vertex(1, height, 0, 0, 1 - height);
+        vertex(1, 0, 0, 0, 1);
+        vertex(0, 0, 0, 1, 1);
+        vertex(0, height, 0, 1, 1 - height);
+        endFace();
+    }
+
+    protected void renderVariableBackFace(double height) {
+        beginPosZFace();
+        beginQuad();
+        vertex(0, height, 1, 0, 1 - height);
+        vertex(0, 0, 1, 0, 1);
+        vertex(1, 0, 1, 1, 1);
+        vertex(1, height, 1, 1, 1 - height);
+        endFace();
+    }
+
+    // -------------------------------------------------------------------------------------
     protected void renderOuterCorner() {
         if (renderSecondary) {
             // Front slope

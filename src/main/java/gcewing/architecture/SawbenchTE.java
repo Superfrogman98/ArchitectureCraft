@@ -110,7 +110,22 @@ public class SawbenchTE extends BaseTileInventory {
                     BanisterFancyBottom,
                     BanisterFancyEnd,
                     BanisterFancyNewelTall),
-            new ShapePage("Other", CladdingSheet, Slab, Stairs, StairsOuterCorner, StairsInnerCorner), };
+            new ShapePage(
+                    "Other",
+                    CladdingSheet,
+                    Slab,
+                    Stairs,
+                    StairsOuterCorner,
+                    StairsInnerCorner,
+                    SlopeTileA1,
+                    SlopeTileA2,
+                    SlopeTileB1,
+                    SlopeTileB2,
+                    SlopeTileB3,
+                    SlopeTileC1,
+                    SlopeTileC2,
+                    SlopeTileC3,
+                    SlopeTileC4), };
 
     public IInventory inventory = new InventoryBasic("Items", false, 2);
     public int selectedPage = 0;
