@@ -146,7 +146,10 @@ public enum Shape {
     SlopeTileB1(96, "Slope B Start", Roof, Bilateral, 1, 1, 0xff),
     SlopeTileB2(97, "Slope B Middle", Roof, Bilateral, 1, 2, 0xcf),
     SlopeTileB3(98, "Slope B End", Roof, Bilateral, 1, 3, 0x0f),
-    ;
+    SlopeTileC1(99, "Slope C 1", Roof, Bilateral, 1, 1, 0xff),
+    SlopeTileC2(100, "Slope C 2", Roof, Bilateral, 1, 2, 0xcf),
+    SlopeTileC3(101, "Slope C 3", Roof, Bilateral, 1, 3, 0x0f),
+    SlopeTileC4(102, "Slope C 4", Roof, Bilateral, 1, 4, 0x0f),;
 
     public int id;
     public String title;

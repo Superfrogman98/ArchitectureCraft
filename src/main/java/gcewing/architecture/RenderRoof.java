@@ -64,6 +64,18 @@ public class RenderRoof extends RenderShape {
             case SlopeTileB3:
                 renderSlopeB3();
                 break;
+            case SlopeTileC1:
+                renderSlopeC1();
+                break;
+            case SlopeTileC2:
+                renderSlopeC2();
+                break;
+            case SlopeTileC3:
+                renderSlopeC3();
+                break;
+            case SlopeTileC4:
+                renderSlopeC4();
+                break;
             case RoofOuterCorner:
                 renderOuterCorner();
                 break;
@@ -191,6 +203,62 @@ public class RenderRoof extends RenderShape {
 
         bottomQuad();
         renderVariableBackFace(0.33333);
+    }
+
+    protected void renderSlopeC1() {
+        renderVariableSlope(1, 0.75);
+
+        renderVariableFaceLeft(0, 0.75);
+        renderVariableTriangleLeft(0.75, 0.25);
+
+        renderVariableFaceRight(0, 0.75);
+        renderVariableTriangleRight(0.75, 0.25);
+
+        renderVariableFrontFace(0.75);
+
+        bottomQuad();
+        backQuad();
+    }
+
+    protected void renderSlopeC2() {
+        renderVariableSlope(0.75, 0.50);
+
+        renderVariableFaceLeft(0, 0.50);
+        renderVariableTriangleLeft(0.50, 0.25);
+
+        renderVariableFaceRight(0, 0.50);
+        renderVariableTriangleRight(0.50, 0.25);
+
+        renderVariableFrontFace(0.50);
+
+        bottomQuad();
+        renderVariableBackFace(0.75);
+    }
+
+    protected void renderSlopeC3() {
+        renderVariableSlope(0.50, 0.25);
+
+        renderVariableFaceLeft(0, 0.25);
+        renderVariableTriangleLeft(0.25, 0.25);
+
+        renderVariableFaceRight(0, 0.25);
+        renderVariableTriangleRight(0.25, 0.25);
+
+        renderVariableFrontFace(0.25);
+
+        bottomQuad();
+        renderVariableBackFace(0.50);
+    }
+
+    protected void renderSlopeC4() {
+        renderVariableSlope(0.25, 0);
+
+        renderVariableTriangleLeft(0, 0.25);
+
+        renderVariableTriangleRight(0, 0.25);
+
+        bottomQuad();
+        renderVariableBackFace(0.25);
     }
 
     // -------------------------------------------------------------------------------------
