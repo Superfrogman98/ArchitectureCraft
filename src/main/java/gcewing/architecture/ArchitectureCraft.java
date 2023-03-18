@@ -24,7 +24,6 @@ import gcewing.architecture.BaseDataChannel.*;
         modid = Info.modID,
         name = Info.modName,
         version = Info.versionNumber,
-        acceptableRemoteVersions = Info.versionBounds,
         acceptedMinecraftVersions = Info.acceptedMinecraftVersions)
 
 public class ArchitectureCraft extends BaseMod<ArchitectureCraftClient> {
