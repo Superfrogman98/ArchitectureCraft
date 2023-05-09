@@ -28,11 +28,21 @@ public class InventoryHelper {
     }
 
     private static void func_180174_a(World worldIn, double x, double y, double z, IInventory p_180174_7_) {
-        for (int i = 0; i < p_180174_7_.getSizeInventory(); ++i) {
-            ItemStack itemstack = p_180174_7_.getStackInSlot(i);
+        if (p_180174_7_ instanceof IRestrictedDroppingInventory) {
+            for (int nSlot : ((IRestrictedDroppingInventory) p_180174_7_).getDroppingSlots()) {
+                ItemStack itemstack = p_180174_7_.getStackInSlot(nSlot);
 
-            if (itemstack != null) {
-                spawnItemStack(worldIn, x, y, z, itemstack);
+                if (itemstack != null) {
+                    spawnItemStack(worldIn, x, y, z, itemstack);
+                }
+            }
+        } else {
+            for (int i = 0; i < p_180174_7_.getSizeInventory(); ++i) {
+                ItemStack itemstack = p_180174_7_.getStackInSlot(i);
+
+                if (itemstack != null) {
+                    spawnItemStack(worldIn, x, y, z, itemstack);
+                }
             }
         }
     }

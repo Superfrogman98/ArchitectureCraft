@@ -12,16 +12,12 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.block.*;
-import net.minecraft.entity.player.*;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
-import net.minecraft.tileentity.*;
-import net.minecraft.world.*;
-import net.minecraftforge.common.util.*;
 
-public class SawbenchTE extends BaseTileInventory {
+public class SawbenchTE extends BaseTileInventory implements IRestrictedDroppingInventory {
 
     final public static int materialSlot = 0;
     final public static int resultSlot = 1;
@@ -329,6 +325,11 @@ public class SawbenchTE extends BaseTileInventory {
     public boolean canExtractItem(int slot, ItemStack stack, int side) {
         if (side == BaseDirections.DOWN) return allowAutomation && slot == resultSlot;
         else return slot == materialSlot;
+    }
+
+    @Override
+    public int[] getDroppingSlots() {
+        return materialSideSlots;
     }
 
 }
