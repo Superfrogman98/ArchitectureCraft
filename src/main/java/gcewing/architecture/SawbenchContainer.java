@@ -81,6 +81,7 @@ public class SawbenchContainer extends BaseContainer {
                 }
             }
         }
+        te.updateResultSlot();// update the result slot to make shift clicking new material in work smoothly
     }
 
     @ServerMessageHandler("SelectShape")
