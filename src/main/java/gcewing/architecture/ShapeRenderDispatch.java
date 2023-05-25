@@ -57,12 +57,13 @@ public class ShapeRenderDispatch implements ICustomRenderer {
             IBlockState base = te.baseBlockState;
             if (base != null) {
                 // System.out.printf("ShapeRenderDispatch.renderShapeTE: in pass %s renderBase = %s renderSecondary =
-                // %s\n",
-                // MinecraftForgeClient.getRenderPass(), renderBase, renderSecondary);
+                // %s\n", MinecraftForgeClient.getRenderPass(), renderBase, renderSecondary);
+                // System.out.printf("ShapeRenderDispatch.renderShapeTE: base%s\n", base.getBlock());
                 IIcon icon = getSpriteForBlockState(base);
                 IIcon icon2 = getSpriteForBlockState(te.secondaryBlockState);
                 if (icon != null) {
                     ITexture[] textures = new ITexture[4];
+                    // System.out.printf("ShapeRenderDispatch.renderShapeTE: icon:%s\n", icon.toString());
                     if (renderBase) {
                         textures[0] = BaseTexture.fromSprite(icon);
                         textures[1] = textures[0].projected();
