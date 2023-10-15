@@ -7,6 +7,7 @@
 package gcewing.architecture;
 
 import static gcewing.architecture.Shape.*;
+import static gcewing.architecture.Shape.AngledRoofRidge;
 
 import java.util.Arrays;
 import java.util.List;
@@ -121,7 +122,8 @@ public class SawbenchTE extends BaseTileInventory implements IRestrictedDropping
                     SlopeTileC1,
                     SlopeTileC2,
                     SlopeTileC3,
-                    SlopeTileC4), };
+                    SlopeTileC4,
+                    AngledRoofRidge), };
 
     public IInventory inventory = new InventoryBasic("Items", false, 2);
     public int selectedPage = 0;
