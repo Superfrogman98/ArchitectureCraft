@@ -120,42 +120,12 @@ public class RenderRoof extends RenderShape {
                 endFace();
                 connectValleyBack();
             } else {
-
-                if (te.secondaryBlockState != null) {
-                    beginQuad();
-                    vertex(1, 1, 1, 0, 0);
-                    vertex(1, 1, 0, 0, 1);
-                    vertex(0, 1, 0, 1, 1);
-                    vertex(0, 1, 1, 1, 0);
-                    endFace();
-                    // left
-                    beginTriangle();
-                    vertex(0, 1, 1, 0, 0);
-                    vertex(0, 1, 0, 0, 1);
-                    vertex(0, 0, 0, 1, 1);
-                    endFace();
-                    // right
-                    beginTriangle();
-                    vertex(1, 1, 1, 1, 0);
-                    vertex(1, 0, 0, 0, 1);
-                    vertex(1, 1, 0, 1, 1);
-                    endFace();
-
-                    beginQuad();
-                    vertex(1, 1, 0, 0, 0);
-                    vertex(1, 0, 0, 0, 1);
-                    vertex(0, 0, 0, 1, 1);
-                    vertex(0, 1, 0, 1, 0);
-                    endFace();
-                } else {
-                    beginQuad();
-                    vertex(1, 1, 1, 0, 0);
-                    vertex(1, 0, 0, 0, 1);
-                    vertex(0, 0, 0, 1, 1);
-                    vertex(0, 1, 1, 1, 0);
-                    endFace();
-                }
-
+                beginQuad();
+                vertex(1, 1, 1, 0, 0);
+                vertex(1, 0, 0, 0, 1);
+                vertex(0, 0, 0, 1, 1);
+                vertex(0, 1, 1, 1, 0);
+                endFace();
             }
         }
         // Other faces
