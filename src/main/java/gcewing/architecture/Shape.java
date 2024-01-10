@@ -149,7 +149,16 @@ public enum Shape {
     SlopeTileC1(99, "Slope C 1", Roof, Bilateral, 1, 1, 0xff),
     SlopeTileC2(100, "Slope C 2", Roof, Bilateral, 1, 2, 0xcf),
     SlopeTileC3(101, "Slope C 3", Roof, Bilateral, 1, 3, 0x0f),
-    SlopeTileC4(102, "Slope C 4", Roof, Bilateral, 1, 4, 0x0f),;
+    SlopeTileC4(102, "Slope C 4", Roof, Bilateral, 1, 4, 0x0f),
+    SlopeTileA1SE(103, "Slope A Start(Emissive in shader)", Roof, Bilateral, 1, 1, 0xcf),
+    SlopeTileA2SE(104, "Slope A End(Emissive in shader)", Roof, Bilateral, 1, 3, 0x0f),
+    SlopeTileB1SE(105, "Slope B Start(Emissive in shader)", Roof, Bilateral, 1, 1, 0xff),
+    SlopeTileB2SE(106, "Slope B Middle(Emissive in shader)", Roof, Bilateral, 1, 2, 0xcf),
+    SlopeTileB3SE(107, "Slope B End(Emissive in shader)", Roof, Bilateral, 1, 3, 0x0f),
+    SlopeTileC1SE(108, "Slope C 1(Emissive in shader)", Roof, Bilateral, 1, 1, 0xff),
+    SlopeTileC2SE(109, "Slope C 2(Emissive in shader)", Roof, Bilateral, 1, 2, 0xcf),
+    SlopeTileC3SE(110, "Slope C 3(Emissive in shader)", Roof, Bilateral, 1, 3, 0x0f),
+    SlopeTileC4SE(1111, "Slope C 4(Emissive in shader)", Roof, Bilateral, 1, 4, 0x0f),;
 
     public int id;
     public String title;
