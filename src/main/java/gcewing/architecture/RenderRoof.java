@@ -52,28 +52,55 @@ public class RenderRoof extends RenderShape {
             case SlopeTileA1:
                 renderSlopeA1();
                 break;
+            case SlopeTileA1SE:
+                renderSlopeA1();
+                break;
             case SlopeTileA2:
+                renderSlopeA2();
+                break;
+            case SlopeTileA2SE:
                 renderSlopeA2();
                 break;
             case SlopeTileB1:
                 renderSlopeB1();
                 break;
+            case SlopeTileB1SE:
+                renderSlopeB1();
+                break;
             case SlopeTileB2:
+                renderSlopeB2();
+                break;
+            case SlopeTileB2SE:
                 renderSlopeB2();
                 break;
             case SlopeTileB3:
                 renderSlopeB3();
                 break;
+            case SlopeTileB3SE:
+                renderSlopeB3();
+                break;
             case SlopeTileC1:
+                renderSlopeC1();
+                break;
+            case SlopeTileC1SE:
                 renderSlopeC1();
                 break;
             case SlopeTileC2:
                 renderSlopeC2();
                 break;
+            case SlopeTileC2SE:
+                renderSlopeC2();
+                break;
             case SlopeTileC3:
                 renderSlopeC3();
                 break;
+            case SlopeTileC3SE:
+                renderSlopeC3();
+                break;
             case SlopeTileC4:
+                renderSlopeC4();
+                break;
+            case SlopeTileC4SE:
                 renderSlopeC4();
                 break;
             case RoofOuterCorner:

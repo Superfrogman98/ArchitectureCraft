@@ -121,7 +121,18 @@ public class SawbenchTE extends BaseTileInventory implements IRestrictedDropping
                     SlopeTileC1,
                     SlopeTileC2,
                     SlopeTileC3,
-                    SlopeTileC4), };
+                    SlopeTileC4),
+            new ShapePage(
+                    "Shader Emissive",
+                    SlopeTileA1SE,
+                    SlopeTileA2SE,
+                    SlopeTileB1SE,
+                    SlopeTileB2SE,
+                    SlopeTileB3SE,
+                    SlopeTileC1SE,
+                    SlopeTileC2SE,
+                    SlopeTileC3SE,
+                    SlopeTileC4SE)};
 
     public IInventory inventory = new InventoryBasic("Items", false, 2);
     public int selectedPage = 0;
