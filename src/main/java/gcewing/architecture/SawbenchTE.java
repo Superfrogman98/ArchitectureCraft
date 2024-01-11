@@ -124,6 +124,7 @@ public class SawbenchTE extends BaseTileInventory implements IRestrictedDropping
                     SlopeTileC4),
             new ShapePage(
                     "Shader Emissive",
+                    RoofTileSE,
                     SlopeTileA1SE,
                     SlopeTileA2SE,
                     SlopeTileB1SE,
@@ -155,6 +156,10 @@ public class SawbenchTE extends BaseTileInventory implements IRestrictedDropping
             if (slot >= 0 && slot < pages[selectedPage].size()) return pages[selectedPage].get(slot);
         }
         return null;
+    }
+
+    public int getSelectedPage() {
+        return selectedPage;
     }
 
     @Override
@@ -273,6 +278,12 @@ public class SawbenchTE extends BaseTileInventory implements IRestrictedDropping
 
     protected ItemStack makeResultStack() {
         Shape resultShape = getSelectedShape();
+        boolean shaderEmissive = false;
+        if (getSelectedPage() == 7){
+            shaderEmissive = true;
+        } else {
+            shaderEmissive = false;
+        }
         if (resultShape != null) {
             ItemStack materialStack = getStackInSlot(materialSlot);
             if (materialStack != null && materialStack.stackSize >= resultShape.materialUsed) {
@@ -284,7 +295,8 @@ public class SawbenchTE extends BaseTileInventory implements IRestrictedDropping
                                 resultShape,
                                 materialBlock,
                                 materialStack.getItemDamage(),
-                                resultShape.itemsProduced);
+                                resultShape.itemsProduced,
+                                shaderEmissive);
                     }
                 }
             }

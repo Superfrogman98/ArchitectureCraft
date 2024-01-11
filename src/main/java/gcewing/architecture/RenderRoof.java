@@ -49,6 +49,9 @@ public class RenderRoof extends RenderShape {
             case RoofTile:
                 renderSlope();
                 break;
+            case RoofTileSE:
+                renderSlope();
+                break;
             case SlopeTileA1:
                 renderSlopeA1();
                 break;

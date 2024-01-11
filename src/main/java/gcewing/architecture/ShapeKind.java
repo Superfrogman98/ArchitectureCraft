@@ -47,9 +47,24 @@ public abstract class ShapeKind {
         return newStack(shape, materialState.getBlock(), getMetaFromBlockState(materialState), stackSize);
     }
 
+    public ItemStack newStack(Shape shape, IBlockState materialState, int stackSize,boolean shaderEmissive) {
+        return newStack(shape, materialState.getBlock(), getMetaFromBlockState(materialState), stackSize, shaderEmissive);
+    }
+
     public ItemStack newStack(Shape shape, Block materialBlock, int materialMeta, int stackSize) {
         ShapeTE te = new ShapeTE(shape, materialBlock, materialMeta);
         int light = materialBlock.getLightValue();
+        ItemStack result = BaseTileEntity.blockStackWithTileEntity(ArchitectureCraft.blockShape, stackSize, light, te);
+        return result;
+    }
+
+    public ItemStack newStack(Shape shape, Block materialBlock, int materialMeta, int stackSize,boolean shaderEmissive) {
+        ShapeTE te = new ShapeTE(shape, materialBlock, materialMeta);
+        int light = materialBlock.getLightValue();
+        if (shaderEmissive){
+            ItemStack result = BaseTileEntity.blockStackWithTileEntity(ArchitectureCraft.blockShapeSE, stackSize, light, te);
+            return result;
+        }
         ItemStack result = BaseTileEntity.blockStackWithTileEntity(ArchitectureCraft.blockShape, stackSize, light, te);
         return result;
     }
