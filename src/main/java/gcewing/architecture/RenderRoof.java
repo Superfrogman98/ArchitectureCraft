@@ -38,7 +38,7 @@ public class RenderRoof extends RenderShape {
     protected boolean renderBase, renderSecondary;
 
     public RenderRoof(ShapeTE te, ITexture[] textures, Trans3 t, IRenderTarget target, boolean renderBase,
-            boolean renderSecondary) {
+                      boolean renderSecondary) {
         super(te, textures, t, target);
         this.renderBase = renderBase;
         this.renderSecondary = renderSecondary;
