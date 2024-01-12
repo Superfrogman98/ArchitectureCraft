@@ -123,7 +123,10 @@ public class SawbenchTE extends BaseTileInventory implements IRestrictedDropping
                     SlopeTileC3,
                     SlopeTileC4),
             new ShapePage(
-                    "Shader Emissive",
+                    "Glow",
+                    SquareSE,
+                    SlabSE,
+                    RoofTileSE,
                     SlopeTileA1SE,
                     SlopeTileA2SE,
                     SlopeTileB1SE,
@@ -132,7 +135,7 @@ public class SawbenchTE extends BaseTileInventory implements IRestrictedDropping
                     SlopeTileC1SE,
                     SlopeTileC2SE,
                     SlopeTileC3SE,
-                    SlopeTileC4SE)};
+                    SlopeTileC4SE) };
 
     public IInventory inventory = new InventoryBasic("Items", false, 2);
     public int selectedPage = 0;
@@ -156,6 +159,7 @@ public class SawbenchTE extends BaseTileInventory implements IRestrictedDropping
         }
         return null;
     }
+
     public int getSelectedPage() {
         return selectedPage;
     }
@@ -282,8 +286,6 @@ public class SawbenchTE extends BaseTileInventory implements IRestrictedDropping
         } else {
             shaderEmissive = false;
         }
-        System.out.println(shaderEmissive);
-        System.out.println(getSelectedPage());
         if (resultShape != null) {
             ItemStack materialStack = getStackInSlot(materialSlot);
             if (materialStack != null && materialStack.stackSize >= resultShape.materialUsed) {

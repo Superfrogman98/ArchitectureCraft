@@ -41,14 +41,19 @@ public abstract class ShapeKind {
     }
 
     public abstract void renderShape(ShapeTE te, ITexture[] textures, IRenderTarget target, Trans3 t,
-                                     boolean renderBase, boolean renderSecondary);
+            boolean renderBase, boolean renderSecondary);
 
     public ItemStack newStack(Shape shape, IBlockState materialState, int stackSize) {
         return newStack(shape, materialState.getBlock(), getMetaFromBlockState(materialState), stackSize);
     }
 
-    public ItemStack newStack(Shape shape, IBlockState materialState, int stackSize,boolean shaderEmissive) {
-        return newStack(shape, materialState.getBlock(), getMetaFromBlockState(materialState), stackSize, shaderEmissive);
+    public ItemStack newStack(Shape shape, IBlockState materialState, int stackSize, boolean shaderEmissive) {
+        return newStack(
+                shape,
+                materialState.getBlock(),
+                getMetaFromBlockState(materialState),
+                stackSize,
+                shaderEmissive);
     }
 
     public ItemStack newStack(Shape shape, Block materialBlock, int materialMeta, int stackSize) {
@@ -58,11 +63,14 @@ public abstract class ShapeKind {
         return result;
     }
 
-    public ItemStack newStack(Shape shape, Block materialBlock, int materialMeta, int stackSize,boolean shaderEmissive) {
+    public ItemStack newStack(Shape shape, Block materialBlock, int materialMeta, int stackSize,
+            boolean shaderEmissive) {
         ShapeTE te = new ShapeTE(shape, materialBlock, materialMeta);
         int light = materialBlock.getLightValue();
-        if (shaderEmissive){
-            ItemStack result = BaseTileEntity.blockStackWithTileEntity(ArchitectureCraft.blockShapeSE, stackSize, light, te);
+        if (shaderEmissive) {
+            light = 15;
+            ItemStack result = BaseTileEntity
+                    .blockStackWithTileEntity(ArchitectureCraft.blockShapeSE, stackSize, light, te);
             return result;
         }
         ItemStack result = BaseTileEntity.blockStackWithTileEntity(ArchitectureCraft.blockShape, stackSize, light, te);
@@ -70,7 +78,7 @@ public abstract class ShapeKind {
     }
 
     public boolean orientOnPlacement(EntityPlayer player, ShapeTE te, BlockPos npos, IBlockState nstate, TileEntity nte,
-                                     EnumFacing otherFace, Vector3 hit) {
+            EnumFacing otherFace, Vector3 hit) {
         if (nte instanceof ShapeTE) return orientOnPlacement(player, te, (ShapeTE) nte, otherFace, hit);
         else return orientOnPlacement(player, te, null, otherFace, hit);
     }
@@ -180,14 +188,14 @@ public abstract class ShapeKind {
     }
 
     public AxisAlignedBB getBounds(ShapeTE te, IBlockAccess world, BlockPos pos, IBlockState state, Entity entity,
-                                   Trans3 t) {
+            Trans3 t) {
         List<AxisAlignedBB> list = new ArrayList<AxisAlignedBB>();
         addCollisionBoxesToList(te, world, pos, state, entity, t, list);
         return Utils.unionOfBoxes(list);
     }
 
     public void addCollisionBoxesToList(ShapeTE te, IBlockAccess world, BlockPos pos, IBlockState state, Entity entity,
-                                        Trans3 t, List list) {
+            Trans3 t, List list) {
         int mask = te.shape.occlusionMask;
         int param = mask & 0xff;
         double r, h;
@@ -251,7 +259,7 @@ public abstract class ShapeKind {
         }
 
         public void renderShape(ShapeTE te, ITexture[] textures, IRenderTarget target, Trans3 t, boolean renderBase,
-                                boolean renderSecondary) {
+                boolean renderSecondary) {
             new RenderRoof(te, textures, t, target, renderBase, renderSecondary).render();
         }
 
@@ -376,12 +384,12 @@ public abstract class ShapeKind {
 
         @Override
         public AxisAlignedBB getBounds(ShapeTE te, IBlockAccess world, BlockPos pos, IBlockState state, Entity entity,
-                                       Trans3 t) {
+                Trans3 t) {
             return t.t(getModel().getBounds());
         }
 
         public void renderShape(ShapeTE te, ITexture[] textures, IRenderTarget target, Trans3 t, boolean renderBase,
-                                boolean renderSecondary) {
+                boolean renderSecondary) {
             IModel model = getModel();
             model.render(t, target, textures);
         }
@@ -400,7 +408,7 @@ public abstract class ShapeKind {
 
         @Override
         public void addCollisionBoxesToList(ShapeTE te, IBlockAccess world, BlockPos pos, IBlockState state,
-                                            Entity entity, Trans3 t, List list) {
+                Entity entity, Trans3 t, List list) {
             if (te.shape.occlusionMask == 0) getModel().addBoxesToList(t, list);
             else super.addCollisionBoxesToList(te, world, pos, state, entity, t, list);
         }
@@ -437,7 +445,7 @@ public abstract class ShapeKind {
 
         @Override
         public boolean orientOnPlacement(EntityPlayer player, ShapeTE te, ShapeTE nte, EnumFacing otherFace,
-                                         Vector3 hit) {
+                Vector3 hit) {
             int turn = -1;
             // If click is on side of a non-window block, orient perpendicular to it
             if (!player.isSneaking() && (nte == null || !(nte.shape.kind instanceof ShapeKind.Window))) {
@@ -483,7 +491,7 @@ public abstract class ShapeKind {
         }
 
         public void renderShape(ShapeTE te, ITexture[] textures, IRenderTarget target, Trans3 t, boolean renderBase,
-                                boolean renderSecondary) {
+                boolean renderSecondary) {
             new RenderWindow(te, textures, t, target, renderBase, renderSecondary).render();
         }
 
@@ -508,7 +516,7 @@ public abstract class ShapeKind {
 
         @Override
         public void addCollisionBoxesToList(ShapeTE te, IBlockAccess world, BlockPos pos, IBlockState state,
-                                            Entity entity, Trans3 t, List list) {
+                Entity entity, Trans3 t, List list) {
             final double r = 1 / 8d, s = 3 / 32d;
             double[] e = new double[4];
             addCentreBoxesToList(r, s, t, list);
@@ -588,7 +596,7 @@ public abstract class ShapeKind {
     public static class Cladding extends ShapeKind {
 
         public void renderShape(ShapeTE te, ITexture[] textures, IRenderTarget target, Trans3 t, boolean renderBase,
-                                boolean renderSecondary) {}
+                boolean renderSecondary) {}
 
         public ItemStack newStack(Shape shape, Block materialBlock, int materialMeta, int stackSize) {
             return ArchitectureCraft.itemCladding.newStack(materialBlock, materialMeta, stackSize);
@@ -609,7 +617,7 @@ public abstract class ShapeKind {
         }
 
         public boolean orientOnPlacement(EntityPlayer player, ShapeTE te, BlockPos npos, IBlockState nstate,
-                                         TileEntity nte, EnumFacing otherFace, Vector3 hit) {
+                TileEntity nte, EnumFacing otherFace, Vector3 hit) {
             // System.out.printf("Banister.orientOnPlacement: nstate = %s\n", nstate);
             if (!player.isSneaking()) {
                 Block nblock = nstate.getBlock();
