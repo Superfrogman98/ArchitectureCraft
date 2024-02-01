@@ -132,7 +132,8 @@ public enum GuiText {
     SlopeTileC4,
 
     // UI Colors
-    FontColor(0x404040);
+    FontColor(0x404040),
+    SelectedBgColor(0x66CCFF);
 
     private final String root;
     private final int color;

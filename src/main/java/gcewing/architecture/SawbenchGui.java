@@ -50,6 +50,7 @@ public class SawbenchGui extends BaseGui.Screen {
     public static float shapeMenuItemHeight = shapeMenuItemVSize / shapeMenuItemScale;
 
     public int textColor;
+    public int selectedShapeBackgroundColor;
     public String localizedSawbenchName;
     public String localizedMakes;
     public String[] localizedPageNames;
@@ -71,6 +72,7 @@ public class SawbenchGui extends BaseGui.Screen {
 
     private void initLocalizationAndColor() {
         textColor = GuiText.FontColor.getColor();
+        selectedShapeBackgroundColor = GuiText.SelectedBgColor.getColor();
         localizedSawbenchName = GuiText.Sawbench.getLocal();
         localizedMakes = GuiText.Makes.getLocal();
         localizedPageNames = new String[te.pages.length];
@@ -99,7 +101,7 @@ public class SawbenchGui extends BaseGui.Screen {
         glPushMatrix();
         glTranslatef(pageMenuLeft, pageMenuTop, 0);
         gSave();
-        setColor(102 / 255d, 204 / 255d, 1);
+        setColor(selectedShapeBackgroundColor);
         drawRect(0, te.selectedPage * pageMenuRowHeight, pageMenuWidth, pageMenuRowHeight);
         gRestore();
         for (int i = 0; i < this.localizedPageNames.length; i++) {

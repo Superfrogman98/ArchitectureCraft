@@ -13,6 +13,7 @@ gui.architecturecraft.Makes=makes
 
 # Gui Colors
 gui.architecturecraft.FontColor=404040
+gui.architecturecraft.SelectedBgColor=66CCFF
 
 # Pages
 gui.architecturecraft.Roofing=Roofing
