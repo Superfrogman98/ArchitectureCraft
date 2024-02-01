@@ -163,7 +163,7 @@ public class SawbenchGui extends BaseGui.Screen {
     void drawSelectedShapeTitle() {
         int pageIndex = te.getSelectedPageIndex();
         int shapeIndex = te.getSelectedShapeIndex();
-        if (pageIndex != -1) {
+        if (pageIndex != -1 && shapeIndex != -1) {
             String shapeName = localizedShapeNames.get(pageIndex)[shapeIndex];
             int x = selectedShapeTitleLeft;
             int w = fontRendererObj.getStringWidth(shapeName);
