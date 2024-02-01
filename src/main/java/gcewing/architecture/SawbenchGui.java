@@ -11,6 +11,9 @@ import static gcewing.architecture.BaseUtils.*;
 import static gcewing.architecture.SawbenchContainer.*;
 import static org.lwjgl.opengl.GL11.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.client.gui.inventory.*;
 import net.minecraft.client.renderer.*;
 import net.minecraft.entity.player.*;
@@ -46,6 +49,12 @@ public class SawbenchGui extends BaseGui.Screen {
     public static float shapeMenuItemWidth = shapeMenuItemUSize / shapeMenuItemScale;
     public static float shapeMenuItemHeight = shapeMenuItemVSize / shapeMenuItemScale;
 
+    public int textColor;
+    public String localizedSawbenchName;
+    public String localizedMakes;
+    public String[] localizedPageNames;
+    public List<String[]> localizedShapeNames;
+
     SawbenchTE te;
 
     public static SawbenchGui create(EntityPlayer player, World world, BlockPos pos) {
@@ -57,6 +66,21 @@ public class SawbenchGui extends BaseGui.Screen {
     public SawbenchGui(EntityPlayer player, SawbenchTE te) {
         super(new SawbenchContainer(player, te));
         this.te = te;
+        initLocalizationAndColor();
+    }
+
+    private void initLocalizationAndColor() {
+        textColor = GuiText.FontColor.getColor();
+        localizedSawbenchName = GuiText.Sawbench.getLocal();
+        localizedMakes = GuiText.Makes.getLocal();
+        localizedPageNames = new String[te.pages.length];
+        localizedShapeNames = new ArrayList<String[]>(te.pages.length);
+
+        for (int i = 0; i < te.pages.length; i++) {
+            localizedPageNames[i] = te.pages[i].getTitle();
+            te.pages[i].updateShapeNames();
+            localizedShapeNames.add(te.pages[i].getShapeNames());
+        }
     }
 
     @Override
@@ -68,7 +92,7 @@ public class SawbenchGui extends BaseGui.Screen {
         drawShapeSelection();
         drawPageMenu();
         drawSelectedShapeTitle();
-        fontRendererObj.drawString("Sawbench", 7, 7, 4210752);
+        fontRendererObj.drawString(localizedSawbenchName, 7, 7, textColor);
     }
 
     void drawPageMenu() {
@@ -78,8 +102,8 @@ public class SawbenchGui extends BaseGui.Screen {
         setColor(102 / 255d, 204 / 255d, 1);
         drawRect(0, te.selectedPage * pageMenuRowHeight, pageMenuWidth, pageMenuRowHeight);
         gRestore();
-        for (int i = 0; i < te.pages.length; i++) {
-            drawString(te.pages[i].title, 1, 1);
+        for (int i = 0; i < this.localizedPageNames.length; i++) {
+            drawString(this.localizedPageNames[i], 1, 1);
             glTranslatef(0, pageMenuRowHeight, 0);
         }
         glPopMatrix();
@@ -135,16 +159,18 @@ public class SawbenchGui extends BaseGui.Screen {
     }
 
     void drawSelectedShapeTitle() {
-        Shape shape = te.getSelectedShape();
-        if (shape != null) {
+        int pageIndex = te.getSelectedPageIndex();
+        int shapeIndex = te.getSelectedShapeIndex();
+        if (pageIndex != -1) {
+            String shapeName = localizedShapeNames.get(pageIndex)[shapeIndex];
             int x = selectedShapeTitleLeft;
-            int w = fontRendererObj.getStringWidth(shape.title);
+            int w = fontRendererObj.getStringWidth(shapeName);
             if (x + w > selectedShapeTitleRight) x = selectedShapeTitleRight - w;
-            drawString(shape.title, x, selectedShapeTitleTop);
+            drawString(shapeName, x, selectedShapeTitleTop);
             glPushMatrix();
             glTranslatef(materialUsageLeft, materialUsageTop, 0);
             glScalef(0.5f, 0.5f, 1.0f);
-            drawString(String.format("%s makes %s", te.materialMultiple(), te.resultMultiple()), 0, 0);
+            drawString(String.format("%s %s %s", te.materialMultiple(), localizedMakes, te.resultMultiple()), 0, 0);
             glPopMatrix();
         }
     }

@@ -72,7 +72,7 @@ public class ShapeItem extends BaseItemBlock {
         if (tag != null) {
             int id = tag.getInteger("Shape");
             Shape shape = Shape.forId(id);
-            if (shape != null) lines.set(0, shape.title);
+            if (shape != null) lines.set(0, GuiText.valueOf(GuiText.class, shape.name()).getLocal());
             else lines.set(0, lines.get(0) + " (" + id + ")");
             Block baseBlock = Block.getBlockFromName(tag.getString("BaseName"));
             int baseMetadata = tag.getInteger("BaseData");

@@ -146,6 +146,17 @@ public class SawbenchTE extends BaseTileInventory implements IRestrictedDropping
         return null;
     }
 
+    public int getSelectedPageIndex() {
+        if (selectedPage >= 0 && selectedPage < pages.length) {
+            return selectedPage;
+        }
+        return -1;
+    }
+
+    public int getSelectedShapeIndex() {
+        return selectedSlots[selectedPage];
+    }
+
     @Override
     protected IInventory getInventory() {
         return inventory;
