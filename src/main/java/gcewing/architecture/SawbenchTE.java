@@ -139,11 +139,29 @@ public class SawbenchTE extends BaseTileInventory implements IRestrictedDropping
                     .getStringList());
 
     public Shape getSelectedShape() {
-        if (selectedPage >= 0 && selectedPage < pages.length) {
+        if (isSelectedPageInRange()) {
             int slot = selectedSlots[selectedPage];
             if (slot >= 0 && slot < pages[selectedPage].size()) return pages[selectedPage].get(slot);
         }
         return null;
+    }
+
+    public int getSelectedPageIndex() {
+        if (isSelectedPageInRange()) {
+            return selectedPage;
+        }
+        return -1;
+    }
+
+    public int getSelectedShapeIndex() {
+        if (isSelectedPageInRange()) {
+            return selectedSlots[selectedPage];
+        }
+        return -1;
+    }
+
+    private boolean isSelectedPageInRange() {
+        return selectedPage >= 0 && selectedPage < pages.length;
     }
 
     @Override
