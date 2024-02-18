@@ -28,11 +28,11 @@ import org.lwjgl.opengl.*;
 
 public class BaseGui {
 
-    public final static int defaultTextColor = 0x404040;
+    public final static int defaultTextColor = GuiText.FontColor.getColor();
 
     public static class Screen extends GuiContainer implements BaseMod.ISetMod {
 
-        final static int defaultTextColor = 0x404040;
+        final static int defaultTextColor = GuiText.FontColor.getColor();
 
         protected BaseMod mod;
         // double uscale, vscale;
@@ -821,7 +821,7 @@ public class BaseGui {
             uscale = 1;
             vscale = 1;
             red = green = blue = 1;
-            textColor = defaultTextColor;
+            textColor = GuiText.FontColor.getColor();
             textShadow = false;
         }
 
