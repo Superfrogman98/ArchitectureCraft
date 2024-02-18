@@ -37,7 +37,7 @@ public class ArchitectureCraft extends BaseMod<ArchitectureCraftClient> {
 
     public static SawbenchBlock blockSawbench;
     public static BaseBlock blockShape;
-
+    public static BaseBlock blockShapeSE;
     public static Item itemSawblade;
     public static Item itemLargePulley;
     public static Item itemChisel;
@@ -75,6 +75,7 @@ public class ArchitectureCraft extends BaseMod<ArchitectureCraftClient> {
         blockSawbench = newBlock("sawbench", SawbenchBlock.class);
         blockSawbench.setHardness(2.0F);
         blockShape = newBlock("shape", ShapeBlock.class, ShapeItem.class);
+        blockShapeSE = newBlock("shapeSE", ShapeBlock.class, ShapeItem.class);
     }
 
     protected void registerTileEntities() {

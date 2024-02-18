@@ -30,6 +30,7 @@ public class ArchitectureCraftClient extends BaseModClient<ArchitectureCraft> {
     @Override
     protected void registerBlockRenderers() {
         addBlockRenderer(base.blockShape, shapeRenderDispatch);
+        addBlockRenderer(base.blockShapeSE, shapeRenderDispatch);
     }
 
     @Override

@@ -26,6 +26,7 @@ import net.minecraft.util.*;
 public enum Shape {
 
     RoofTile(0, "Roof Tile", Roof, Bilateral, 1, 2, 0xcf),
+
     RoofOuterCorner(1, "Roof Outer Corner", Roof, Unilateral, 1, 3, 0x4f),
     RoofInnerCorner(2, "Roof Inner Corner", Roof, Unilateral, 2, 3, 0xdf),
     RoofRidge(3, "Gabled Roof Ridge", Roof, Bilateral, 1, 4, 0x0f),
@@ -149,7 +150,19 @@ public enum Shape {
     SlopeTileC1(99, "Slope C 1", Roof, Bilateral, 1, 1, 0xff),
     SlopeTileC2(100, "Slope C 2", Roof, Bilateral, 1, 2, 0xcf),
     SlopeTileC3(101, "Slope C 3", Roof, Bilateral, 1, 3, 0x0f),
-    SlopeTileC4(102, "Slope C 4", Roof, Bilateral, 1, 4, 0x0f),;
+    SlopeTileC4(102, "Slope C 4", Roof, Bilateral, 1, 4, 0x0f),
+    SlopeTileA1SE(103, "Slope A Start(Glow)", Roof, Bilateral, 1, 1, 0xcf),
+    SlopeTileA2SE(104, "Slope A End(Glow)", Roof, Bilateral, 1, 3, 0x0f),
+    SlopeTileB1SE(105, "Slope B Start(Glow)", Roof, Bilateral, 1, 1, 0xff),
+    SlopeTileB2SE(106, "Slope B Middle(Glow)", Roof, Bilateral, 1, 2, 0xcf),
+    SlopeTileB3SE(107, "Slope B End(Glow)", Roof, Bilateral, 1, 3, 0x0f),
+    SlopeTileC1SE(108, "Slope C 1(Glow)", Roof, Bilateral, 1, 1, 0xff),
+    SlopeTileC2SE(109, "Slope C 2(Glow)", Roof, Bilateral, 1, 2, 0xcf),
+    SlopeTileC3SE(110, "Slope C 3(Glow)", Roof, Bilateral, 1, 3, 0x0f),
+    SlopeTileC4SE(111, "Slope C 4(Glow)", Roof, Bilateral, 1, 4, 0x0f),
+    RoofTileSE(112, "Roof Tile(Glow)", Roof, Bilateral, 1, 2, 0xcf),
+    SquareSE(113, "Square(Glow)", Model("square"), Quadrilateral, 1, 1, 0x0),
+    SlabSE(114, "Slab(Glow)", Model("slab"), Quadrilateral, 1, 2, 0x0),;
 
     public int id;
     public String title;

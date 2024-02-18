@@ -1,6 +1,7 @@
 # Items
 tile.architecturecraft:sawbench.name=Architect's Sawbench
 tile.architecturecraft:shape.name=Architectural Block
+tile.architecturecraft:shapeSE.name=Architectural Block(Glow)
 item.architecturecraft:largePulley.name=Large Pulley
 item.architecturecraft:sawblade.name=Circular Saw Blade
 item.architecturecraft:chisel.name=Architect's Chisel
