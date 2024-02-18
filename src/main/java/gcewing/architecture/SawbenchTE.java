@@ -294,7 +294,7 @@ public class SawbenchTE extends BaseTileInventory implements IRestrictedDropping
 
     protected ItemStack makeResultStack() {
         Shape resultShape = getSelectedShape();
-        boolean shaderEmissive = getSelectedPage() == 7;
+        boolean shaderEmissive = getSelectedPageIndex() == 7;
         if (resultShape != null) {
             ItemStack materialStack = getStackInSlot(materialSlot);
             if (materialStack != null && materialStack.stackSize >= resultShape.materialUsed) {
