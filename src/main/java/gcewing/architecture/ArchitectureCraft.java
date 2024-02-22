@@ -6,19 +6,14 @@
 
 package gcewing.architecture;
 
-import net.minecraft.block.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.init.*;
 import net.minecraft.item.*;
-import net.minecraft.util.*;
 import net.minecraft.world.*;
-import net.minecraftforge.common.*;
 
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.event.*;
-import cpw.mods.fml.common.network.*;
 import cpw.mods.fml.common.registry.*;
-import gcewing.architecture.BaseDataChannel.*;
 
 @Mod(
         modid = Info.modID,

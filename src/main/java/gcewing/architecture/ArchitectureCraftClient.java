@@ -6,15 +6,11 @@
 
 package gcewing.architecture;
 
-import net.minecraft.entity.player.*;
-import net.minecraft.item.*;
-import net.minecraft.tileentity.*;
-import net.minecraft.world.*;
 // import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class ArchitectureCraftClient extends BaseModClient<ArchitectureCraft> {
 
-    public static ShapeRenderDispatch shapeRenderDispatch = new ShapeRenderDispatch();
+    public static final ShapeRenderDispatch shapeRenderDispatch = new ShapeRenderDispatch();
 
     public ArchitectureCraftClient(ArchitectureCraft mod) {
         super(mod);
@@ -29,13 +25,13 @@ public class ArchitectureCraftClient extends BaseModClient<ArchitectureCraft> {
 
     @Override
     protected void registerBlockRenderers() {
-        addBlockRenderer(base.blockShape, shapeRenderDispatch);
-        addBlockRenderer(base.blockShapeSE, shapeRenderDispatch);
+        addBlockRenderer(ArchitectureCraft.blockShape, shapeRenderDispatch);
+        addBlockRenderer(ArchitectureCraft.blockShapeSE, shapeRenderDispatch);
     }
 
     @Override
     protected void registerItemRenderers() {
-        addItemRenderer(base.itemCladding, new CladdingRenderer());
+        addItemRenderer(ArchitectureCraft.itemCladding, new CladdingRenderer());
     }
 
 }

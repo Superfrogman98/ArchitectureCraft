@@ -10,7 +10,6 @@ import net.minecraft.entity.player.*;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
-import net.minecraft.tileentity.*;
 
 public class BaseTileInventory extends BaseTileEntity implements IInventory, ISidedInventory {
 
@@ -28,7 +27,7 @@ public class BaseTileInventory extends BaseTileEntity implements IInventory, ISi
             NBTTagList list = nbt.getTagList("inventory", 10);
             int n = list.tagCount();
             for (int i = 0; i < n; i++) {
-                NBTTagCompound item = (NBTTagCompound) list.getCompoundTagAt(i);
+                NBTTagCompound item = list.getCompoundTagAt(i);
                 int slot = item.getInteger("slot");
                 ItemStack stack = ItemStack.loadItemStackFromNBT(item);
                 inventory.setInventorySlotContents(slot, stack);

@@ -58,9 +58,9 @@ public class BaseItemBlock extends ItemBlock implements IItem {
             int j1 = baseBlock.getMetaFromState(state);
             if (placeBlockAt(stack, player, world, x, y, z, side, hitX, hitY, hitZ, j1)) {
                 world.playSoundEffect(
-                        (double) ((float) x + 0.5F),
-                        (double) ((float) y + 0.5F),
-                        (double) ((float) z + 0.5F),
+                        (float) x + 0.5F,
+                        (float) y + 0.5F,
+                        (float) z + 0.5F,
                         this.field_150939_a.stepSound.func_150496_b(),
                         (this.field_150939_a.stepSound.getVolume() + 1.0F) / 2.0F,
                         this.field_150939_a.stepSound.getPitch() * 0.8F);

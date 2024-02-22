@@ -8,7 +8,6 @@ package gcewing.architecture;
 
 import static gcewing.architecture.BaseBlockUtils.*;
 import static gcewing.architecture.BaseUtils.*;
-import static java.lang.Math.*;
 
 import net.minecraft.block.*;
 import net.minecraft.entity.player.EntityPlayer;

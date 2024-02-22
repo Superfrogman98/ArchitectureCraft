@@ -7,35 +7,28 @@
 package gcewing.architecture;
 
 import static gcewing.architecture.BaseBlockUtils.*;
-import static gcewing.architecture.BaseUtils.*;
 import static org.lwjgl.opengl.GL11.*;
 
 import java.lang.reflect.*;
-import java.net.*;
 import java.util.*;
 
 import net.minecraft.block.*;
 import net.minecraft.client.*;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.*;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.entity.*;
 import net.minecraft.client.renderer.texture.*;
 import net.minecraft.client.renderer.tileentity.*;
-import net.minecraft.creativetab.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
-import net.minecraft.inventory.*;
+import net.minecraft.inventory.Container;
 import net.minecraft.item.*;
-import net.minecraft.network.*;
 import net.minecraft.tileentity.*;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.client.*;
 import net.minecraftforge.client.event.*;
-import net.minecraftforge.client.model.*;
 import net.minecraftforge.common.*;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -50,13 +43,13 @@ import gcewing.architecture.BaseMod.*;
 
 public class BaseModClient<MOD extends BaseMod<? extends BaseModClient>> implements IGuiHandler {
 
-    public boolean debugModelRegistration = false;
+    public final boolean debugModelRegistration = false;
 
     MOD base;
     boolean customRenderingRequired;
     boolean debugSound = false;
 
-    Map<Integer, Class<? extends GuiScreen>> screenClasses = new HashMap<Integer, Class<? extends GuiScreen>>();
+    final Map<Integer, Class<? extends GuiScreen>> screenClasses = new HashMap<>();
 
     public BaseModClient(MOD mod) {
         base = mod;
@@ -167,7 +160,7 @@ public class BaseModClient<MOD extends BaseMod<? extends BaseModClient>> impleme
                     String name = ((IBlock) block).getQualifiedRendererClassName();
                     if (name != null) {
                         try {
-                            Class cls = Class.forName(name);
+                            Class<?> cls = Class.forName(name);
                             addBlockRenderer((IBlock) block, (ICustomRenderer) cls.newInstance());
                         } catch (Exception e) {
                             throw new RuntimeException(e);
@@ -267,32 +260,31 @@ public class BaseModClient<MOD extends BaseMod<? extends BaseModClient>> impleme
         id = id & 0xffff;
         Object result = null;
         if (base.debugGui) System.out.printf("BaseModClient.getClientGuiElement: for id %s\n", id);
-        Class scrnCls = screenClasses.get(id);
+        Class<? extends GuiScreen> scrnCls = screenClasses.get(id);
         if (scrnCls != null) {
             if (base.debugGui) System.out.printf("BaseModClient.getClientGuiElement: Instantiating %s\n", scrnCls);
             // If there is a container class registered for this gui and the screen class has
             // a constructor taking it, instantiate the screen automatically.
-            Class contCls = base.containerClasses.get(id);
+            Class<? extends Container> contCls = base.containerClasses.get(id);
             if (contCls != null) {
                 try {
                     if (base.debugGui) System.out
                             .printf("BaseModClient.getClientGuiElement: Looking for constructor taking %s\n", contCls);
                     Constructor ctor = scrnCls.getConstructor(contCls);
-                    if (base.debugGui)
-                        System.out.printf("BaseModClient.getClientGuiElement: Instantiating container\n");
+                    if (base.debugGui) System.out.print("BaseModClient.getClientGuiElement: Instantiating container\n");
                     Object cont = base.createGuiElement(contCls, player, world, pos, param);
                     if (cont != null) {
                         if (base.debugGui) System.out
-                                .printf("BaseModClient.getClientGuiElement: Instantiating screen with container\n");
+                                .print("BaseModClient.getClientGuiElement: Instantiating screen with container\n");
                         try {
                             result = ctor.newInstance(cont);
                         } catch (Exception e) {
                             // throw new RuntimeException(e);
-                            base.reportExceptionCause(e);
+                            BaseMod.reportExceptionCause(e);
                             return null;
                         }
                     }
-                } catch (NoSuchMethodException e) {}
+                } catch (NoSuchMethodException ignored) {}
             }
             // Otherwise, contruct screen from player, world, pos.
             if (result == null) result = base.createGuiElement(scrnCls, player, world, pos, param);
@@ -391,10 +383,10 @@ public class BaseModClient<MOD extends BaseMod<? extends BaseModClient>> impleme
     public static class TextureCache extends HashMap<ResourceLocation, ITexture> {
     }
 
-    protected Map<IBlock, ICustomRenderer> blockRenderers = new HashMap<IBlock, ICustomRenderer>();
-    protected Map<Item, ICustomRenderer> itemRenderers = new HashMap<Item, ICustomRenderer>();
-    protected Map<IBlockState, ICustomRenderer> stateRendererCache = new HashMap<IBlockState, ICustomRenderer>();
-    protected TextureCache[] textureCaches = new TextureCache[2];
+    protected final Map<IBlock, ICustomRenderer> blockRenderers = new HashMap<>();
+    protected final Map<Item, ICustomRenderer> itemRenderers = new HashMap<>();
+    protected final Map<IBlockState, ICustomRenderer> stateRendererCache = new HashMap<>();
+    protected final TextureCache[] textureCaches = new TextureCache[2];
     {
         for (int i = 0; i < 2; i++) textureCaches[i] = new TextureCache();
     }
@@ -430,7 +422,7 @@ public class BaseModClient<MOD extends BaseMod<? extends BaseModClient>> impleme
 
     // ------------------------------------------------------------------------------------------------
 
-    public static EnumWorldBlockLayer[][] passLayers = {
+    public static final EnumWorldBlockLayer[][] passLayers = {
             { EnumWorldBlockLayer.SOLID, EnumWorldBlockLayer.CUTOUT_MIPPED, EnumWorldBlockLayer.CUTOUT,
                     EnumWorldBlockLayer.TRANSLUCENT },
             { EnumWorldBlockLayer.SOLID, EnumWorldBlockLayer.CUTOUT_MIPPED, EnumWorldBlockLayer.CUTOUT },
@@ -449,7 +441,7 @@ public class BaseModClient<MOD extends BaseMod<? extends BaseModClient>> impleme
 
     protected class BlockRenderDispatcher implements ISimpleBlockRenderingHandler {
 
-        protected int renderID;
+        protected final int renderID;
 
         public BlockRenderDispatcher() {
             renderID = RenderingRegistry.getNextAvailableRenderId();
@@ -507,8 +499,8 @@ public class BaseModClient<MOD extends BaseMod<? extends BaseModClient>> impleme
 
     // ------------------------------------------------------------------------------------------------
 
-    public static boolean debugRenderBlock = false;
-    public static boolean debugRenderItem = false;
+    public static final boolean debugRenderBlock = false;
+    public static final boolean debugRenderItem = false;
 
     protected ItemRenderDispatcher itemRenderDispatcher;
 
@@ -517,12 +509,12 @@ public class BaseModClient<MOD extends BaseMod<? extends BaseModClient>> impleme
         return itemRenderDispatcher;
     }
 
-    protected static BaseGLRenderTarget glTarget = new BaseGLRenderTarget();
+    protected static final BaseGLRenderTarget glTarget = new BaseGLRenderTarget();
 
-    protected static Trans3 entityTrans = Trans3.blockCenter;
-    protected static Trans3 equippedTrans = Trans3.blockCenter;
-    protected static Trans3 firstPersonTrans = Trans3.blockCenterSideTurn(0, 3);
-    protected static Trans3 inventoryTrans = Trans3.blockCenter;
+    protected static final Trans3 entityTrans = Trans3.blockCenter;
+    protected static final Trans3 equippedTrans = Trans3.blockCenter;
+    protected static final Trans3 firstPersonTrans = Trans3.blockCenterSideTurn(0, 3);
+    protected static final Trans3 inventoryTrans = Trans3.blockCenter;
 
     protected class ItemRenderDispatcher implements IItemRenderer {
 
@@ -698,7 +690,7 @@ public class BaseModClient<MOD extends BaseMod<? extends BaseModClient>> impleme
     protected void registerSprites(TextureMap reg, TextureCache cache, Object obj) {
         if (debugModelRegistration) System.out.printf("BaseModClient.registerSprites: for %s\n", obj);
         if (obj instanceof ITextureConsumer) {
-            String names[] = ((ITextureConsumer) obj).getTextureNames();
+            String[] names = ((ITextureConsumer) obj).getTextureNames();
             if (names != null) {
                 customRenderingRequired = true;
                 for (String name : names) {
@@ -726,8 +718,8 @@ public class BaseModClient<MOD extends BaseMod<? extends BaseModClient>> impleme
         }
     }
 
-    protected static AltBlockAccess altBlockAccess = new AltBlockAccess();
-    protected static RenderBlocks altRenderBlocks = new RenderBlocks(altBlockAccess);
+    protected static final AltBlockAccess altBlockAccess = new AltBlockAccess();
+    protected static final RenderBlocks altRenderBlocks = new RenderBlocks(altBlockAccess);
 
     protected static class AltBlockAccess implements IBlockAccess {
 

@@ -171,6 +171,6 @@ public enum GuiText {
     }
 
     public String getUnlocalized() {
-        return this.root + '.' + this.toString();
+        return this.root + '.' + this;
     }
 }

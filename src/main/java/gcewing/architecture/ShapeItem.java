@@ -14,9 +14,7 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.*;
-import net.minecraft.client.renderer.texture.*;
 import net.minecraft.entity.player.*;
-import net.minecraft.init.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import net.minecraft.tileentity.*;

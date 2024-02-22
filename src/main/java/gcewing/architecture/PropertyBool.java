@@ -6,8 +6,7 @@ import com.google.common.collect.ImmutableSet;
 
 public class PropertyBool extends PropertyHelper<Boolean> {
 
-    private final ImmutableSet<Boolean> allowedValues = ImmutableSet
-            .<Boolean>of(Boolean.valueOf(true), Boolean.valueOf(false));
+    private final ImmutableSet<Boolean> allowedValues = ImmutableSet.<Boolean>of(Boolean.TRUE, Boolean.FALSE);
 
     protected PropertyBool(String name) {
         super(name, Boolean.class);

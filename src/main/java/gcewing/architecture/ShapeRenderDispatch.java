@@ -7,14 +7,8 @@
 package gcewing.architecture;
 
 import static gcewing.architecture.BaseBlockUtils.*;
-import static gcewing.architecture.BaseUtils.*;
 
-import net.minecraft.block.*;
-import net.minecraft.client.*;
-import net.minecraft.client.renderer.texture.*;
 import net.minecraft.item.*;
-import net.minecraft.nbt.*;
-import net.minecraft.tileentity.*;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
 

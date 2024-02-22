@@ -7,28 +7,19 @@
 package gcewing.architecture;
 
 import static gcewing.architecture.BaseBlockUtils.*;
-import static gcewing.architecture.BaseUtils.*;
-import static gcewing.architecture.Shape.*;
 
-import net.minecraft.block.*;
-import net.minecraft.client.*;
-import net.minecraft.client.renderer.texture.*;
-import net.minecraft.item.*;
-import net.minecraft.nbt.*;
-import net.minecraft.tileentity.*;
-import net.minecraft.util.*;
 import net.minecraft.world.*;
 
 import gcewing.architecture.BaseModClient.*;
 
 public abstract class RenderShape {
 
-    protected IBlockAccess blockWorld;
-    protected BlockPos blockPos;
-    protected ShapeTE te;
-    protected ITexture[] textures;
-    protected Trans3 t;
-    protected IRenderTarget target;
+    protected final IBlockAccess blockWorld;
+    protected final BlockPos blockPos;
+    protected final ShapeTE te;
+    protected final ITexture[] textures;
+    protected final Trans3 t;
+    protected final IRenderTarget target;
 
     public RenderShape(ShapeTE te, ITexture[] textures, Trans3 t, IRenderTarget target) {
         this.te = te;

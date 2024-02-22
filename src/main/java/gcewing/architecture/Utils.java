@@ -6,26 +6,16 @@
 
 package gcewing.architecture;
 
-import static gcewing.architecture.BaseBlockUtils.*;
 import static gcewing.architecture.BaseUtils.*;
 import static java.lang.Math.*;
 
-import java.io.*;
 import java.util.*;
 
 import net.minecraft.block.*;
-import net.minecraft.block.material.*;
-import net.minecraft.client.*;
-import net.minecraft.client.renderer.texture.*;
 import net.minecraft.entity.*;
-import net.minecraft.entity.item.*;
 import net.minecraft.entity.player.*;
-import net.minecraft.inventory.*;
 import net.minecraft.item.*;
-import net.minecraft.nbt.*;
-import net.minecraft.tileentity.*;
 import net.minecraft.util.*;
-import net.minecraft.world.*;
 
 public class Utils {
 

@@ -29,7 +29,7 @@ public class BaseInventoryUtils {
 
     public static class UnsidedInventorySide extends InventorySide {
 
-        IInventory base;
+        final IInventory base;
 
         public UnsidedInventorySide(IInventory base) {
             this.base = base;
@@ -53,9 +53,9 @@ public class BaseInventoryUtils {
 
     public static class SidedInventorySide extends InventorySide {
 
-        ISidedInventory base;
-        int side;
-        int[] slots;
+        final ISidedInventory base;
+        final int side;
+        final int[] slots;
 
         public SidedInventorySide(ISidedInventory base, int side) {
             this.base = base;

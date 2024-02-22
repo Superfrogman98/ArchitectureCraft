@@ -6,13 +6,8 @@
 
 package gcewing.architecture;
 
-import net.minecraft.block.*;
 import net.minecraft.block.material.*;
-import net.minecraft.client.renderer.texture.*;
-import net.minecraft.creativetab.*;
-import net.minecraft.entity.*;
 import net.minecraft.entity.player.*;
-import net.minecraft.item.*;
 import net.minecraft.tileentity.*;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
@@ -21,9 +16,9 @@ import gcewing.architecture.BaseMod.*;
 
 public class SawbenchBlock extends BaseBlock<SawbenchTE> {
 
-    static String model = "block/sawbench.smeg";
-    static String[] textures = { "sawbench-wood", "sawbench-metal" };
-    static ModelSpec modelSpec = new ModelSpec(model, textures);
+    static final String model = "block/sawbench.smeg";
+    static final String[] textures = { "sawbench-wood", "sawbench-metal" };
+    static final ModelSpec modelSpec = new ModelSpec(model, textures);
 
     public SawbenchBlock() {
         super(Material.wood, SawbenchTE.class);

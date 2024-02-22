@@ -12,15 +12,12 @@ import static gcewing.architecture.BaseUtils.*;
 import java.lang.reflect.*;
 
 import net.minecraft.block.Block;
-import net.minecraft.entity.player.*;
-import net.minecraft.inventory.*;
 import net.minecraft.item.*;
 import net.minecraft.nbt.*;
 import net.minecraft.network.*;
 import net.minecraft.network.play.server.*;
 import net.minecraft.server.management.PlayerManager;
 import net.minecraft.tileentity.*;
-import net.minecraft.util.*;
 import net.minecraft.world.*;
 import net.minecraftforge.common.*;
 import net.minecraftforge.common.ForgeChunkManager.Ticket;
@@ -104,7 +101,7 @@ public class BaseTileEntity extends TileEntity implements BaseMod.ITileEntity {
         worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
     }
 
-    protected static Method getOrCreateChunkWatcher = getMethodDef(
+    protected static final Method getOrCreateChunkWatcher = getMethodDef(
             PlayerManager.class,
             "getOrCreateChunkWatcher",
             "func_72690_a",
@@ -112,7 +109,7 @@ public class BaseTileEntity extends TileEntity implements BaseMod.ITileEntity {
             int.class,
             boolean.class);
 
-    protected static Field flagsYAreasToUpdate = getFieldDef(
+    protected static final Field flagsYAreasToUpdate = getFieldDef(
             classForName("net.minecraft.server.management.PlayerManager$PlayerInstance"),
             "flagsYAreasToUpdate",
             "field_73260_f");

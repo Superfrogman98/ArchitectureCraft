@@ -7,7 +7,6 @@
 package gcewing.architecture;
 
 import static gcewing.architecture.BaseBlockUtils.*;
-import static gcewing.architecture.BaseUtils.*;
 
 import java.util.List;
 

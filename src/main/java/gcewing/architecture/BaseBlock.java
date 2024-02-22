@@ -16,13 +16,10 @@ import java.util.*;
 import net.minecraft.block.*;
 import net.minecraft.block.material.*;
 import net.minecraft.client.particle.*;
-import net.minecraft.client.renderer.texture.*;
 import net.minecraft.entity.*;
-import net.minecraft.entity.item.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.*;
 import net.minecraft.item.*;
-import net.minecraft.nbt.*;
 import net.minecraft.tileentity.*;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
@@ -33,9 +30,9 @@ import cpw.mods.fml.relauncher.*;
 
 public class BaseBlock<TE extends TileEntity> extends BlockContainer implements BaseMod.IBlock {
 
-    public static boolean debugState = false;
+    public static final boolean debugState = false;
 
-    protected static Random RANDOM = new Random();
+    protected static final Random RANDOM = new Random();
     // private static TileEntity tileEntityHarvested;
 
     public Class getDefaultItemClass() {
@@ -69,19 +66,19 @@ public class BaseBlock<TE extends TileEntity> extends BlockContainer implements 
 
     }
 
-    public static IOrientationHandler orient1Way = new Orient1Way();
+    public static final IOrientationHandler orient1Way = new Orient1Way();
 
     // --------------------------- Members -------------------------------
 
     protected MapColor mapColor;
     protected final BlockState blockState;
-    protected IBlockState defaultBlockState;
+    protected final IBlockState defaultBlockState;
     protected IProperty[] properties;
     protected Object[][] propertyValues;
     protected int numProperties; // Do not explicitly initialise
     protected int renderID;
-    protected Class<? extends TileEntity> tileEntityClass = null;
-    protected IOrientationHandler orientationHandler = orient1Way;
+    protected Class<? extends TileEntity> tileEntityClass;
+    protected IOrientationHandler orientationHandler;
     protected String[] textureNames;
     protected ModelSpec modelSpec;
     protected BaseMod mod;
@@ -165,7 +162,7 @@ public class BaseBlock<TE extends TileEntity> extends BlockContainer implements 
 
     // @Override
     protected BlockState createBlockState() {
-        if (debugState) System.out.printf("BaseBlock.createBlockState: Defining properties\n");
+        if (debugState) System.out.print("BaseBlock.createBlockState: Defining properties\n");
         defineProperties();
         if (debugState) dumpProperties();
         checkProperties();
@@ -251,7 +248,7 @@ public class BaseBlock<TE extends TileEntity> extends BlockContainer implements 
 
     // -------------------------- Harvesting ----------------------------
 
-    protected ThreadLocal<TileEntity> harvestingTileEntity = new ThreadLocal();
+    protected final ThreadLocal<TileEntity> harvestingTileEntity = new ThreadLocal<>();
 
     @Override
     public void onBlockHarvested(World world, int x, int y, int z, int meta, EntityPlayer player) {
@@ -661,7 +658,7 @@ public class BaseBlock<TE extends TileEntity> extends BlockContainer implements 
             Entity entity) {
         IModel model = getModel(state);
         if (model != null) {
-            List<AxisAlignedBB> list = new ArrayList<AxisAlignedBB>();
+            List<AxisAlignedBB> list = new ArrayList<>();
             model.addBoxesToList(t, list);
             return list;
         }

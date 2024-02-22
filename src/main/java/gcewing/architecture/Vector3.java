@@ -12,21 +12,21 @@ import net.minecraft.util.*;
 
 public class Vector3 {
 
-    public static Vector3 zero = new Vector3(0, 0, 0);
-    public static Vector3 blockCenter = new Vector3(0.5, 0.5, 0.5);
+    public static final Vector3 zero = new Vector3(0, 0, 0);
+    public static final Vector3 blockCenter = new Vector3(0.5, 0.5, 0.5);
 
-    public static Vector3 unitX = new Vector3(1, 0, 0);
-    public static Vector3 unitY = new Vector3(0, 1, 0);
-    public static Vector3 unitZ = new Vector3(0, 0, 1);
+    public static final Vector3 unitX = new Vector3(1, 0, 0);
+    public static final Vector3 unitY = new Vector3(0, 1, 0);
+    public static final Vector3 unitZ = new Vector3(0, 0, 1);
 
-    public static Vector3 unitNX = new Vector3(-1, 0, 0);
-    public static Vector3 unitNY = new Vector3(0, -1, 0);
-    public static Vector3 unitNZ = new Vector3(0, 0, -1);
+    public static final Vector3 unitNX = new Vector3(-1, 0, 0);
+    public static final Vector3 unitNY = new Vector3(0, -1, 0);
+    public static final Vector3 unitNZ = new Vector3(0, 0, -1);
 
-    public static Vector3 unitPYNZ = new Vector3(0, 0.707, -0.707);
-    public static Vector3 unitPXPY = new Vector3(0.707, 0.707, 0);
-    public static Vector3 unitPYPZ = new Vector3(0, 0.707, 0.707);
-    public static Vector3 unitNXPY = new Vector3(-0.707, 0.707, 0);
+    public static final Vector3 unitPYNZ = new Vector3(0, 0.707, -0.707);
+    public static final Vector3 unitPXPY = new Vector3(0.707, 0.707, 0);
+    public static final Vector3 unitPYPZ = new Vector3(0, 0.707, 0.707);
+    public static final Vector3 unitNXPY = new Vector3(-0.707, 0.707, 0);
 
     public static Vector3 blockCenter(double x, double y, double z) {
         return blockCenter.add(x, y, z);
@@ -36,7 +36,9 @@ public class Vector3 {
         return blockCenter.add(pos);
     }
 
-    double x, y, z;
+    final double x;
+    final double y;
+    final double z;
 
     public Vector3(double x, double y, double z) {
         this.x = x;
@@ -206,7 +208,7 @@ public class Vector3 {
         return faceBases[f.ordinal()];
     }
 
-    public static Vector3[][] faceBases = { { unitX, unitZ }, // DOWN
+    public static final Vector3[][] faceBases = { { unitX, unitZ }, // DOWN
             { unitX, unitNZ }, // UP
             { unitNX, unitY }, // NORTH
             { unitX, unitY }, // SOUTH
@@ -216,7 +218,7 @@ public class Vector3 {
 
     // Workaround for EnumFacing.getDirectionVec being client-side only
 
-    public static Vec3i[] directionVec = { new Vec3i(0, -1, 0), new Vec3i(0, 1, 0), new Vec3i(0, 0, -1),
+    public static final Vec3i[] directionVec = { new Vec3i(0, -1, 0), new Vec3i(0, 1, 0), new Vec3i(0, 0, -1),
             new Vec3i(0, 0, 1), new Vec3i(-1, 0, 0), new Vec3i(1, 0, 0) };
 
     public static Vec3i getDirectionVec(EnumFacing f) {

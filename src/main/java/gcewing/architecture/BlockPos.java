@@ -11,7 +11,9 @@ import net.minecraft.util.EnumFacing;
 
 public class BlockPos {
 
-    public int x, y, z;
+    public final int x;
+    public final int y;
+    public final int z;
 
     public BlockPos(int x, int y, int z) {
         this.x = x;

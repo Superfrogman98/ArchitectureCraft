@@ -14,15 +14,12 @@ import com.google.common.collect.Iterables;
 public abstract class BlockStateBase implements IBlockState {
 
     private static final Joiner COMMA_JOINER = Joiner.on(',');
-    private static final Function<Entry<IProperty, Comparable>, String> MAP_ENTRY_TO_STRING = new Function<Entry<IProperty, Comparable>, String>() {
-
-        public String apply(Entry<IProperty, Comparable> p_apply_1_) {
-            if (p_apply_1_ == null) {
-                return "<NULL>";
-            } else {
-                IProperty iproperty = (IProperty) p_apply_1_.getKey();
-                return iproperty.getName() + "=" + iproperty.getName((Comparable) p_apply_1_.getValue());
-            }
+    private static final Function<Entry<IProperty, Comparable>, String> MAP_ENTRY_TO_STRING = p_apply_1_ -> {
+        if (p_apply_1_ == null) {
+            return "<NULL>";
+        } else {
+            IProperty iproperty = p_apply_1_.getKey();
+            return iproperty.getName() + "=" + iproperty.getName(p_apply_1_.getValue());
         }
     };
 
@@ -36,14 +33,14 @@ public abstract class BlockStateBase implements IBlockState {
         while (iterator.hasNext()) {
             if (iterator.next().equals(currentValue)) {
                 if (iterator.hasNext()) {
-                    return (T) iterator.next();
+                    return iterator.next();
                 }
 
-                return (T) values.iterator().next();
+                return values.iterator().next();
             }
         }
 
-        return (T) iterator.next();
+        return iterator.next();
     }
 
     public String toString() {

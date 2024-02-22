@@ -25,9 +25,9 @@ public class SawbenchTE extends BaseTileInventory implements IRestrictedDropping
     final public static int[] materialSideSlots = { materialSlot };
     final public static int[] resultSideSlots = { resultSlot };
 
-    public static boolean allowAutomation = false;
+    public static final boolean allowAutomation = false;
 
-    public static ShapePage[] pages = {
+    public static final ShapePage[] pages = {
             new ShapePage(
                     "Roofing",
                     RoofTile,
@@ -137,9 +137,9 @@ public class SawbenchTE extends BaseTileInventory implements IRestrictedDropping
                     SlopeTileC3SE,
                     SlopeTileC4SE) };
 
-    public IInventory inventory = new InventoryBasic("Items", false, 2);
+    public final IInventory inventory = new InventoryBasic("Items", false, 2);
     public int selectedPage = 0;
-    public int[] selectedSlots = new int[pages.length];
+    public final int[] selectedSlots = new int[pages.length];
     public boolean pendingMaterialUsage = false; // Material for the stack in the result slot
     // has not yet been removed from the material slot
 
@@ -147,7 +147,7 @@ public class SawbenchTE extends BaseTileInventory implements IRestrictedDropping
     /*
      * materials { S:UnlocalizedNames < tile.chisel.stained_glass tile.chisel.glass > }
      */
-    private static List<String> acceptableMaterialsFromConfig = Arrays.asList(
+    private static final List<String> acceptableMaterialsFromConfig = Arrays.asList(
             ArchitectureCraft.mod.config
                     .get("materials", "UnlocalizedNames", new String[] { "tile.chisel.stained_glass" })
                     .getStringList());

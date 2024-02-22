@@ -8,19 +8,10 @@ package gcewing.architecture;
 
 import static gcewing.architecture.Shape.*;
 import static gcewing.architecture.ShapeKind.*;
-import static net.minecraft.util.EnumFacing.*;
 
-import java.util.*;
+import java.util.Arrays;
 
-import net.minecraft.block.*;
-import net.minecraft.client.*;
-import net.minecraft.client.renderer.texture.*;
-import net.minecraft.entity.player.*;
-import net.minecraft.item.*;
-import net.minecraft.nbt.*;
-import net.minecraft.tileentity.*;
 import net.minecraft.util.*;
-import net.minecraft.world.*;
 
 import gcewing.architecture.BaseModClient.*;
 
@@ -30,10 +21,16 @@ public class RenderWindow extends RenderShape {
 
     protected static class WindowModels {
 
-        public IModel centre, centreEnd[], side[], end0[], end1[], glass, glassEdge[];
+        public final IModel centre;
+        public final IModel[] centreEnd;
+        public final IModel[] side;
+        public final IModel[] end0;
+        public final IModel[] end1;
+        public final IModel glass;
+        public final IModel[] glassEdge;
 
-        public WindowModels(IModel centre, IModel[] centreEnd, IModel side[], IModel end0[], IModel end1[],
-                IModel glass, IModel glassEdge[]) {
+        public WindowModels(IModel centre, IModel[] centreEnd, IModel[] side, IModel[] end0, IModel[] end1,
+                IModel glass, IModel[] glassEdge) {
             this.centre = centre;
             this.centreEnd = centreEnd;
             this.side = side;
@@ -62,7 +59,7 @@ public class RenderWindow extends RenderShape {
     protected static IModel[] models(int n, String name) {
         IModel[] result = new IModel[n];
         IModel m = model(name);
-        for (int i = 0; i < n; i++) result[i] = m;
+        Arrays.fill(result, m);
         return result;
     }
 
@@ -100,8 +97,9 @@ public class RenderWindow extends RenderShape {
 
     }
 
-    protected boolean renderBase, renderSecondary;
-    protected Window kind;
+    protected final boolean renderBase;
+    protected final boolean renderSecondary;
+    protected final Window kind;
 
     public RenderWindow(ShapeTE te, ITexture[] textures, Trans3 t, IRenderTarget target, boolean renderBase,
             boolean renderSecondary) {
@@ -126,7 +124,7 @@ public class RenderWindow extends RenderShape {
     }
 
     protected void renderWindow(WindowModels models) {
-        boolean frame[][] = getFrameFlags();
+        boolean[][] frame = getFrameFlags();
         if (renderBase) renderModel(t, models.centre);
         for (int i = 0; i <= 3; i++) {
             int j = (i - 1) & 3;
@@ -179,7 +177,7 @@ public class RenderWindow extends RenderShape {
             for (int i = 0; i <= 3; i++) frame[i][1] = true;
         } else {
             EnumFacing[] gdir = new EnumFacing[4];
-            ShapeTE neighbour[] = new ShapeTE[4];
+            ShapeTE[] neighbour = new ShapeTE[4];
             for (int i = 0; i <= 3; i++) gdir[i] = t.t(kind.frameSides[i]);
             for (int i = 0; i <= 3; i++) {
                 if (kind.frameAlways[i]) frame[i][1] = true;
@@ -202,7 +200,7 @@ public class RenderWindow extends RenderShape {
 
     protected void dumpFrameFlags(boolean[][] frame) {
         if (te != null && te.secondaryBlockState != null) {
-            System.out.printf("RenderWindow.getFrameFlags:\n");
+            System.out.print("RenderWindow.getFrameFlags:\n");
             for (int i = 0; i <= 3; i++)
                 System.out.printf("Side %s: %s %s %s\n", i, frame[i][0], frame[i][1], frame[i][2]);
         }

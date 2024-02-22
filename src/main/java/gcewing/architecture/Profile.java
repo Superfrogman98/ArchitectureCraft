@@ -12,7 +12,7 @@ import net.minecraft.util.*;
 
 public class Profile {
 
-    public static enum Generic {
+    public enum Generic {
 
         End,
         LeftEnd,
@@ -26,17 +26,17 @@ public class Profile {
         }
 
         public static Generic[] eeStraight = { null, null, null, null, End, End };
-        public static Generic[] lrStraight = { null, null, null, null, RightEnd, LeftEnd };
+        public static final Generic[] lrStraight = { null, null, null, null, RightEnd, LeftEnd };
         public static Generic[] eeCorner = { null, null, null, End, End, null };
-        public static Generic[] lrCorner = { null, null, null, LeftEnd, RightEnd, null };
-        public static Generic[] rlCorner = { null, null, RightEnd, null, null, LeftEnd };
+        public static final Generic[] lrCorner = { null, null, null, LeftEnd, RightEnd, null };
+        public static final Generic[] rlCorner = { null, null, RightEnd, null, null, LeftEnd };
         public static Generic[] tOffset = { null, OffsetTop, null, null, null, null };
         public static Generic[] bOffset = { OffsetBottom, null, null, null, null, null };
-        public static Generic[] tbOffset = { OffsetBottom, OffsetTop, null, null, null, null };
+        public static final Generic[] tbOffset = { OffsetBottom, OffsetTop, null, null, null, null };
 
     }
 
-    protected static Map opposites = new HashMap();
+    protected static final Map opposites = new HashMap();
 
     public static Object getProfileGlobal(Shape shape, int side, int turn, EnumFacing globalFace) {
         EnumFacing localFace = Trans3.sideTurnRotations[side][turn].it(globalFace);

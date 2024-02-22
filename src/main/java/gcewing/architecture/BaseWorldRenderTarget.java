@@ -9,26 +9,22 @@ package gcewing.architecture;
 import static gcewing.architecture.BaseUtils.*;
 import static java.lang.Math.*;
 
-import java.nio.*;
-import java.util.*;
-
 import net.minecraft.block.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.*;
-import net.minecraft.client.renderer.texture.*;
-import net.minecraft.item.*;
 import net.minecraft.util.*;
 import net.minecraft.world.*;
-import net.minecraftforge.client.model.*;
 
 public class BaseWorldRenderTarget extends BaseRenderTarget {
 
-    protected IBlockAccess world;
-    protected BlockPos blockPos;
-    protected Block block;
-    protected Tessellator tess;
-    protected float cmr = 1, cmg = 1, cmb = 1;
-    protected boolean ao;
+    protected final IBlockAccess world;
+    protected final BlockPos blockPos;
+    protected final Block block;
+    protected final Tessellator tess;
+    protected final float cmr = 1;
+    protected final float cmg = 1;
+    protected final float cmb = 1;
+    protected final boolean ao;
     protected boolean axisAlignedNormal;
     protected boolean renderingOccurred;
     protected float vr, vg, vb, va; // Colour to be applied to next vertex

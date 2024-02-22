@@ -9,7 +9,6 @@ package gcewing.architecture;
 import static gcewing.architecture.BaseBlockUtils.*;
 import static gcewing.architecture.BaseDirections.*;
 import static gcewing.architecture.BaseUtils.*;
-import static gcewing.architecture.ShapeKind.*;
 import static gcewing.architecture.ShapeKind.Window.*;
 import static gcewing.architecture.ShapeKind.Window.FrameKind.*;
 
@@ -22,7 +21,7 @@ public class WindowShapeKinds {
 
     // ------------------------------------------------------------------------------
 
-    public static Window PlainWindow = new PlainWindow();
+    public static final Window PlainWindow = new PlainWindow();
 
     public static class PlainWindow extends Window {
 
@@ -67,7 +66,7 @@ public class WindowShapeKinds {
 
     // ------------------------------------------------------------------------------
 
-    public static Window MullionWindow = new MullionWindow();
+    public static final Window MullionWindow = new MullionWindow();
 
     public static class MullionWindow extends PlainWindow {
 
@@ -77,7 +76,7 @@ public class WindowShapeKinds {
         }
 
         @Override
-        protected void addGlassBoxesToList(double r, double s, double w, double e[], Trans3 t, List list) {
+        protected void addGlassBoxesToList(double r, double s, double w, double[] e, Trans3 t, List list) {
             t.addBox(-e[3], -e[0], -w, -r, e[2], w, list);
             t.addBox(r, -e[0], -w, e[1], e[2], w, list);
         }
@@ -86,7 +85,7 @@ public class WindowShapeKinds {
 
     // ------------------------------------------------------------------------------
 
-    public static Window CornerWindow = new CornerWindow();
+    public static final Window CornerWindow = new CornerWindow();
 
     public static class CornerWindow extends Window {
 
@@ -114,7 +113,7 @@ public class WindowShapeKinds {
         }
 
         @Override
-        protected void addGlassBoxesToList(double r, double s, double w, double e[], Trans3 t, List list) {
+        protected void addGlassBoxesToList(double r, double s, double w, double[] e, Trans3 t, List list) {
             t.addBox(-e[3], -e[0], -w, -s, e[2], w, list);
             t.addBox(-w, -e[0], s, w, e[2], e[1], list);
         }
@@ -122,8 +121,7 @@ public class WindowShapeKinds {
         @Override
         public boolean orientOnPlacement(EntityPlayer player, ShapeTE te, ShapeTE nte, EnumFacing face, Vector3 hit) {
             if (nte != null && !player.isSneaking()) {
-                if (nte.shape.kind instanceof Window) {
-                    Window nsk = (Window) nte.shape.kind;
+                if (nte.shape.kind instanceof Window nsk) {
                     EnumFacing nlf = nte.localFace(face);
                     FrameKind nfk = nsk.frameKindForLocalSide(nlf);
                     switch (nfk) {
@@ -143,8 +141,7 @@ public class WindowShapeKinds {
 
         protected boolean orientFromAdjacentCorner(ShapeTE te, EnumFacing face, Vector3 hit) {
             ShapeTE nte = ShapeTE.get(getTileEntityWorld(te), te.getPos().offset(oppositeFacing(face)));
-            if (nte != null && nte.shape.kind instanceof Window) {
-                Window nsk = (Window) nte.shape.kind;
+            if (nte != null && nte.shape.kind instanceof Window nsk) {
                 EnumFacing nlf = nte.localFace(face);
                 FrameKind nfk = nsk.frameKindForLocalSide(nlf);
                 if (nfk == FrameKind.Corner) {

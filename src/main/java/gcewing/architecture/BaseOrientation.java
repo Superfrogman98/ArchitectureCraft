@@ -18,18 +18,18 @@ import gcewing.architecture.BaseBlock.IOrientationHandler;
 
 public class BaseOrientation {
 
-    public static boolean debugPlacement = false;
-    public static boolean debugOrientation = false;
+    public static final boolean debugPlacement = false;
+    public static final boolean debugOrientation = false;
 
-    public static IOrientationHandler orient4WaysByState = new Orient4WaysByState();
-    public static IOrientationHandler orient24WaysByTE = new Orient24WaysByTE();
+    public static final IOrientationHandler orient4WaysByState = new Orient4WaysByState();
+    public static final IOrientationHandler orient24WaysByTE = new Orient24WaysByTE();
 
     // ------------------------------------------------------------------------------------------------
 
     public static class Orient4WaysByState implements IOrientationHandler {
 
         // public static IProperty FACING = PropertyDirection.create("facing", Plane.HORIZONTAL);
-        public static IProperty FACING = new PropertyTurn("facing");
+        public static final IProperty<EnumFacing> FACING = new PropertyTurn("facing");
 
         public void defineProperties(BaseBlock block) {
             block.addProperty(FACING);
@@ -48,28 +48,18 @@ public class BaseOrientation {
         }
 
         public Trans3 localToGlobalTransformation(IBlockAccess world, BlockPos pos, IBlockState state, Vector3 origin) {
-            EnumFacing f = (EnumFacing) state.getValue(FACING);
+            EnumFacing f = state.getValue(FACING);
             if (debugOrientation) System.out.printf(
                     "BaseOrientation.Orient4WaysByState.localToGlobalTransformation: for %s: facing = %s\n",
                     state,
                     f);
-            int i;
-            switch (f) {
-                case NORTH:
-                    i = 0;
-                    break;
-                case WEST:
-                    i = 1;
-                    break;
-                case SOUTH:
-                    i = 2;
-                    break;
-                case EAST:
-                    i = 3;
-                    break;
-                default:
-                    i = 0;
-            }
+            int i = switch (f) {
+                case NORTH -> 0;
+                case WEST -> 1;
+                case SOUTH -> 2;
+                case EAST -> 3;
+                default -> 0;
+            };
             return new Trans3(origin).turn(i);
         }
 
@@ -81,8 +71,7 @@ public class BaseOrientation {
 
         public Trans3 localToGlobalTransformation(IBlockAccess world, BlockPos pos, IBlockState state, Vector3 origin) {
             TileEntity te = world.getTileEntity(pos.x, pos.y, pos.z);
-            if (te instanceof BaseTileEntity) {
-                BaseTileEntity bte = (BaseTileEntity) te;
+            if (te instanceof BaseTileEntity bte) {
                 return Trans3.sideTurn(origin, bte.side, bte.turn);
             } else return super.localToGlobalTransformation(world, pos, state, origin);
         }

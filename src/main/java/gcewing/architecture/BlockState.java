@@ -24,12 +24,8 @@ import com.google.common.collect.Table;
 public class BlockState {
 
     private static final Joiner COMMA_JOINER = Joiner.on(", ");
-    private static final Function<IProperty, String> GET_NAME_FUNC = new Function<IProperty, String>() {
-
-        public String apply(IProperty p_apply_1_) {
-            return p_apply_1_ == null ? "<NULL>" : p_apply_1_.getName();
-        }
-    };
+    private static final Function<IProperty, String> GET_NAME_FUNC = p_apply_1_ -> p_apply_1_ == null ? "<NULL>"
+            : p_apply_1_.getName();
     private final Block block;
     private final ImmutableList<IProperty> properties;
     private final ImmutableList<IBlockState> validStates;
@@ -51,15 +47,10 @@ public class BlockState {
     // com.google.common.base.Optional<?>> unlistedProperties)
     protected BlockState(Block blockIn, IProperty... properties) {
         this.block = blockIn;
-        Arrays.sort(properties, new Comparator<IProperty>() {
-
-            public int compare(IProperty p_compare_1_, IProperty p_compare_2_) {
-                return p_compare_1_.getName().compareTo(p_compare_2_.getName());
-            }
-        });
+        Arrays.sort(properties, Comparator.comparing(IProperty::getName));
         this.properties = ImmutableList.copyOf(properties);
-        Map<Map<IProperty, Comparable>, BlockState.StateImplementation> map = Maps.<Map<IProperty, Comparable>, BlockState.StateImplementation>newLinkedHashMap();
-        List<BlockState.StateImplementation> list = Lists.<BlockState.StateImplementation>newArrayList();
+        Map<Map<IProperty, Comparable>, BlockState.StateImplementation> map = Maps.newLinkedHashMap();
+        List<BlockState.StateImplementation> list = Lists.newArrayList();
 
         for (List<Comparable> list1 : Cartesian.cartesianProduct(this.getAllowedValues())) {
             Map<IProperty, Comparable> map1 = MapPopulator.<IProperty, Comparable>createMap(this.properties, list1);
@@ -85,14 +76,14 @@ public class BlockState {
         List<Iterable<Comparable>> list = Lists.<Iterable<Comparable>>newArrayList();
 
         for (int i = 0; i < this.properties.size(); ++i) {
-            list.add(((IProperty) this.properties.get(i)).getAllowedValues());
+            list.add(this.properties.get(i).getAllowedValues());
         }
 
         return list;
     }
 
     public IBlockState getBaseState() {
-        return (IBlockState) this.validStates.get(0);
+        return this.validStates.get(0);
     }
 
     public Block getBlock() {
@@ -128,7 +119,7 @@ public class BlockState {
                 throw new IllegalArgumentException(
                         "Cannot get property " + property + " as it does not exist in " + this);
             } else {
-                return (T) ((Comparable) property.getValueClass().cast(this.properties.get(property)));
+                return property.getValueClass().cast(this.properties.get(property));
             }
         }
 
@@ -152,8 +143,7 @@ public class BlockState {
                                 + Block.blockRegistry.getNameForObject(this.block)
                                 + ", it is not an allowed value");
             } else {
-                return (IBlockState) (this.properties.get(property) == value ? this
-                        : (IBlockState) this.propertyValueTable.get(property, value));
+                return this.properties.get(property) == value ? this : this.propertyValueTable.get(property, value);
             }
         }
 

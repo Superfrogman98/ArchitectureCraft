@@ -13,14 +13,13 @@ import java.util.*;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.util.*;
-import net.minecraftforge.common.util.*;
 
 public class Trans3 {
 
-    public static Trans3 ident = new Trans3(Vector3.zero);
-    public static Trans3 blockCenter = new Trans3(Vector3.blockCenter);
+    public static final Trans3 ident = new Trans3(Vector3.zero);
+    public static final Trans3 blockCenter = new Trans3(Vector3.blockCenter);
 
-    public static Trans3 sideTurnRotations[][] = new Trans3[6][4];
+    public static final Trans3[][] sideTurnRotations = new Trans3[6][4];
     static {
         for (int side = 0; side < 6; side++) for (int turn = 0; turn < 4; turn++)
             sideTurnRotations[side][turn] = new Trans3(Vector3.zero, Matrix3.sideTurnRotations[side][turn]);
@@ -182,7 +181,7 @@ public class Trans3 {
 
     public static int turnFor(Entity e, int side) {
         if (side > 1) return 0;
-        int rot = (int) round(e.rotationYaw / 90);
+        int rot = round(e.rotationYaw / 90);
         if (side == 0) rot = 2 - rot;
         else rot = 2 + rot;
         return rot & 0x3;

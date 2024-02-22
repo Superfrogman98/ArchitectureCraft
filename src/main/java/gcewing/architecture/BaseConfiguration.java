@@ -9,7 +9,6 @@ package gcewing.architecture;
 import java.io.*;
 import java.util.*;
 
-import net.minecraftforge.common.*;
 import net.minecraftforge.common.config.*;
 
 import cpw.mods.fml.common.registry.*;

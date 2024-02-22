@@ -8,7 +8,6 @@ package gcewing.architecture;
 
 // import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
 import net.minecraft.world.IBlockAccess;
 
 import gcewing.architecture.BaseMod.*;
@@ -16,11 +15,11 @@ import gcewing.architecture.BaseModClient.*;
 
 public class BaseModelRenderer implements ICustomRenderer {
 
-    public static boolean debugRenderModel = false;
+    public static final boolean debugRenderModel = false;
 
-    protected IModel model;
-    protected ITexture[] textures;
-    protected Vector3 origin;
+    protected final IModel model;
+    protected final ITexture[] textures;
+    protected final Vector3 origin;
 
     // private static Trans3 itemTrans = Trans3.blockCenterSideTurn(0, 0);
 
