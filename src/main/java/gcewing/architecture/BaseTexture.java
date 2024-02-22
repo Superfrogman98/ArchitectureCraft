@@ -6,7 +6,8 @@
 
 package gcewing.architecture;
 
-import net.minecraft.util.*;
+import net.minecraft.util.IIcon;
+import net.minecraft.util.ResourceLocation;
 
 import gcewing.architecture.BaseModClient.ITexture;
 import gcewing.architecture.BaseModClient.ITiledTexture;

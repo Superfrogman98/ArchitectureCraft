@@ -6,16 +6,22 @@
 
 package gcewing.architecture;
 
-import static gcewing.architecture.BaseBlockUtils.*;
-import static gcewing.architecture.BaseDirections.*;
-import static gcewing.architecture.BaseUtils.*;
-import static gcewing.architecture.ShapeKind.Window.*;
-import static gcewing.architecture.ShapeKind.Window.FrameKind.*;
+import static gcewing.architecture.BaseBlockUtils.getTileEntityWorld;
+import static gcewing.architecture.BaseDirections.F_DOWN;
+import static gcewing.architecture.BaseDirections.F_EAST;
+import static gcewing.architecture.BaseDirections.F_SOUTH;
+import static gcewing.architecture.BaseDirections.F_UP;
+import static gcewing.architecture.BaseDirections.F_WEST;
+import static gcewing.architecture.BaseUtils.oppositeFacing;
+import static gcewing.architecture.ShapeKind.Window.FrameKind.Corner;
+import static gcewing.architecture.ShapeKind.Window.FrameKind.None;
+import static gcewing.architecture.ShapeKind.Window.FrameKind.Plain;
+import static gcewing.architecture.ShapeKind.Window.Window;
 
-import java.util.*;
+import java.util.List;
 
-import net.minecraft.entity.player.*;
-import net.minecraft.util.*;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.EnumFacing;
 
 public class WindowShapeKinds {
 

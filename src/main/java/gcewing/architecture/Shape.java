@@ -6,20 +6,30 @@
 
 package gcewing.architecture;
 
-import static gcewing.architecture.BaseBlockUtils.*;
-import static gcewing.architecture.BaseUtils.*;
-import static gcewing.architecture.Profile.Generic.*;
-import static gcewing.architecture.ShapeFlags.*;
-import static gcewing.architecture.ShapeKind.*;
-import static gcewing.architecture.ShapeSymmetry.*;
-import static gcewing.architecture.WindowShapeKinds.*;
-import static net.minecraft.util.EnumFacing.*;
+import static gcewing.architecture.BaseBlockUtils.getTileEntityWorld;
+import static gcewing.architecture.BaseUtils.oppositeFacing;
+import static gcewing.architecture.Profile.Generic.lrCorner;
+import static gcewing.architecture.Profile.Generic.lrStraight;
+import static gcewing.architecture.Profile.Generic.rlCorner;
+import static gcewing.architecture.ShapeFlags.placeOffset;
+import static gcewing.architecture.ShapeFlags.placeUnderneath;
+import static gcewing.architecture.ShapeKind.Banister;
+import static gcewing.architecture.ShapeKind.Cladding;
+import static gcewing.architecture.ShapeKind.Model;
+import static gcewing.architecture.ShapeKind.Roof;
+import static gcewing.architecture.ShapeSymmetry.Bilateral;
+import static gcewing.architecture.ShapeSymmetry.Quadrilateral;
+import static gcewing.architecture.ShapeSymmetry.Unilateral;
+import static gcewing.architecture.WindowShapeKinds.CornerWindow;
+import static gcewing.architecture.WindowShapeKinds.MullionWindow;
+import static gcewing.architecture.WindowShapeKinds.PlainWindow;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
-import net.minecraft.entity.player.*;
-import net.minecraft.tileentity.*;
-import net.minecraft.util.*;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 
 public enum Shape {
 

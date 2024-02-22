@@ -6,11 +6,13 @@
 
 package gcewing.architecture;
 
-import static gcewing.architecture.BaseBlockUtils.*;
+import static gcewing.architecture.BaseBlockUtils.getTileEntityWorld;
 
-import net.minecraft.world.*;
+import net.minecraft.world.IBlockAccess;
 
-import gcewing.architecture.BaseModClient.*;
+import gcewing.architecture.BaseModClient.IModel;
+import gcewing.architecture.BaseModClient.IRenderTarget;
+import gcewing.architecture.BaseModClient.ITexture;
 
 public abstract class RenderShape {
 

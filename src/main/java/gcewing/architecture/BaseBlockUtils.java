@@ -6,21 +6,25 @@
 
 package gcewing.architecture;
 
-import static gcewing.architecture.BaseUtils.*;
+import static gcewing.architecture.BaseUtils.facings;
+import static gcewing.architecture.BaseUtils.oppositeFacing;
 
 import java.util.Collection;
 
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.*;
-import net.minecraft.util.*;
-import net.minecraft.world.*;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.IIcon;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 
 import com.google.common.collect.ImmutableMap;
 
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BaseBlockUtils {
 

@@ -7,11 +7,15 @@
 package gcewing.architecture;
 
 // import net.minecraft.block.state.IBlockState;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.IBlockAccess;
 
-import gcewing.architecture.BaseMod.*;
-import gcewing.architecture.BaseModClient.*;
+import gcewing.architecture.BaseMod.IBlock;
+import gcewing.architecture.BaseModClient.ICustomRenderer;
+import gcewing.architecture.BaseModClient.IModel;
+import gcewing.architecture.BaseModClient.IRenderTarget;
+import gcewing.architecture.BaseModClient.ITexture;
 
 public class BaseModelRenderer implements ICustomRenderer {
 

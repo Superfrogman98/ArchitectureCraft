@@ -6,14 +6,16 @@
 
 package gcewing.architecture;
 
-import static gcewing.architecture.BaseBlockUtils.*;
+import static gcewing.architecture.BaseBlockUtils.getBlockStateFromMeta;
+import static gcewing.architecture.BaseBlockUtils.getMetaFromBlockState;
 
 import java.util.List;
 
-import net.minecraft.block.*;
-import net.minecraft.entity.player.*;
-import net.minecraft.item.*;
-import net.minecraft.nbt.*;
+import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 
 public class CladdingItem extends Item {
 

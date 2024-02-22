@@ -6,17 +6,25 @@
 
 package gcewing.architecture;
 
-import static gcewing.architecture.BaseBlockUtils.*;
-import static org.lwjgl.opengl.GL11.*;
+import static gcewing.architecture.BaseBlockUtils.getWorldTileEntity;
+import static org.lwjgl.opengl.GL11.GL_ALPHA_TEST;
+import static org.lwjgl.opengl.GL11.GL_BLEND;
+import static org.lwjgl.opengl.GL11.glColor4f;
+import static org.lwjgl.opengl.GL11.glDisable;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glPopMatrix;
+import static org.lwjgl.opengl.GL11.glPushMatrix;
+import static org.lwjgl.opengl.GL11.glScalef;
+import static org.lwjgl.opengl.GL11.glTranslatef;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.entity.player.*;
-import net.minecraft.tileentity.*;
-import net.minecraft.world.*;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 
-import gcewing.architecture.BaseDataChannel.*;
+import gcewing.architecture.BaseDataChannel.ChannelOutput;
 
 public class SawbenchGui extends BaseGui.Screen {
 

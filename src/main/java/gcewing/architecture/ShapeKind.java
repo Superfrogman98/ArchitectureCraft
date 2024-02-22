@@ -6,22 +6,41 @@
 
 package gcewing.architecture;
 
-import static gcewing.architecture.BaseBlockUtils.*;
-import static gcewing.architecture.BaseDirections.*;
-import static gcewing.architecture.BaseUtils.*;
+import static gcewing.architecture.BaseBlockUtils.getMetaFromBlockState;
+import static gcewing.architecture.BaseBlockUtils.getTileEntityPos;
+import static gcewing.architecture.BaseBlockUtils.getTileEntityWorld;
+import static gcewing.architecture.BaseDirections.DOWN;
+import static gcewing.architecture.BaseDirections.EAST;
+import static gcewing.architecture.BaseDirections.F_DOWN;
+import static gcewing.architecture.BaseDirections.F_EAST;
+import static gcewing.architecture.BaseDirections.F_NORTH;
+import static gcewing.architecture.BaseDirections.F_SOUTH;
+import static gcewing.architecture.BaseDirections.F_UP;
+import static gcewing.architecture.BaseDirections.F_WEST;
+import static gcewing.architecture.BaseDirections.NORTH;
+import static gcewing.architecture.BaseDirections.SOUTH;
+import static gcewing.architecture.BaseDirections.UP;
+import static gcewing.architecture.BaseDirections.WEST;
+import static gcewing.architecture.BaseUtils.facingAxesEqual;
+import static gcewing.architecture.BaseUtils.oppositeFacing;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import net.minecraft.block.*;
-import net.minecraft.entity.*;
-import net.minecraft.entity.player.*;
-import net.minecraft.init.*;
-import net.minecraft.item.*;
-import net.minecraft.tileentity.*;
-import net.minecraft.util.*;
-import net.minecraft.world.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockStairs;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.world.IBlockAccess;
 
-import gcewing.architecture.BaseModClient.*;
+import gcewing.architecture.BaseModClient.IModel;
+import gcewing.architecture.BaseModClient.IRenderTarget;
+import gcewing.architecture.BaseModClient.ITexture;
 
 // ------------------------------------------------------------------------------
 

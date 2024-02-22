@@ -7,12 +7,16 @@
 package gcewing.architecture;
 
 import static gcewing.architecture.Vector3.getDirectionVec;
-import static java.lang.Math.*;
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+import static java.lang.Math.round;
 
-import java.util.*;
+import java.util.List;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.util.*;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Vec3;
 
 public class Trans3 {
 

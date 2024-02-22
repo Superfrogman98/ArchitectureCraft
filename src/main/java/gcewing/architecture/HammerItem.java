@@ -6,11 +6,11 @@
 
 package gcewing.architecture;
 
-import net.minecraft.creativetab.*;
-import net.minecraft.entity.player.*;
-import net.minecraft.item.*;
-import net.minecraft.util.*;
-import net.minecraft.world.*;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.world.World;
 
 public class HammerItem extends BaseItem {
 

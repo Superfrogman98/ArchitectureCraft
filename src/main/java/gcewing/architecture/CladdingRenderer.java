@@ -6,15 +6,19 @@
 
 package gcewing.architecture;
 
-import static gcewing.architecture.BaseBlockUtils.*;
+import static gcewing.architecture.BaseBlockUtils.getBlockStateFromMeta;
+import static gcewing.architecture.BaseBlockUtils.getSpriteForBlockState;
 
-import net.minecraft.block.*;
-import net.minecraft.item.*;
-import net.minecraft.nbt.*;
-import net.minecraft.util.*;
-import net.minecraft.world.*;
+import net.minecraft.block.Block;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.IIcon;
+import net.minecraft.world.IBlockAccess;
 
-import gcewing.architecture.BaseModClient.*;
+import gcewing.architecture.BaseModClient.ICustomRenderer;
+import gcewing.architecture.BaseModClient.IModel;
+import gcewing.architecture.BaseModClient.IRenderTarget;
+import gcewing.architecture.BaseModClient.ITexture;
 
 public class CladdingRenderer implements ICustomRenderer {
 

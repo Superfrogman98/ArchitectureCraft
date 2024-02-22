@@ -6,11 +6,18 @@
 
 package gcewing.architecture;
 
-import static gcewing.architecture.Shape.*;
+import static gcewing.architecture.Shape.RoofInnerCorner;
+import static gcewing.architecture.Shape.RoofOuterCorner;
+import static gcewing.architecture.Shape.RoofRidge;
+import static gcewing.architecture.Shape.RoofSmartRidge;
+import static gcewing.architecture.Shape.RoofSmartValley;
+import static gcewing.architecture.Shape.RoofTile;
+import static gcewing.architecture.Shape.RoofValley;
 
-import net.minecraft.util.*;
+import net.minecraft.util.EnumFacing;
 
-import gcewing.architecture.BaseModClient.*;
+import gcewing.architecture.BaseModClient.IRenderTarget;
+import gcewing.architecture.BaseModClient.ITexture;
 
 public class RenderRoof extends RenderShape {
 

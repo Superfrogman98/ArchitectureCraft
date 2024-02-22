@@ -1,6 +1,7 @@
 package gcewing.architecture;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
 
 import net.minecraft.util.EnumFacing;
 

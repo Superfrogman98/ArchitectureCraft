@@ -6,27 +6,43 @@
 
 package gcewing.architecture;
 
-import static gcewing.architecture.BaseBlockUtils.*;
-import static gcewing.architecture.BaseMod.*;
-import static gcewing.architecture.BaseModClient.*;
-import static gcewing.architecture.BaseUtils.*;
+import static gcewing.architecture.BaseBlockUtils.getMetaFromBlockState;
+import static gcewing.architecture.BaseBlockUtils.getWorldBlockState;
+import static gcewing.architecture.BaseBlockUtils.getWorldTileEntity;
+import static gcewing.architecture.BaseMod.ModelSpec;
+import static gcewing.architecture.BaseModClient.IModel;
+import static gcewing.architecture.BaseUtils.facings;
+import static gcewing.architecture.BaseUtils.newMovingObjectPosition;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
-import net.minecraft.block.*;
-import net.minecraft.block.material.*;
-import net.minecraft.client.particle.*;
-import net.minecraft.entity.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockContainer;
+import net.minecraft.block.material.MapColor;
+import net.minecraft.block.material.Material;
+import net.minecraft.client.particle.EffectRenderer;
+import net.minecraft.client.particle.EntityDiggingFX;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.*;
-import net.minecraft.item.*;
-import net.minecraft.tileentity.*;
-import net.minecraft.util.*;
-import net.minecraft.world.*;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.Vec3;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
-import cpw.mods.fml.common.registry.*;
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BaseBlock<TE extends TileEntity> extends BlockContainer implements BaseMod.IBlock {
 

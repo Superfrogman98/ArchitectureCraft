@@ -6,16 +6,20 @@
 
 package gcewing.architecture;
 
-import static gcewing.architecture.BaseBlockUtils.*;
+import static gcewing.architecture.BaseBlockUtils.getWorldTileEntity;
 
-import net.minecraft.entity.player.*;
-import net.minecraft.inventory.*;
-import net.minecraft.item.*;
-import net.minecraft.network.play.server.*;
-import net.minecraft.tileentity.*;
-import net.minecraft.world.*;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.ICrafting;
+import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
+import net.minecraft.network.play.server.S2FPacketSetSlot;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 
-import gcewing.architecture.BaseDataChannel.*;
+import gcewing.architecture.BaseDataChannel.ChannelInput;
+import gcewing.architecture.BaseDataChannel.ServerMessageHandler;
 
 public class SawbenchContainer extends BaseContainer {
 

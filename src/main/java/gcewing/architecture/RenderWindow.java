@@ -6,14 +6,15 @@
 
 package gcewing.architecture;
 
-import static gcewing.architecture.Shape.*;
-import static gcewing.architecture.ShapeKind.*;
+import static gcewing.architecture.ShapeKind.Window;
 
 import java.util.Arrays;
 
-import net.minecraft.util.*;
+import net.minecraft.util.EnumFacing;
 
-import gcewing.architecture.BaseModClient.*;
+import gcewing.architecture.BaseModClient.IModel;
+import gcewing.architecture.BaseModClient.IRenderTarget;
+import gcewing.architecture.BaseModClient.ITexture;
 
 public class RenderWindow extends RenderShape {
 

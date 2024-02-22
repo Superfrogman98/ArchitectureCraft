@@ -6,14 +6,15 @@
 
 package gcewing.architecture;
 
-import static gcewing.architecture.BaseUtils.*;
-import static java.lang.Math.*;
+import static gcewing.architecture.BaseUtils.ifloor;
+import static gcewing.architecture.BaseUtils.iround;
+import static java.lang.Math.floor;
 
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.*;
-import net.minecraft.util.*;
-import net.minecraft.world.*;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.util.IIcon;
+import net.minecraft.world.IBlockAccess;
 
 public class BaseWorldRenderTarget extends BaseRenderTarget {
 

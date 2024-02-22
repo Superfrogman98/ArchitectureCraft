@@ -6,7 +6,8 @@
 
 package gcewing.architecture;
 
-import net.minecraft.util.*;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.IIcon;
 
 import gcewing.architecture.BaseModClient.ITexture;
 

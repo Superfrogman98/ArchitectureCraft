@@ -6,13 +6,15 @@
 
 package gcewing.architecture;
 
-import static gcewing.architecture.BaseUtils.*;
+import java.lang.reflect.Constructor;
 
-import java.lang.reflect.*;
-
-import net.minecraft.entity.player.*;
-import net.minecraft.inventory.*;
-import net.minecraft.item.*;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.ICrafting;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
 
 public class BaseContainer extends Container {
 

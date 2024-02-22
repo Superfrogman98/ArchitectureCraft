@@ -6,13 +6,13 @@
 
 package gcewing.architecture;
 
-import net.minecraft.block.material.*;
-import net.minecraft.entity.player.*;
-import net.minecraft.tileentity.*;
-import net.minecraft.util.*;
-import net.minecraft.world.*;
+import net.minecraft.block.material.Material;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.world.World;
 
-import gcewing.architecture.BaseMod.*;
+import gcewing.architecture.BaseMod.ModelSpec;
 
 public class SawbenchBlock extends BaseBlock<SawbenchTE> {
 

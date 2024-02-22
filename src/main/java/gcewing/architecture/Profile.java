@@ -6,9 +6,10 @@
 
 package gcewing.architecture;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
-import net.minecraft.util.*;
+import net.minecraft.util.EnumFacing;
 
 public class Profile {
 
