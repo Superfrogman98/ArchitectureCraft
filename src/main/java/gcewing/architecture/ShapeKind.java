@@ -6,24 +6,41 @@
 
 package gcewing.architecture;
 
-import static gcewing.architecture.BaseBlockUtils.*;
-import static gcewing.architecture.BaseDirections.*;
-import static gcewing.architecture.BaseUtils.*;
-import static java.lang.Math.*;
+import static gcewing.architecture.BaseBlockUtils.getMetaFromBlockState;
+import static gcewing.architecture.BaseBlockUtils.getTileEntityPos;
+import static gcewing.architecture.BaseBlockUtils.getTileEntityWorld;
+import static gcewing.architecture.BaseDirections.DOWN;
+import static gcewing.architecture.BaseDirections.EAST;
+import static gcewing.architecture.BaseDirections.F_DOWN;
+import static gcewing.architecture.BaseDirections.F_EAST;
+import static gcewing.architecture.BaseDirections.F_NORTH;
+import static gcewing.architecture.BaseDirections.F_SOUTH;
+import static gcewing.architecture.BaseDirections.F_UP;
+import static gcewing.architecture.BaseDirections.F_WEST;
+import static gcewing.architecture.BaseDirections.NORTH;
+import static gcewing.architecture.BaseDirections.SOUTH;
+import static gcewing.architecture.BaseDirections.UP;
+import static gcewing.architecture.BaseDirections.WEST;
+import static gcewing.architecture.BaseUtils.facingAxesEqual;
+import static gcewing.architecture.BaseUtils.oppositeFacing;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import net.minecraft.block.*;
-import net.minecraft.entity.*;
-import net.minecraft.entity.player.*;
-import net.minecraft.init.*;
-import net.minecraft.item.*;
-import net.minecraft.nbt.*;
-import net.minecraft.tileentity.*;
-import net.minecraft.util.*;
-import net.minecraft.world.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockStairs;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.world.IBlockAccess;
 
-import gcewing.architecture.BaseModClient.*;
+import gcewing.architecture.BaseModClient.IModel;
+import gcewing.architecture.BaseModClient.IRenderTarget;
+import gcewing.architecture.BaseModClient.ITexture;
 
 // ------------------------------------------------------------------------------
 
@@ -189,7 +206,7 @@ public abstract class ShapeKind {
 
     public AxisAlignedBB getBounds(ShapeTE te, IBlockAccess world, BlockPos pos, IBlockState state, Entity entity,
             Trans3 t) {
-        List<AxisAlignedBB> list = new ArrayList<AxisAlignedBB>();
+        List<AxisAlignedBB> list = new ArrayList<>();
         addCollisionBoxesToList(te, world, pos, state, entity, t, list);
         return Utils.unionOfBoxes(list);
     }
@@ -242,7 +259,7 @@ public abstract class ShapeKind {
 
     // ------------------------------------------------------------------------------
 
-    public static Roof Roof = new Roof();
+    public static final Roof Roof = new Roof();
 
     public static class Roof extends ShapeKind {
 
@@ -298,7 +315,7 @@ public abstract class ShapeKind {
             Right,
             Ridge,
             Valley
-        };
+        }
 
         static {
             Profile.declareOpposite(RoofProfile.Left, RoofProfile.Right);
@@ -369,7 +386,7 @@ public abstract class ShapeKind {
 
     public static class Model extends ShapeKind {
 
-        protected String modelName;
+        protected final String modelName;
         private IModel model;
 
         public Model(String name, Object[] profiles) {
@@ -415,7 +432,7 @@ public abstract class ShapeKind {
 
         @Override
         public double placementOffsetX() {
-            List<AxisAlignedBB> list = new ArrayList<AxisAlignedBB>();
+            List<AxisAlignedBB> list = new ArrayList<>();
             getModel().addBoxesToList(Trans3.ident, list);
             AxisAlignedBB bounds = Utils.unionOfBoxes(list);
             if (Shape.debugPlacement) {
@@ -435,7 +452,7 @@ public abstract class ShapeKind {
             None,
             Plain,
             Corner
-        };
+        }
 
         public EnumFacing[] frameSides;
         public boolean[] frameAlways;
@@ -449,16 +466,11 @@ public abstract class ShapeKind {
             int turn = -1;
             // If click is on side of a non-window block, orient perpendicular to it
             if (!player.isSneaking() && (nte == null || !(nte.shape.kind instanceof ShapeKind.Window))) {
-                switch (otherFace.ordinal()) {
-                    case EAST:
-                    case WEST:
-                        turn = 0;
-                        break;
-                    case NORTH:
-                    case SOUTH:
-                        turn = 1;
-                        break;
-                }
+                turn = switch (otherFace.ordinal()) {
+                    case EAST, WEST -> 0;
+                    case NORTH, SOUTH -> 1;
+                    default -> turn;
+                };
             }
             if (turn >= 0) {
                 te.setSide(0);
@@ -537,7 +549,7 @@ public abstract class ShapeKind {
             ts.addBox(-0.5, -0.5, -s, 0.5, -0.5 + r, s, list);
         }
 
-        protected void addGlassBoxesToList(double r, double s, double w, double e[], Trans3 t, List list) {
+        protected void addGlassBoxesToList(double r, double s, double w, double[] e, Trans3 t, List list) {
             t.addBox(-e[3], -e[0], -w, e[1], e[2], w, list);
         }
 
@@ -551,8 +563,7 @@ public abstract class ShapeKind {
             if (thisFrameKind != FrameKind.None) {
                 EnumFacing thisOrient = frameOrientationForLocalSide(thisLocalDir);
                 ShapeTE nte = te.getConnectedNeighbourGlobal(globalDir);
-                if (nte != null && nte.shape.kind instanceof Window) {
-                    Window otherKind = (Window) nte.shape.kind;
+                if (nte != null && nte.shape.kind instanceof Window otherKind) {
                     EnumFacing otherLocalDir = nte.localFace(oppositeFacing(globalDir));
                     FrameKind otherFrameKind = otherKind.frameKindForLocalSide(otherLocalDir);
                     if (otherFrameKind != FrameKind.None) {
@@ -571,12 +582,10 @@ public abstract class ShapeKind {
 
         protected boolean framesMatch(FrameKind kind1, FrameKind kind2, EnumFacing orient1, EnumFacing orient2) {
             if (kind1 == kind2) {
-                switch (kind1) {
-                    case Plain:
-                        return facingAxesEqual(orient1, orient2);
-                    default:
-                        return orient1 == orient2;
-                }
+                return switch (kind1) {
+                    case Plain -> facingAxesEqual(orient1, orient2);
+                    default -> orient1 == orient2;
+                };
             }
             return false;
         }
@@ -591,7 +600,7 @@ public abstract class ShapeKind {
 
     // ------------------------------------------------------------------------------
 
-    public static Cladding Cladding = new Cladding();
+    public static final Cladding Cladding = new Cladding();
 
     public static class Cladding extends ShapeKind {
 
@@ -651,7 +660,7 @@ public abstract class ShapeKind {
             return super.orientOnPlacement(player, te, npos, nstate, nte, otherFace, hit);
         }
 
-        private static EnumFacing stairsFacingMap[] = { F_WEST, F_EAST, F_SOUTH, F_NORTH };
+        private static final EnumFacing[] stairsFacingMap = { F_WEST, F_EAST, F_SOUTH, F_NORTH };
 
         private static EnumFacing stairsFacing(IBlockState state) {
             int meta = getMetaFromBlockState(state);

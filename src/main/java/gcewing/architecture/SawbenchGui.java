@@ -6,48 +6,53 @@
 
 package gcewing.architecture;
 
-import static gcewing.architecture.BaseBlockUtils.*;
-import static gcewing.architecture.BaseUtils.*;
-import static gcewing.architecture.SawbenchContainer.*;
-import static org.lwjgl.opengl.GL11.*;
+import static gcewing.architecture.BaseBlockUtils.getWorldTileEntity;
+import static org.lwjgl.opengl.GL11.GL_ALPHA_TEST;
+import static org.lwjgl.opengl.GL11.GL_BLEND;
+import static org.lwjgl.opengl.GL11.glColor4f;
+import static org.lwjgl.opengl.GL11.glDisable;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glPopMatrix;
+import static org.lwjgl.opengl.GL11.glPushMatrix;
+import static org.lwjgl.opengl.GL11.glScalef;
+import static org.lwjgl.opengl.GL11.glTranslatef;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.client.gui.inventory.*;
-import net.minecraft.client.renderer.*;
-import net.minecraft.entity.player.*;
-import net.minecraft.tileentity.*;
-import net.minecraft.world.*;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 
-import gcewing.architecture.BaseDataChannel.*;
-import gcewing.architecture.BaseModClient.*;
+import gcewing.architecture.BaseDataChannel.ChannelOutput;
 
 public class SawbenchGui extends BaseGui.Screen {
 
-    public static int pageMenuLeft = 176;
-    public static int pageMenuTop = 19;
-    public static int pageMenuWidth = 58;
-    public static int pageMenuRowHeight = 10;
+    public static final int pageMenuLeft = 176;
+    public static final int pageMenuTop = 19;
+    public static final int pageMenuWidth = 58;
+    public static final int pageMenuRowHeight = 10;
     public static float pageMenuScale = 1;
 
-    public static int shapeMenuLeft = 44;
-    public static int shapeMenuTop = 23;
-    public static int shapeMenuMargin = 4;
-    public static int shapeMenuCellSize = 24;
-    public static int shapeMenuRows = 4, shapeMenuCols = 5;
-    public static int shapeMenuWidth = shapeMenuCols * shapeMenuCellSize;
-    public static int shapeMenuHeight = shapeMenuRows * shapeMenuCellSize;
-    public static int selectedShapeTitleLeft = 40;
-    public static int selectedShapeTitleTop = 128;
-    public static int selectedShapeTitleRight = 168;
-    public static int materialUsageLeft = 7;
-    public static int materialUsageTop = 82;
-    public static float shapeMenuScale = 2;
-    public static float shapeMenuItemScale = 2;
-    public static float shapeMenuItemUSize = 40, shapeMenuItemVSize = 45;
-    public static float shapeMenuItemWidth = shapeMenuItemUSize / shapeMenuItemScale;
-    public static float shapeMenuItemHeight = shapeMenuItemVSize / shapeMenuItemScale;
+    public static final int shapeMenuLeft = 44;
+    public static final int shapeMenuTop = 23;
+    public static final int shapeMenuMargin = 4;
+    public static final int shapeMenuCellSize = 24;
+    public static final int shapeMenuRows = 4;
+    public static final int shapeMenuCols = 5;
+    public static final int shapeMenuWidth = shapeMenuCols * shapeMenuCellSize;
+    public static final int shapeMenuHeight = shapeMenuRows * shapeMenuCellSize;
+    public static final int selectedShapeTitleLeft = 40;
+    public static final int selectedShapeTitleTop = 128;
+    public static final int selectedShapeTitleRight = 168;
+    public static final int materialUsageLeft = 7;
+    public static final int materialUsageTop = 82;
+    public static final float shapeMenuScale = 2;
+    public static final float shapeMenuItemScale = 2;
+    public static final float shapeMenuItemUSize = 40;
+    public static final float shapeMenuItemVSize = 45;
+    public static final float shapeMenuItemWidth = shapeMenuItemUSize / shapeMenuItemScale;
+    public static final float shapeMenuItemHeight = shapeMenuItemVSize / shapeMenuItemScale;
 
     public int textColor;
     public int selectedShapeBackgroundColor;
@@ -56,7 +61,7 @@ public class SawbenchGui extends BaseGui.Screen {
     public String[] localizedPageNames;
     public List<String[]> localizedShapeNames;
 
-    SawbenchTE te;
+    final SawbenchTE te;
 
     public static SawbenchGui create(EntityPlayer player, World world, BlockPos pos) {
         TileEntity te = getWorldTileEntity(world, pos);
@@ -75,13 +80,13 @@ public class SawbenchGui extends BaseGui.Screen {
         selectedShapeBackgroundColor = GuiText.SelectedBgColor.getColor();
         localizedSawbenchName = GuiText.Sawbench.getLocal();
         localizedMakes = GuiText.Makes.getLocal();
-        localizedPageNames = new String[te.pages.length];
-        localizedShapeNames = new ArrayList<String[]>(te.pages.length);
+        localizedPageNames = new String[SawbenchTE.pages.length];
+        localizedShapeNames = new ArrayList<>(SawbenchTE.pages.length);
 
-        for (int i = 0; i < te.pages.length; i++) {
-            localizedPageNames[i] = te.pages[i].getTitle();
-            te.pages[i].updateShapeNames();
-            localizedShapeNames.add(te.pages[i].getShapeNames());
+        for (int i = 0; i < SawbenchTE.pages.length; i++) {
+            localizedPageNames[i] = SawbenchTE.pages[i].getTitle();
+            SawbenchTE.pages[i].updateShapeNames();
+            localizedShapeNames.add(SawbenchTE.pages[i].getShapeNames());
         }
     }
 
@@ -123,8 +128,8 @@ public class SawbenchGui extends BaseGui.Screen {
         drawTexturedRect(-shapeMenuMargin, -shapeMenuMargin, w, h, 0, 0, shapeMenuScale * w, shapeMenuScale * h);
         bindTexture("gui/shapemenu_items.png", 512, 512);
         int p = te.selectedPage;
-        if (p >= 0 && p < te.pages.length) {
-            ShapePage page = te.pages[p];
+        if (p >= 0 && p < SawbenchTE.pages.length) {
+            ShapePage page = SawbenchTE.pages[p];
             if (page != null) {
                 Shape[] shapes = page.shapes;
                 for (int i = 0; i < shapes.length; i++) {
@@ -192,7 +197,7 @@ public class SawbenchGui extends BaseGui.Screen {
     void clickPageMenu(int x, int y) {
         // System.out.printf("SawbenchGui.clickPageMenu: %d, %d\n", x, y);
         int i = y / pageMenuRowHeight;
-        if (i >= 0 && i < te.pages.length) sendSelectShape(i, te.selectedSlots[i]);
+        if (i >= 0 && i < SawbenchTE.pages.length) sendSelectShape(i, te.selectedSlots[i]);
     }
 
     void clickShapeMenu(int x, int y) {

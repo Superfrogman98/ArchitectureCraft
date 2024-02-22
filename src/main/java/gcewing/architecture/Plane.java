@@ -1,6 +1,7 @@
 package gcewing.architecture;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.Random;
 
 import net.minecraft.util.EnumFacing;
 
@@ -16,18 +17,16 @@ public enum Plane implements Predicate<EnumFacing>, Iterable<EnumFacing> {
      * All EnumFacing values for this Plane
      */
     public EnumFacing[] facings() {
-        switch (this) {
-            case HORIZONTAL:
-                return new EnumFacing[] { EnumFacing.NORTH, EnumFacing.EAST, EnumFacing.SOUTH, EnumFacing.WEST };
+        return switch (this) {
+            case HORIZONTAL -> new EnumFacing[] { EnumFacing.NORTH, EnumFacing.EAST, EnumFacing.SOUTH,
+                    EnumFacing.WEST };
             // return new EnumFacing[] {EnumFacing.NORTH, EnumFacing.WEST, EnumFacing.SOUTH, EnumFacing.EAST};
-            case VERTICAL:
-                return new EnumFacing[] { EnumFacing.UP, EnumFacing.DOWN };
-            default:
-                throw new Error("Someone\'s been tampering with the universe!");
-        }
+            case VERTICAL -> new EnumFacing[] { EnumFacing.UP, EnumFacing.DOWN };
+            default -> throw new Error("Someone\'s been tampering with the universe!");
+        };
     }
 
-    private int[] axes = { 1, 1, 0, 0, 0, 0 };
+    private final int[] axes = { 1, 1, 0, 0, 0, 0 };
 
     /**
      * Choose a random Facing from this Plane using the given Random

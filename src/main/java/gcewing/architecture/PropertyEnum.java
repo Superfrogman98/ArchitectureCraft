@@ -25,7 +25,7 @@ public class PropertyEnum<T extends Enum> extends PropertyHelper<T> {
             String s = getName(t);
 
             if (this.nameToValue.containsKey(s)) {
-                throw new IllegalArgumentException("Multiple values have the same name \'" + s + "\'");
+                throw new IllegalArgumentException("Multiple values have the same name '" + s + "'");
             }
 
             this.nameToValue.put(s, t);
@@ -66,6 +66,6 @@ public class PropertyEnum<T extends Enum> extends PropertyHelper<T> {
     }
 
     public static <T extends Enum<T>> PropertyEnum<T> create(String name, Class<T> clazz, Collection<T> values) {
-        return new PropertyEnum(name, clazz, values);
+        return new PropertyEnum<>(name, clazz, values);
     }
 }

@@ -6,8 +6,8 @@
 
 package gcewing.architecture;
 
-import net.minecraft.client.renderer.texture.*;
-import net.minecraft.util.*;
+import net.minecraft.util.IIcon;
+import net.minecraft.util.ResourceLocation;
 
 import gcewing.architecture.BaseModClient.ITexture;
 import gcewing.architecture.BaseModClient.ITiledTexture;
@@ -94,7 +94,7 @@ public abstract class BaseTexture implements ITexture {
 
     public static class Proxy extends BaseTexture {
 
-        public ITexture base;
+        public final ITexture base;
 
         public Proxy(ITexture base) {
             this.base = base;
@@ -131,7 +131,7 @@ public abstract class BaseTexture implements ITexture {
 
     public static class Sprite extends BaseTexture {
 
-        public IIcon icon;
+        public final IIcon icon;
 
         public Sprite(IIcon icon) {
             this.icon = icon;
@@ -211,7 +211,8 @@ public abstract class BaseTexture implements ITexture {
 
     public static class TileSet extends Proxy implements ITiledTexture {
 
-        public double tileSizeU, tileSizeV;
+        public final double tileSizeU;
+        public final double tileSizeV;
 
         public TileSet(ITexture base, int numRows, int numCols) {
             super(base);
@@ -229,7 +230,10 @@ public abstract class BaseTexture implements ITexture {
 
     public static class Tile extends Proxy {
 
-        protected double u0, v0, uSize, vSize;
+        protected final double u0;
+        protected final double v0;
+        protected final double uSize;
+        protected final double vSize;
 
         public Tile(TileSet base, int row, int col) {
             super(base);

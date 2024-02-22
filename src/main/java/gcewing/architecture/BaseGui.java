@@ -6,23 +6,34 @@
 
 package gcewing.architecture;
 
-import static gcewing.architecture.BaseUtils.*;
-import static org.lwjgl.opengl.GL11.*;
+import static gcewing.architecture.BaseUtils.packedColor;
+import static org.lwjgl.opengl.GL11.GL_QUADS;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glColor3d;
+import static org.lwjgl.opengl.GL11.glColor3f;
+import static org.lwjgl.opengl.GL11.glDisable;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glEnd;
+import static org.lwjgl.opengl.GL11.glPopMatrix;
+import static org.lwjgl.opengl.GL11.glPushMatrix;
+import static org.lwjgl.opengl.GL11.glTexCoord2d;
+import static org.lwjgl.opengl.GL11.glTranslated;
+import static org.lwjgl.opengl.GL11.glVertex3d;
 
-import java.lang.reflect.*;
-import java.util.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
-import net.minecraft.client.*;
-import net.minecraft.client.gui.*;
-import net.minecraft.client.gui.inventory.*;
-import net.minecraft.client.renderer.*;
-import net.minecraft.entity.player.*;
-import net.minecraft.inventory.*;
-import net.minecraft.util.*;
-import net.minecraftforge.client.*;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
 
-import org.lwjgl.input.*;
-import org.lwjgl.opengl.*;
+import org.lwjgl.opengl.GL11;
 
 // ------------------------------------------------------------------------------------------------
 
@@ -39,7 +50,7 @@ public class BaseGui {
         // float red = 1.0F, green = 1.0F, blue = 1.0F;
         // public int textColor = defaultTextColor;
         // public boolean textShadow = false;
-        protected Root root;
+        protected final Root root;
         protected String title;
         protected IWidget mouseWidget;
         protected GState gstate;
@@ -139,7 +150,7 @@ public class BaseGui {
             if (gstate.previous != null) {
                 gstate = gstate.previous;
                 mc.getTextureManager().bindTexture(gstate.texture);
-            } else System.out.printf("BaseGui: Warning: Graphics state stack underflow\n");
+            } else System.out.print("BaseGui: Warning: Graphics state stack underflow\n");
         }
 
         public void drawRect(double x, double y, double w, double h) {
@@ -388,7 +399,8 @@ public class BaseGui {
 
     public static class MouseCoords {
 
-        int x, y;
+        final int x;
+        final int y;
 
         public MouseCoords(IWidget widget, int x, int y) {
             while (widget != null) {
@@ -560,7 +572,7 @@ public class BaseGui {
 
     public static class Group extends Widget implements IWidgetContainer {
 
-        protected List<IWidget> widgets = new ArrayList<IWidget>();
+        protected final List<IWidget> widgets = new ArrayList<>();
         protected IWidget focus;
 
         public IWidget getFocus() {
@@ -636,12 +648,12 @@ public class BaseGui {
 
     public static class Root extends Group {
 
-        public Screen screen;
-        public List<IWidget> popupStack;
+        public final Screen screen;
+        public final List<IWidget> popupStack;
 
         public Root(Screen screen) {
             this.screen = screen;
-            popupStack = new ArrayList<IWidget>();
+            popupStack = new ArrayList<>();
         }
 
         @Override
@@ -731,13 +743,13 @@ public class BaseGui {
 
     public static class PropertyRef implements Ref {
 
-        public Object target;
+        public final Object target;
         public Method getter, setter;
 
         public PropertyRef(Object target, String getterName, String setterName) {
             this.target = target;
             try {
-                Class cls = target.getClass();
+                Class<? extends Object> cls = target.getClass();
                 getter = cls.getMethod(getterName);
                 setter = cls.getMethod(setterName, getter.getReturnType());
             } catch (Exception e) {
@@ -775,7 +787,7 @@ public class BaseGui {
 
     public interface Action {
 
-        public void perform();
+        void perform();
     }
 
     public static class MethodAction implements Action {

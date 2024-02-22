@@ -6,10 +6,12 @@
 
 package gcewing.architecture;
 
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
 
-import cpw.mods.fml.common.event.*;
-import cpw.mods.fml.common.registry.*;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class BaseSubsystem<MOD extends BaseMod, CLIENT extends BaseModClient> {
 
@@ -61,14 +63,14 @@ public class BaseSubsystem<MOD extends BaseMod, CLIENT extends BaseModClient> {
     protected void registerOtherClient() {}
 
     public Item searchForItem(String... names) {
-        Item result = null;
+        Item result;
         for (String name : names) {
             result = findItem(name);
             if (result != null) return result;
         }
         System.out.printf("%s: Unable to find an item with any of the following names:", getClass().getName());
         for (String name : names) System.out.printf(" %s", name);
-        System.out.printf("\n");
+        System.out.print("\n");
         return null;
     }
 

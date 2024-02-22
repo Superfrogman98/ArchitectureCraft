@@ -6,24 +6,17 @@
 
 package gcewing.architecture;
 
-import static java.lang.Math.*;
-
-import java.nio.*;
-import java.util.*;
-
-import net.minecraft.block.*;
-import net.minecraft.client.renderer.texture.*;
-import net.minecraft.item.*;
-import net.minecraft.util.*;
-import net.minecraft.world.*;
-import net.minecraftforge.client.model.*;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.IIcon;
 
 import gcewing.architecture.BaseModClient.ITexture;
 
 public abstract class BaseRenderTarget implements BaseModClient.IRenderTarget {
 
     // Position of block in rendering coordinates (may be different from world coordinates)
-    protected double blockX, blockY, blockZ;
+    protected final double blockX;
+    protected final double blockY;
+    protected final double blockZ;
 
     protected int verticesPerFace;
     protected int vertexCount;
@@ -137,7 +130,7 @@ public abstract class BaseRenderTarget implements BaseModClient.IRenderTarget {
     }
 
     public float a() {
-        return (float) alpha;
+        return alpha;
     }
 
     // Add vertex with texture coords projected from the given direction
@@ -149,35 +142,36 @@ public abstract class BaseRenderTarget implements BaseModClient.IRenderTarget {
         // %s\n",
         // p.x, p.y, p.z, x, y, z, face);
         double u, v;
-        switch (face) {
-            case DOWN:
+        v = switch (face) {
+            case DOWN -> {
                 u = x;
-                v = 1 - z;
-                break;
-            case UP:
+                yield 1 - z;
+            }
+            case UP -> {
                 u = x;
-                v = z;
-                break;
-            case NORTH:
+                yield z;
+            }
+            case NORTH -> {
                 u = 1 - x;
-                v = 1 - y;
-                break;
-            case SOUTH:
+                yield 1 - y;
+            }
+            case SOUTH -> {
                 u = x;
-                v = 1 - y;
-                break;
-            case WEST:
+                yield 1 - y;
+            }
+            case WEST -> {
                 u = 1 - z;
-                v = 1 - y;
-                break;
-            case EAST:
+                yield 1 - y;
+            }
+            case EAST -> {
                 u = z;
-                v = 1 - y;
-                break;
-            default:
+                yield 1 - y;
+            }
+            default -> {
                 u = 0;
-                v = 0;
-        }
+                yield 0;
+            }
+        };
         addUVVertex(p, u, v);
     }
 

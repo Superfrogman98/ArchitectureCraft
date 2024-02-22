@@ -6,22 +6,30 @@
 
 package gcewing.architecture;
 
-import static gcewing.architecture.BaseBlockUtils.*;
-import static gcewing.architecture.BaseUtils.*;
-import static gcewing.architecture.Profile.*;
-import static gcewing.architecture.Profile.Generic.*;
-import static gcewing.architecture.ShapeFlags.*;
-import static gcewing.architecture.ShapeKind.*;
-import static gcewing.architecture.ShapeSymmetry.*;
-import static gcewing.architecture.WindowShapeKinds.*;
-import static java.lang.Math.*;
-import static net.minecraft.util.EnumFacing.*;
+import static gcewing.architecture.BaseBlockUtils.getTileEntityWorld;
+import static gcewing.architecture.BaseUtils.oppositeFacing;
+import static gcewing.architecture.Profile.Generic.lrCorner;
+import static gcewing.architecture.Profile.Generic.lrStraight;
+import static gcewing.architecture.Profile.Generic.rlCorner;
+import static gcewing.architecture.ShapeFlags.placeOffset;
+import static gcewing.architecture.ShapeFlags.placeUnderneath;
+import static gcewing.architecture.ShapeKind.Banister;
+import static gcewing.architecture.ShapeKind.Cladding;
+import static gcewing.architecture.ShapeKind.Model;
+import static gcewing.architecture.ShapeKind.Roof;
+import static gcewing.architecture.ShapeSymmetry.Bilateral;
+import static gcewing.architecture.ShapeSymmetry.Quadrilateral;
+import static gcewing.architecture.ShapeSymmetry.Unilateral;
+import static gcewing.architecture.WindowShapeKinds.CornerWindow;
+import static gcewing.architecture.WindowShapeKinds.MullionWindow;
+import static gcewing.architecture.WindowShapeKinds.PlainWindow;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
-import net.minecraft.entity.player.*;
-import net.minecraft.tileentity.*;
-import net.minecraft.util.*;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 
 public enum Shape {
 
@@ -173,9 +181,9 @@ public enum Shape {
     public int occlusionMask;
     public int flags;
 
-    public static Shape[] values = values();
+    public static final Shape[] values = values();
 
-    protected static Map<Integer, Shape> idMap = new HashMap<Integer, Shape>();
+    protected static final Map<Integer, Shape> idMap = new HashMap<>();
 
     static {
         for (Shape s : values) idMap.put(s.id, s);
@@ -221,7 +229,7 @@ public enum Shape {
         else orientFromHitPosition(player, te, face, hit);
     }
 
-    public static boolean debugPlacement = false;
+    public static final boolean debugPlacement = false;
 
     protected void orientFromHitPosition(EntityPlayer player, ShapeTE te, EnumFacing face, Vector3 hit) {
         int side, turn;
@@ -291,7 +299,7 @@ public enum Shape {
             case Quadrilateral: // All rotations are equivalent
                 return 0;
             case Bilateral: // Rotate according to nearest side
-                if (abs(z) > abs(x)) return z < 0 ? 2 : 0;
+                if (Math.abs(z) > Math.abs(x)) return z < 0 ? 2 : 0;
                 else return x > 0 ? 1 : 3;
             case Unilateral: // Rotate according to nearest corner
                 if (z > 0) return x < 0 ? 0 : 1;

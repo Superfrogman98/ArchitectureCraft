@@ -6,15 +6,18 @@
 
 package gcewing.architecture;
 
-import java.io.*;
-import java.util.*;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.List;
 
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ResourceLocation;
 
-import com.google.gson.*;
+import com.google.gson.Gson;
 
-import gcewing.architecture.BaseModClient.*;
+import gcewing.architecture.BaseModClient.IModel;
+import gcewing.architecture.BaseModClient.IRenderTarget;
+import gcewing.architecture.BaseModClient.ITexture;
 
 public class BaseModel implements IModel {
 
@@ -31,7 +34,7 @@ public class BaseModel implements IModel {
         Vector3 normal;
     }
 
-    static Gson gson = new Gson();
+    static final Gson gson = new Gson();
 
     public static BaseModel fromResource(ResourceLocation location) {
         // Can't use resource manager because this needs to work on the server
@@ -67,7 +70,7 @@ public class BaseModel implements IModel {
     }
 
     public void render(Trans3 t, IRenderTarget renderer, ITexture... textures) {
-        Vector3 p = null, n = null;
+        Vector3 p, n;
         for (Face face : faces) {
             int k = face.texture;
             if (k >= textures.length) k = textures.length - 1;

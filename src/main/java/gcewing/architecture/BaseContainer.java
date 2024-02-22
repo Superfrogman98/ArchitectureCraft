@@ -6,17 +6,20 @@
 
 package gcewing.architecture;
 
-import static gcewing.architecture.BaseUtils.*;
+import java.lang.reflect.Constructor;
 
-import java.lang.reflect.*;
-
-import net.minecraft.entity.player.*;
-import net.minecraft.inventory.*;
-import net.minecraft.item.*;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.ICrafting;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
 
 public class BaseContainer extends Container {
 
-    int xSize, ySize;
+    final int xSize;
+    final int ySize;
     SlotRange playerSlotRange; // Slots containing player inventory
     SlotRange containerSlotRange; // Default slot range for shift-clicking into from player inventory
 
@@ -94,7 +97,7 @@ public class BaseContainer extends Container {
     public void detectAndSendChanges() {
         super.detectAndSendChanges();
         for (int i = 0; i < crafters.size(); i++) {
-            ICrafting crafter = (ICrafting) crafters.get(i);
+            ICrafting crafter = crafters.get(i);
             sendStateTo(crafter);
         }
     }
@@ -104,7 +107,7 @@ public class BaseContainer extends Container {
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int index) {
         ItemStack result = null;
-        Slot slot = (Slot) inventorySlots.get(index);
+        Slot slot = inventorySlots.get(index);
         ItemStack stack = slot.getStack();
         if (slot != null && slot.getHasStack()) {
             SlotRange destRange = transferSlotRange(index, stack);
@@ -130,7 +133,7 @@ public class BaseContainer extends Container {
         if (stack.isStackable()) {
             for (int i = 0; i < n && stack.stackSize > 0; i++) {
                 int k = reverse ? endSlot - 1 - i : startSlot + i;
-                Slot slot = (Slot) this.inventorySlots.get(k);
+                Slot slot = this.inventorySlots.get(k);
                 ItemStack slotStack = slot.getStack();
                 if (slotStack != null && slotStack.isStackable()
                         && slotStack.getItem() == stack.getItem()
@@ -142,7 +145,7 @@ public class BaseContainer extends Container {
         }
         for (int i = 0; i < n && stack.stackSize > 0; i++) {
             int k = reverse ? endSlot - 1 - i : startSlot + i;
-            Slot slot = (Slot) this.inventorySlots.get(k);
+            Slot slot = this.inventorySlots.get(k);
             if (!slot.getHasStack() && slot.isItemValid(stack)) {
                 ItemStack newStack = stack.copy();
                 newStack.stackSize = 0;
@@ -155,9 +158,9 @@ public class BaseContainer extends Container {
 
     protected boolean transferToSlot(ItemStack stack, Slot slot) {
         ItemStack slotStack = slot.getStack();
-        int slotLimit = min(stack.getMaxStackSize(), slot.getSlotStackLimit());
+        int slotLimit = Math.min(stack.getMaxStackSize(), slot.getSlotStackLimit());
         int oldSlotSize = slotStack.stackSize;
-        int newSlotSize = min(oldSlotSize + stack.stackSize, slotLimit);
+        int newSlotSize = Math.min(oldSlotSize + stack.stackSize, slotLimit);
         int transferSize = newSlotSize - oldSlotSize;
         if (transferSize > 0) {
             stack.stackSize -= transferSize;
@@ -181,7 +184,7 @@ public class BaseContainer extends Container {
 
     public class SlotRange {
 
-        public int firstSlot;
+        public final int firstSlot;
         public int numSlots;
         public boolean reverseMerge;
 

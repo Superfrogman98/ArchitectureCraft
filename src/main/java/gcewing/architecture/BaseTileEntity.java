@@ -6,23 +6,27 @@
 
 package gcewing.architecture;
 
-import static gcewing.architecture.BaseBlockUtils.*;
-import static gcewing.architecture.BaseUtils.*;
+import static gcewing.architecture.BaseBlockUtils.getWorldBlockState;
+import static gcewing.architecture.BaseUtils.classForName;
+import static gcewing.architecture.BaseUtils.getFieldDef;
+import static gcewing.architecture.BaseUtils.getIntField;
+import static gcewing.architecture.BaseUtils.getMethodDef;
+import static gcewing.architecture.BaseUtils.invokeMethod;
+import static gcewing.architecture.BaseUtils.setIntField;
 
-import java.lang.reflect.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 import net.minecraft.block.Block;
-import net.minecraft.entity.player.*;
-import net.minecraft.inventory.*;
-import net.minecraft.item.*;
-import net.minecraft.nbt.*;
-import net.minecraft.network.*;
-import net.minecraft.network.play.server.*;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.server.management.PlayerManager;
-import net.minecraft.tileentity.*;
-import net.minecraft.util.*;
-import net.minecraft.world.*;
-import net.minecraftforge.common.*;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.ForgeChunkManager.Ticket;
 
 import gcewing.architecture.BaseMod.IBlock;
@@ -104,7 +108,7 @@ public class BaseTileEntity extends TileEntity implements BaseMod.ITileEntity {
         worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
     }
 
-    protected static Method getOrCreateChunkWatcher = getMethodDef(
+    protected static final Method getOrCreateChunkWatcher = getMethodDef(
             PlayerManager.class,
             "getOrCreateChunkWatcher",
             "func_72690_a",
@@ -112,7 +116,7 @@ public class BaseTileEntity extends TileEntity implements BaseMod.ITileEntity {
             int.class,
             boolean.class);
 
-    protected static Field flagsYAreasToUpdate = getFieldDef(
+    protected static final Field flagsYAreasToUpdate = getFieldDef(
             classForName("net.minecraft.server.management.PlayerManager$PlayerInstance"),
             "flagsYAreasToUpdate",
             "field_73260_f");

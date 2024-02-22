@@ -6,19 +6,19 @@
 
 package gcewing.architecture;
 
-import net.minecraft.block.*;
-import net.minecraft.entity.player.*;
-import net.minecraft.init.*;
-import net.minecraft.item.*;
-import net.minecraft.util.*;
-import net.minecraft.world.*;
-import net.minecraftforge.common.*;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 
-import cpw.mods.fml.common.*;
-import cpw.mods.fml.common.event.*;
-import cpw.mods.fml.common.network.*;
-import cpw.mods.fml.common.registry.*;
-import gcewing.architecture.BaseDataChannel.*;
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 @Mod(
         modid = Info.modID,

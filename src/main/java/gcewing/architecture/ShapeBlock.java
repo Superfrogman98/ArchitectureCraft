@@ -6,30 +6,37 @@
 
 package gcewing.architecture;
 
-import static gcewing.architecture.BaseBlockUtils.*;
-import static gcewing.architecture.BaseUtils.*;
-import static gcewing.architecture.Shape.*;
+import static gcewing.architecture.BaseBlockUtils.getBlockHarvestLevel;
+import static gcewing.architecture.BaseBlockUtils.getBlockHarvestTool;
+import static gcewing.architecture.BaseBlockUtils.getPlayerBreakSpeed;
+import static gcewing.architecture.BaseBlockUtils.getWorldBlockState;
+import static gcewing.architecture.BaseBlockUtils.getWorldTileEntity;
+import static gcewing.architecture.BaseUtils.newMovingObjectPosition;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import net.minecraft.block.*;
-import net.minecraft.block.material.*;
-import net.minecraft.client.renderer.texture.*;
-import net.minecraft.entity.*;
-import net.minecraft.entity.player.*;
-import net.minecraft.init.*;
-import net.minecraft.item.*;
-import net.minecraft.tileentity.*;
-import net.minecraft.util.*;
-import net.minecraft.world.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.Vec3;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ShapeBlock extends BaseBlock<ShapeTE> {
 
     protected AxisAlignedBB boxHit;
 
-    public static IProperty<Integer> LIGHT = PropertyInteger.create("light", 0, 15);
+    public static final IProperty<Integer> LIGHT = PropertyInteger.create("light", 0, 15);
 
     @Override
     protected void defineProperties() {
@@ -162,7 +169,7 @@ public class ShapeBlock extends BaseBlock<ShapeTE> {
 
     protected List<AxisAlignedBB> getCollisionBoxes(ShapeTE te, IBlockAccess world, BlockPos pos, IBlockState state,
             Trans3 t, Entity entity) {
-        List<AxisAlignedBB> list = new ArrayList<AxisAlignedBB>();
+        List<AxisAlignedBB> list = new ArrayList<>();
         te.shape.kind.addCollisionBoxesToList(te, world, pos, state, entity, t, list);
         return list;
     }
@@ -176,9 +183,8 @@ public class ShapeBlock extends BaseBlock<ShapeTE> {
     @Override
     protected ArrayList<ItemStack> getDropsFromTileEntity(IBlockAccess world, BlockPos pos, IBlockState state,
             TileEntity te, int fortune) {
-        ArrayList<ItemStack> result = new ArrayList<ItemStack>();
-        if (te instanceof ShapeTE) {
-            ShapeTE ste = (ShapeTE) te;
+        ArrayList<ItemStack> result = new ArrayList<>();
+        if (te instanceof ShapeTE ste) {
             ItemStack stack = ste.shape.kind.newStack(ste.shape, ste.baseBlockState, 1);
             result.add(stack);
             if (ste.secondaryBlockState != null) {

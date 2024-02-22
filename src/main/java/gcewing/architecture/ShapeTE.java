@@ -6,18 +6,24 @@
 
 package gcewing.architecture;
 
-import static gcewing.architecture.BaseBlockUtils.*;
-import static gcewing.architecture.BaseUtils.*;
-import static java.lang.Math.*;
+import static gcewing.architecture.BaseBlockUtils.blockCanRenderInLayer;
+import static gcewing.architecture.BaseBlockUtils.getBlockStateFromMeta;
+import static gcewing.architecture.BaseBlockUtils.getDefaultBlockState;
+import static gcewing.architecture.BaseBlockUtils.getMetaFromBlockState;
+import static gcewing.architecture.BaseBlockUtils.getNameForBlock;
+import static gcewing.architecture.BaseBlockUtils.getWorldTileEntity;
+import static gcewing.architecture.BaseUtils.getStackMetadata;
+import static gcewing.architecture.BaseUtils.oppositeFacing;
 
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.*;
-import net.minecraft.nbt.*;
-import net.minecraft.tileentity.*;
-import net.minecraft.util.*;
-import net.minecraft.world.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.world.IBlockAccess;
 
 public class ShapeTE extends BaseTileEntity {
 

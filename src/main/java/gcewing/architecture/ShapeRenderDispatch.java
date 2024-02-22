@@ -6,19 +6,16 @@
 
 package gcewing.architecture;
 
-import static gcewing.architecture.BaseBlockUtils.*;
-import static gcewing.architecture.BaseUtils.*;
+import static gcewing.architecture.BaseBlockUtils.blockCanRenderInLayer;
+import static gcewing.architecture.BaseBlockUtils.getSpriteForBlockState;
 
-import net.minecraft.block.*;
-import net.minecraft.client.*;
-import net.minecraft.client.renderer.texture.*;
-import net.minecraft.item.*;
-import net.minecraft.nbt.*;
-import net.minecraft.tileentity.*;
-import net.minecraft.util.*;
-import net.minecraft.world.*;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.IIcon;
+import net.minecraft.world.IBlockAccess;
 
-import gcewing.architecture.BaseModClient.*;
+import gcewing.architecture.BaseModClient.ICustomRenderer;
+import gcewing.architecture.BaseModClient.IRenderTarget;
+import gcewing.architecture.BaseModClient.ITexture;
 
 public class ShapeRenderDispatch implements ICustomRenderer {
 

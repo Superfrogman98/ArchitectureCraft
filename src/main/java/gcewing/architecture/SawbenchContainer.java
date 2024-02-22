@@ -6,31 +6,34 @@
 
 package gcewing.architecture;
 
-import static gcewing.architecture.BaseBlockUtils.*;
-import static gcewing.architecture.BaseUtils.*;
+import static gcewing.architecture.BaseBlockUtils.getWorldTileEntity;
 
-import net.minecraft.entity.player.*;
-import net.minecraft.inventory.*;
-import net.minecraft.item.*;
-import net.minecraft.nbt.*;
-import net.minecraft.network.play.server.*;
-import net.minecraft.tileentity.*;
-import net.minecraft.world.*;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.ICrafting;
+import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
+import net.minecraft.network.play.server.S2FPacketSetSlot;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 
-import gcewing.architecture.BaseDataChannel.*;
+import gcewing.architecture.BaseDataChannel.ChannelInput;
+import gcewing.architecture.BaseDataChannel.ServerMessageHandler;
 
 public class SawbenchContainer extends BaseContainer {
 
-    public static int guWidth = 242;
-    public static int guiHeight = 224;
-    public static int inputSlotLeft = 12;
-    public static int inputSlotTop = 19;
-    public static int outputSlotLeft = 12;
-    public static int outputSlotTop = 57;
+    public static final int guWidth = 242;
+    public static final int guiHeight = 224;
+    public static final int inputSlotLeft = 12;
+    public static final int inputSlotTop = 19;
+    public static final int outputSlotLeft = 12;
+    public static final int outputSlotTop = 57;
 
-    SawbenchTE te;
-    SlotRange sawbenchSlotRange;
-    Slot materialSlot, resultSlot;
+    final SawbenchTE te;
+    final SlotRange sawbenchSlotRange;
+    final Slot materialSlot;
+    final Slot resultSlot;
 
     public static Container create(EntityPlayer player, World world, BlockPos pos) {
         TileEntity te = getWorldTileEntity(world, pos);
@@ -66,18 +69,18 @@ public class SawbenchContainer extends BaseContainer {
     @Override
     public void detectAndSendChanges() {
         for (int i = 0; i < this.inventorySlots.size(); ++i) {
-            ItemStack newstack = ((Slot) this.inventorySlots.get(i)).getStack();
-            ItemStack oldstack = (ItemStack) this.inventoryItemStacks.get(i);
+            ItemStack newstack = this.inventorySlots.get(i).getStack();
+            ItemStack oldstack = this.inventoryItemStacks.get(i);
             if (!ItemStack.areItemStacksEqual(oldstack, newstack)) {
                 oldstack = newstack == null ? null : newstack.copy();
                 this.inventoryItemStacks.set(i, oldstack);
-                for (Object crafter : crafters) {
+                for (ICrafting crafter : crafters) {
                     if (crafter instanceof EntityPlayerMP) {
                         // System.out.printf("SawbenchContainer.updateCraftingResults: sending %s in slot %d to
                         // player\n", newstack, i);
                         ((EntityPlayerMP) crafter).playerNetServerHandler
                                 .sendPacket(new S2FPacketSetSlot(windowId, i, newstack));
-                    } else((ICrafting) crafter).sendSlotContents(this, i, newstack);
+                    } else crafter.sendSlotContents(this, i, newstack);
                 }
             }
         }
@@ -135,8 +138,8 @@ public class SawbenchContainer extends BaseContainer {
 
 class SlotSawbench extends Slot {
 
-    SawbenchTE te;
-    int index;
+    final SawbenchTE te;
+    final int index;
 
     public SlotSawbench(SawbenchTE te, int index, int x, int y) {
         super(te, index, x, y);

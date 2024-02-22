@@ -6,36 +6,52 @@
 
 package gcewing.architecture;
 
-import java.io.*;
-import java.lang.annotation.*;
-import java.lang.reflect.*;
-import java.util.*;
+import java.io.DataInput;
+import java.io.DataOutput;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.List;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.*;
-import net.minecraft.nbt.*;
-import net.minecraft.network.*;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.network.INetHandler;
+import net.minecraft.network.NetHandlerPlayServer;
+import net.minecraft.network.Packet;
+import net.minecraft.network.PacketBuffer;
 
-import cpw.mods.fml.common.network.*;
+import cpw.mods.fml.common.network.FMLEmbeddedChannel;
+import cpw.mods.fml.common.network.FMLOutboundHandler;
 import cpw.mods.fml.common.network.FMLOutboundHandler.OutboundTarget;
+import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.internal.FMLProxyPacket;
-import cpw.mods.fml.common.registry.*;
-import cpw.mods.fml.relauncher.*;
-import io.netty.buffer.*;
-import io.netty.channel.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufInputStream;
+import io.netty.buffer.ByteBufOutputStream;
+import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelFutureListener;
+import io.netty.channel.ChannelHandler;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 
 public class BaseDataChannel {
 
-    public String name;
-    public List handlers = new ArrayList();
-    protected EnumMap<Side, FMLEmbeddedChannel> pipes;
+    public final String name;
+    public final List handlers = new ArrayList();
+    protected final EnumMap<Side, FMLEmbeddedChannel> pipes;
 
     public BaseDataChannel(String name, Object... handlers) {
         this.name = name;
         ChannelHandler handler = new DataHandler(this);
         pipes = NetworkRegistry.INSTANCE.newChannel(name, handler);
         this.handlers.add(this);
-        for (Object h : handlers) this.handlers.add(h);
+        this.handlers.addAll(Arrays.asList(handlers));
     }
 
     protected ChannelOutput openTarget(String message, Side fromSide, OutboundTarget target) {
@@ -174,7 +190,7 @@ public class BaseDataChannel {
         String value();
     }
 
-    protected static enum HandlerMap {
+    protected enum HandlerMap {
 
         SERVER(ServerMessageHandler.class) {
 
@@ -190,8 +206,8 @@ public class BaseDataChannel {
             }
         };
 
-        protected Class type;
-        protected ClassCache classCache = new ClassCache();
+        protected final Class type;
+        protected final ClassCache classCache = new ClassCache();
 
         HandlerMap(Class type) {
             this.type = type;
@@ -201,7 +217,7 @@ public class BaseDataChannel {
         protected abstract String annotationValue(Object a);
 
         public Method get(Object handler, String message) {
-            Class cls = handler.getClass();
+            Class<? extends Object> cls = handler.getClass();
             MethodCache cache = classCache.get(cls);
             Method meth = cache.get(message);
             if (meth == null) {
@@ -438,11 +454,11 @@ public class BaseDataChannel {
 
     static class DataPacket implements ChannelOutput {
 
-        ByteBufOutputStream out;
-        BaseDataChannel channel;
-        Side side;
-        OutboundTarget target;
-        Object arg;
+        final ByteBufOutputStream out;
+        final BaseDataChannel channel;
+        final Side side;
+        final OutboundTarget target;
+        final Object arg;
 
         DataPacket(BaseDataChannel channel, Side side, OutboundTarget target, Object arg) {
             out = new ByteBufOutputStream(Unpooled.buffer());
@@ -585,7 +601,7 @@ public class BaseDataChannel {
     @ChannelHandler.Sharable
     protected static class DataHandler extends ChannelInboundHandlerAdapter {
 
-        BaseDataChannel channel;
+        final BaseDataChannel channel;
 
         DataHandler(BaseDataChannel channel) {
             this.channel = channel;

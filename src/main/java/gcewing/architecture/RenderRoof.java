@@ -6,36 +6,34 @@
 
 package gcewing.architecture;
 
-import static gcewing.architecture.Shape.*;
+import static gcewing.architecture.Shape.RoofInnerCorner;
+import static gcewing.architecture.Shape.RoofOuterCorner;
+import static gcewing.architecture.Shape.RoofRidge;
+import static gcewing.architecture.Shape.RoofSmartRidge;
+import static gcewing.architecture.Shape.RoofSmartValley;
+import static gcewing.architecture.Shape.RoofTile;
+import static gcewing.architecture.Shape.RoofValley;
 
-import java.lang.reflect.*;
-import java.util.*;
+import net.minecraft.util.EnumFacing;
 
-import net.minecraft.block.*;
-import net.minecraft.client.*;
-import net.minecraft.client.renderer.texture.*;
-import net.minecraft.item.*;
-import net.minecraft.nbt.*;
-import net.minecraft.tileentity.*;
-import net.minecraft.util.*;
-import net.minecraft.world.*;
-
-import gcewing.architecture.BaseModClient.*;
+import gcewing.architecture.BaseModClient.IRenderTarget;
+import gcewing.architecture.BaseModClient.ITexture;
 
 public class RenderRoof extends RenderShape {
 
-    protected final static Shape ridgeShapes[] = { RoofRidge, RoofSmartRidge };
+    protected final static Shape[] ridgeShapes = { RoofRidge, RoofSmartRidge };
 
-    protected final static Shape ridgeOrSlopeShapes[] = { RoofRidge, RoofSmartRidge, RoofTile, RoofOuterCorner,
+    protected final static Shape[] ridgeOrSlopeShapes = { RoofRidge, RoofSmartRidge, RoofTile, RoofOuterCorner,
             RoofInnerCorner };
 
-    protected final static Shape valleyShapes[] = { RoofValley, RoofSmartValley };
+    protected final static Shape[] valleyShapes = { RoofValley, RoofSmartValley };
 
-    protected final static Shape valleyOrSlopeShapes[] = { RoofValley, RoofSmartValley, RoofTile, RoofInnerCorner };
+    protected final static Shape[] valleyOrSlopeShapes = { RoofValley, RoofSmartValley, RoofTile, RoofInnerCorner };
 
     protected EnumFacing face;
     protected boolean outerFace;
-    protected boolean renderBase, renderSecondary;
+    protected final boolean renderBase;
+    protected final boolean renderSecondary;
 
     public RenderRoof(ShapeTE te, ITexture[] textures, Trans3 t, IRenderTarget target, boolean renderBase,
             boolean renderSecondary) {

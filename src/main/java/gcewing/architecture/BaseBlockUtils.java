@@ -6,29 +6,30 @@
 
 package gcewing.architecture;
 
-import static gcewing.architecture.BaseUtils.*;
+import static gcewing.architecture.BaseUtils.facings;
+import static gcewing.architecture.BaseUtils.oppositeFacing;
 
 import java.util.Collection;
 
-import net.minecraft.block.*;
-import net.minecraft.block.material.*;
-import net.minecraft.client.renderer.texture.*;
+import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.*;
-import net.minecraft.util.*;
-import net.minecraft.world.*;
-import net.minecraftforge.common.util.*;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.IIcon;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 
 import com.google.common.collect.ImmutableMap;
 
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BaseBlockUtils {
 
     public static String getNameForBlock(Block block) {
-        if (block != null) return Block.blockRegistry.getNameForObject(block).toString();
+        if (block != null) return Block.blockRegistry.getNameForObject(block);
         else return "";
     }
 
@@ -113,14 +114,11 @@ public class BaseBlockUtils {
 
     public static boolean blockCanRenderInLayer(Block block, EnumWorldBlockLayer layer) {
         if (block instanceof BaseBlock) return ((BaseBlock) block).canRenderInLayer(layer);
-        else switch (layer) {
-            case SOLID:
-                return block.canRenderInPass(0);
-            case TRANSLUCENT:
-                return block.canRenderInPass(1);
-            default:
-                return false;
-        }
+        else return switch (layer) {
+            case SOLID -> block.canRenderInPass(0);
+            case TRANSLUCENT -> block.canRenderInPass(1);
+            default -> false;
+        };
     }
 
     public static IBlockState getDefaultBlockState(Block block) {
@@ -186,8 +184,8 @@ public class BaseBlockUtils {
 
     protected static class MetaBlockState implements IBlockState {
 
-        protected Block block;
-        public int meta;
+        protected final Block block;
+        public final int meta;
 
         public MetaBlockState(Block block, int meta) {
             this.block = block;

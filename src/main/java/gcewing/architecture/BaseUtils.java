@@ -6,51 +6,38 @@
 
 package gcewing.architecture;
 
-import java.io.*;
-import java.lang.reflect.*;
-import java.util.*;
+import java.io.DataInput;
+import java.io.DataOutput;
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.Collection;
+import java.util.Map;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.*;
-import net.minecraft.item.*;
-import net.minecraft.nbt.*;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.management.ServerConfigurationManager;
-import net.minecraft.util.*;
-import net.minecraft.world.*;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.Vec3;
+import net.minecraft.world.EnumDifficulty;
+import net.minecraft.world.GameRules;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldSavedData;
+import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.storage.MapStorage;
 
 public class BaseUtils {
 
-    public static EnumFacing[] facings = EnumFacing.values();
-    public static EnumFacing[] horizontalFacings = { EnumFacing.SOUTH, EnumFacing.WEST, EnumFacing.NORTH,
+    public static final EnumFacing[] facings = EnumFacing.values();
+    public static final EnumFacing[] horizontalFacings = { EnumFacing.SOUTH, EnumFacing.WEST, EnumFacing.NORTH,
             EnumFacing.EAST };
-
-    public static int abs(int x) {
-        return x >= 0 ? x : -x;
-    }
-
-    public static int min(int x, int y) {
-        return x < y ? x : y;
-    }
-
-    public static int max(int x, int y) {
-        return x > y ? x : y;
-    }
-
-    public static double min(double x, double y) {
-        return x < y ? x : y;
-    }
-
-    public static double max(double x, double y) {
-        return x > y ? x : y;
-    }
-
-    public static int clampIndex(int x, int n) {
-        return max(0, min(x, n - 1));
-    }
 
     public static int ifloor(double x) {
         return (int) Math.floor(x);
@@ -60,11 +47,7 @@ public class BaseUtils {
         return (int) Math.round(x);
     }
 
-    public static int iceil(double x) {
-        return (int) Math.ceil(x);
-    }
-
-    public static Object[] arrayOf(Collection c) {
+    public static Object[] arrayOf(Collection<?> c) {
         int n = c.size();
         Object[] result = new Object[n];
         int i = 0;
@@ -72,7 +55,7 @@ public class BaseUtils {
         return result;
     }
 
-    public static Class classForName(String name) {
+    public static Class<?> classForName(String name) {
         try {
             return Class.forName(name);
         } catch (Exception e) {
@@ -80,7 +63,7 @@ public class BaseUtils {
         }
     }
 
-    public static Field getFieldDef(Class cls, String unobfName, String obfName) {
+    public static Field getFieldDef(Class<?> cls, String unobfName, String obfName) {
         try {
             Field field;
             try {
@@ -139,7 +122,7 @@ public class BaseUtils {
         }
     }
 
-    public static Method getMethodDef(Class cls, String unobfName, String obfName, Class... params) {
+    public static Method getMethodDef(Class<?> cls, String unobfName, String obfName, Class<?>... params) {
         try {
             Method meth;
             try {
@@ -173,16 +156,12 @@ public class BaseUtils {
     }
 
     public static int turnToFaceEast(EnumFacing f) {
-        switch (f) {
-            case SOUTH:
-                return 1;
-            case WEST:
-                return 2;
-            case NORTH:
-                return 3;
-            default:
-                return 0;
-        }
+        return switch (f) {
+            case SOUTH -> 1;
+            case WEST -> 2;
+            case NORTH -> 3;
+            default -> 0;
+        };
     }
 
     public static ItemStack blockStackWithTileEntity(Block block, int size, BaseTileEntity te) {

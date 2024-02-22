@@ -6,16 +6,123 @@
 
 package gcewing.architecture;
 
-import static gcewing.architecture.Shape.*;
+import static gcewing.architecture.Shape.AnticylinderLargeQuarter;
+import static gcewing.architecture.Shape.ArchD1;
+import static gcewing.architecture.Shape.ArchD2;
+import static gcewing.architecture.Shape.ArchD3A;
+import static gcewing.architecture.Shape.ArchD3B;
+import static gcewing.architecture.Shape.ArchD3C;
+import static gcewing.architecture.Shape.ArchD4A;
+import static gcewing.architecture.Shape.ArchD4B;
+import static gcewing.architecture.Shape.ArchD4C;
+import static gcewing.architecture.Shape.Architrave;
+import static gcewing.architecture.Shape.ArchitraveCorner;
+import static gcewing.architecture.Shape.BalustradeFancy;
+import static gcewing.architecture.Shape.BalustradeFancyCorner;
+import static gcewing.architecture.Shape.BalustradeFancyNewel;
+import static gcewing.architecture.Shape.BalustradeFancyWithNewel;
+import static gcewing.architecture.Shape.BalustradePlain;
+import static gcewing.architecture.Shape.BalustradePlainEnd;
+import static gcewing.architecture.Shape.BalustradePlainInnerCorner;
+import static gcewing.architecture.Shape.BalustradePlainOuterCorner;
+import static gcewing.architecture.Shape.BalustradePlainWithNewel;
+import static gcewing.architecture.Shape.BanisterFancy;
+import static gcewing.architecture.Shape.BanisterFancyBottom;
+import static gcewing.architecture.Shape.BanisterFancyEnd;
+import static gcewing.architecture.Shape.BanisterFancyNewelTall;
+import static gcewing.architecture.Shape.BanisterFancyTop;
+import static gcewing.architecture.Shape.BanisterPlain;
+import static gcewing.architecture.Shape.BanisterPlainBottom;
+import static gcewing.architecture.Shape.BanisterPlainEnd;
+import static gcewing.architecture.Shape.BanisterPlainInnerCorner;
+import static gcewing.architecture.Shape.BanisterPlainTop;
+import static gcewing.architecture.Shape.BevelledInnerCorner;
+import static gcewing.architecture.Shape.BevelledOuterCorner;
+import static gcewing.architecture.Shape.CladdingSheet;
+import static gcewing.architecture.Shape.CorinthianCapital;
+import static gcewing.architecture.Shape.CorniceBottom;
+import static gcewing.architecture.Shape.CorniceEndLH;
+import static gcewing.architecture.Shape.CorniceEndRH;
+import static gcewing.architecture.Shape.CorniceLH;
+import static gcewing.architecture.Shape.CorniceRH;
+import static gcewing.architecture.Shape.CorniceRidge;
+import static gcewing.architecture.Shape.CorniceValley;
+import static gcewing.architecture.Shape.Cylinder;
+import static gcewing.architecture.Shape.CylinderHalf;
+import static gcewing.architecture.Shape.CylinderLargeQuarter;
+import static gcewing.architecture.Shape.CylinderQuarter;
+import static gcewing.architecture.Shape.DoricCapital;
+import static gcewing.architecture.Shape.DoricMetope;
+import static gcewing.architecture.Shape.DoricTriglyph;
+import static gcewing.architecture.Shape.DoricTriglyphCorner;
+import static gcewing.architecture.Shape.IonicCapital;
+import static gcewing.architecture.Shape.Pillar;
+import static gcewing.architecture.Shape.PillarBase;
+import static gcewing.architecture.Shape.Pole;
+import static gcewing.architecture.Shape.Post;
+import static gcewing.architecture.Shape.RoofInnerCorner;
+import static gcewing.architecture.Shape.RoofOuterCorner;
+import static gcewing.architecture.Shape.RoofOverhang;
+import static gcewing.architecture.Shape.RoofOverhangGableEndLH;
+import static gcewing.architecture.Shape.RoofOverhangGableEndRH;
+import static gcewing.architecture.Shape.RoofOverhangGableLH;
+import static gcewing.architecture.Shape.RoofOverhangGableRH;
+import static gcewing.architecture.Shape.RoofOverhangInnerCorner;
+import static gcewing.architecture.Shape.RoofOverhangOuterCorner;
+import static gcewing.architecture.Shape.RoofOverhangRidge;
+import static gcewing.architecture.Shape.RoofOverhangValley;
+import static gcewing.architecture.Shape.RoofRidge;
+import static gcewing.architecture.Shape.RoofSmartRidge;
+import static gcewing.architecture.Shape.RoofSmartValley;
+import static gcewing.architecture.Shape.RoofTile;
+import static gcewing.architecture.Shape.RoofTileSE;
+import static gcewing.architecture.Shape.RoofValley;
+import static gcewing.architecture.Shape.Slab;
+import static gcewing.architecture.Shape.SlabSE;
+import static gcewing.architecture.Shape.SlopeTileA1;
+import static gcewing.architecture.Shape.SlopeTileA1SE;
+import static gcewing.architecture.Shape.SlopeTileA2;
+import static gcewing.architecture.Shape.SlopeTileA2SE;
+import static gcewing.architecture.Shape.SlopeTileB1;
+import static gcewing.architecture.Shape.SlopeTileB1SE;
+import static gcewing.architecture.Shape.SlopeTileB2;
+import static gcewing.architecture.Shape.SlopeTileB2SE;
+import static gcewing.architecture.Shape.SlopeTileB3;
+import static gcewing.architecture.Shape.SlopeTileB3SE;
+import static gcewing.architecture.Shape.SlopeTileC1;
+import static gcewing.architecture.Shape.SlopeTileC1SE;
+import static gcewing.architecture.Shape.SlopeTileC2;
+import static gcewing.architecture.Shape.SlopeTileC2SE;
+import static gcewing.architecture.Shape.SlopeTileC3;
+import static gcewing.architecture.Shape.SlopeTileC3SE;
+import static gcewing.architecture.Shape.SlopeTileC4;
+import static gcewing.architecture.Shape.SlopeTileC4SE;
+import static gcewing.architecture.Shape.SphereEighth;
+import static gcewing.architecture.Shape.SphereEighthLarge;
+import static gcewing.architecture.Shape.SphereEighthLargeRev;
+import static gcewing.architecture.Shape.SphereFull;
+import static gcewing.architecture.Shape.SphereHalf;
+import static gcewing.architecture.Shape.SphereQuarter;
+import static gcewing.architecture.Shape.SquareSE;
+import static gcewing.architecture.Shape.Stairs;
+import static gcewing.architecture.Shape.StairsInnerCorner;
+import static gcewing.architecture.Shape.StairsOuterCorner;
+import static gcewing.architecture.Shape.WindowCorner;
+import static gcewing.architecture.Shape.WindowFrame;
+import static gcewing.architecture.Shape.WindowMullion;
 
 import java.util.Arrays;
 import java.util.List;
 
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockSlab;
 import net.minecraft.init.Blocks;
-import net.minecraft.inventory.*;
-import net.minecraft.item.*;
-import net.minecraft.nbt.*;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryBasic;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 
 public class SawbenchTE extends BaseTileInventory implements IRestrictedDroppingInventory {
 
@@ -25,9 +132,9 @@ public class SawbenchTE extends BaseTileInventory implements IRestrictedDropping
     final public static int[] materialSideSlots = { materialSlot };
     final public static int[] resultSideSlots = { resultSlot };
 
-    public static boolean allowAutomation = false;
+    public static final boolean allowAutomation = false;
 
-    public static ShapePage[] pages = {
+    public static final ShapePage[] pages = {
             new ShapePage(
                     "Roofing",
                     RoofTile,
@@ -137,9 +244,9 @@ public class SawbenchTE extends BaseTileInventory implements IRestrictedDropping
                     SlopeTileC3SE,
                     SlopeTileC4SE) };
 
-    public IInventory inventory = new InventoryBasic("Items", false, 2);
+    public final IInventory inventory = new InventoryBasic("Items", false, 2);
     public int selectedPage = 0;
-    public int[] selectedSlots = new int[pages.length];
+    public final int[] selectedSlots = new int[pages.length];
     public boolean pendingMaterialUsage = false; // Material for the stack in the result slot
     // has not yet been removed from the material slot
 
@@ -147,7 +254,7 @@ public class SawbenchTE extends BaseTileInventory implements IRestrictedDropping
     /*
      * materials { S:UnlocalizedNames < tile.chisel.stained_glass tile.chisel.glass > }
      */
-    private static List<String> acceptableMaterialsFromConfig = Arrays.asList(
+    private static final List<String> acceptableMaterialsFromConfig = Arrays.asList(
             ArchitectureCraft.mod.config
                     .get("materials", "UnlocalizedNames", new String[] { "tile.chisel.stained_glass" })
                     .getStringList());

@@ -6,17 +6,35 @@
 
 package gcewing.architecture;
 
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL12.*;
+import static org.lwjgl.opengl.GL11.GL_LIGHTING;
+import static org.lwjgl.opengl.GL11.GL_LIGHTING_BIT;
+import static org.lwjgl.opengl.GL11.GL_QUADS;
+import static org.lwjgl.opengl.GL11.GL_SMOOTH;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_BIT;
+import static org.lwjgl.opengl.GL11.GL_TRANSFORM_BIT;
+import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
+import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glColor4f;
+import static org.lwjgl.opengl.GL11.glDisable;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glEnd;
+import static org.lwjgl.opengl.GL11.glNormal3d;
+import static org.lwjgl.opengl.GL11.glPopAttrib;
+import static org.lwjgl.opengl.GL11.glPushAttrib;
+import static org.lwjgl.opengl.GL11.glShadeModel;
+import static org.lwjgl.opengl.GL11.glTexCoord2d;
+import static org.lwjgl.opengl.GL11.glVertex3d;
+import static org.lwjgl.opengl.GL12.GL_RESCALE_NORMAL;
 
-import net.minecraft.client.renderer.*;
-import net.minecraft.util.*;
+import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.util.ResourceLocation;
 
-import gcewing.architecture.BaseModClient.*;
+import gcewing.architecture.BaseModClient.ITexture;
 
 public class BaseGLRenderTarget extends BaseRenderTarget {
 
-    public static boolean debugGL = false;
+    public static final boolean debugGL = false;
 
     protected boolean usingLightmap;
     protected int glMode;
@@ -29,9 +47,9 @@ public class BaseGLRenderTarget extends BaseRenderTarget {
 
     public void start(boolean usingLightmap) {
         this.usingLightmap = usingLightmap;
-        if (debugGL) System.out.printf("BaseGLRenderTarget: glPushAttrib()\n");
+        if (debugGL) System.out.print("BaseGLRenderTarget: glPushAttrib()\n");
         glPushAttrib(GL_LIGHTING_BIT | GL_TEXTURE_BIT | GL_TRANSFORM_BIT);
-        if (debugGL) System.out.printf("BaseGLRenderTarget: glEnable(GL_RESCALE_NORMAL)\n");
+        if (debugGL) System.out.print("BaseGLRenderTarget: glEnable(GL_RESCALE_NORMAL)\n");
         glEnable(GL_RESCALE_NORMAL);
         glShadeModel(GL_SMOOTH);
         glMode = 0;
@@ -110,7 +128,7 @@ public class BaseGLRenderTarget extends BaseRenderTarget {
     protected void setGLMode(int mode) {
         if (glMode != mode) {
             if (glMode != 0) {
-                if (debugGL) System.out.printf("BaseGLRenderTarget: glEnd()\n");
+                if (debugGL) System.out.print("BaseGLRenderTarget: glEnd()\n");
                 glEnd();
             }
             glMode = mode;
@@ -118,11 +136,11 @@ public class BaseGLRenderTarget extends BaseRenderTarget {
                 case 0:
                     break;
                 case 3:
-                    if (debugGL) System.out.printf("BaseGLRenderTarget: glBegin(GL_TRIANGLES)\n");
+                    if (debugGL) System.out.print("BaseGLRenderTarget: glBegin(GL_TRIANGLES)\n");
                     glBegin(GL_TRIANGLES);
                     break;
                 case 4:
-                    if (debugGL) System.out.printf("BaseGLRenderTarget: glBegin(GL_QUADS)\n");
+                    if (debugGL) System.out.print("BaseGLRenderTarget: glBegin(GL_QUADS)\n");
                     glBegin(GL_QUADS);
                     break;
                 default:
@@ -136,7 +154,7 @@ public class BaseGLRenderTarget extends BaseRenderTarget {
         setGLMode(0);
         setEmissiveMode(false);
         setTexturedMode(true);
-        if (debugGL) System.out.printf("BaseGLRenderTarget: glPopAttrib()\n");
+        if (debugGL) System.out.print("BaseGLRenderTarget: glPopAttrib()\n");
         glPopAttrib();
         super.finish();
     }

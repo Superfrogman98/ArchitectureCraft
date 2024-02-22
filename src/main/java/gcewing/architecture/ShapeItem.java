@@ -6,22 +6,22 @@
 
 package gcewing.architecture;
 
-import static gcewing.architecture.BaseBlockUtils.*;
-import static gcewing.architecture.BaseUtils.*;
+import static gcewing.architecture.BaseBlockUtils.getWorldBlockState;
+import static gcewing.architecture.BaseBlockUtils.getWorldTileEntity;
+import static gcewing.architecture.BaseBlockUtils.setWorldBlockState;
+import static gcewing.architecture.BaseUtils.oppositeFacing;
 import static gcewing.architecture.Vector3.getDirectionVec;
 
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.block.*;
-import net.minecraft.client.renderer.texture.*;
-import net.minecraft.entity.player.*;
-import net.minecraft.init.*;
-import net.minecraft.item.*;
-import net.minecraft.nbt.*;
-import net.minecraft.tileentity.*;
-import net.minecraft.util.*;
-import net.minecraft.world.*;
+import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.world.World;
 
 public class ShapeItem extends BaseItemBlock {
 

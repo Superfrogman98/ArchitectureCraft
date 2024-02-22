@@ -8,9 +8,9 @@ package gcewing.architecture;
 
 public class ShapePage {
 
-    public String title;
-    public Shape[] shapes;
-    public String[] shapeNames;
+    public final String title;
+    public final Shape[] shapes;
+    public final String[] shapeNames;
 
     public ShapePage(String title, Shape... shapes) {
         this.title = title;

@@ -6,36 +6,49 @@
 
 package gcewing.architecture;
 
-import static gcewing.architecture.BaseBlockUtils.*;
-import static gcewing.architecture.BaseMod.*;
-import static gcewing.architecture.BaseModClient.*;
-import static gcewing.architecture.BaseUtils.*;
+import static gcewing.architecture.BaseBlockUtils.getMetaFromBlockState;
+import static gcewing.architecture.BaseBlockUtils.getWorldBlockState;
+import static gcewing.architecture.BaseBlockUtils.getWorldTileEntity;
+import static gcewing.architecture.BaseMod.ModelSpec;
+import static gcewing.architecture.BaseModClient.IModel;
+import static gcewing.architecture.BaseUtils.facings;
+import static gcewing.architecture.BaseUtils.newMovingObjectPosition;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
-import net.minecraft.block.*;
-import net.minecraft.block.material.*;
-import net.minecraft.client.particle.*;
-import net.minecraft.client.renderer.texture.*;
-import net.minecraft.entity.*;
-import net.minecraft.entity.item.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockContainer;
+import net.minecraft.block.material.MapColor;
+import net.minecraft.block.material.Material;
+import net.minecraft.client.particle.EffectRenderer;
+import net.minecraft.client.particle.EntityDiggingFX;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.*;
-import net.minecraft.item.*;
-import net.minecraft.nbt.*;
-import net.minecraft.tileentity.*;
-import net.minecraft.util.*;
-import net.minecraft.world.*;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.Vec3;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
-import cpw.mods.fml.common.registry.*;
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BaseBlock<TE extends TileEntity> extends BlockContainer implements BaseMod.IBlock {
 
-    public static boolean debugState = false;
+    public static final boolean debugState = false;
 
-    protected static Random RANDOM = new Random();
+    protected static final Random RANDOM = new Random();
     // private static TileEntity tileEntityHarvested;
 
     public Class getDefaultItemClass() {
@@ -69,19 +82,19 @@ public class BaseBlock<TE extends TileEntity> extends BlockContainer implements 
 
     }
 
-    public static IOrientationHandler orient1Way = new Orient1Way();
+    public static final IOrientationHandler orient1Way = new Orient1Way();
 
     // --------------------------- Members -------------------------------
 
     protected MapColor mapColor;
     protected final BlockState blockState;
-    protected IBlockState defaultBlockState;
+    protected final IBlockState defaultBlockState;
     protected IProperty[] properties;
     protected Object[][] propertyValues;
     protected int numProperties; // Do not explicitly initialise
     protected int renderID;
-    protected Class<? extends TileEntity> tileEntityClass = null;
-    protected IOrientationHandler orientationHandler = orient1Way;
+    protected Class<? extends TileEntity> tileEntityClass;
+    protected IOrientationHandler orientationHandler;
     protected String[] textureNames;
     protected ModelSpec modelSpec;
     protected BaseMod mod;
@@ -165,7 +178,7 @@ public class BaseBlock<TE extends TileEntity> extends BlockContainer implements 
 
     // @Override
     protected BlockState createBlockState() {
-        if (debugState) System.out.printf("BaseBlock.createBlockState: Defining properties\n");
+        if (debugState) System.out.print("BaseBlock.createBlockState: Defining properties\n");
         defineProperties();
         if (debugState) dumpProperties();
         checkProperties();
@@ -251,7 +264,7 @@ public class BaseBlock<TE extends TileEntity> extends BlockContainer implements 
 
     // -------------------------- Harvesting ----------------------------
 
-    protected ThreadLocal<TileEntity> harvestingTileEntity = new ThreadLocal();
+    protected final ThreadLocal<TileEntity> harvestingTileEntity = new ThreadLocal<>();
 
     @Override
     public void onBlockHarvested(World world, int x, int y, int z, int meta, EntityPlayer player) {
@@ -661,7 +674,7 @@ public class BaseBlock<TE extends TileEntity> extends BlockContainer implements 
             Entity entity) {
         IModel model = getModel(state);
         if (model != null) {
-            List<AxisAlignedBB> list = new ArrayList<AxisAlignedBB>();
+            List<AxisAlignedBB> list = new ArrayList<>();
             model.addBoxesToList(t, list);
             return list;
         }

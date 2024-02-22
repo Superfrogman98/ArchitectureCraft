@@ -6,42 +6,58 @@
 
 package gcewing.architecture;
 
-import java.io.*;
-import java.lang.annotation.*;
-import java.lang.reflect.*;
-import java.net.*;
-import java.util.*;
-import java.util.jar.*;
+import java.io.File;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import net.minecraft.block.*;
-import net.minecraft.creativetab.*;
-import net.minecraft.entity.*;
-import net.minecraft.entity.player.*;
-import net.minecraft.inventory.*;
-import net.minecraft.item.*;
+import net.minecraft.block.Block;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.inventory.Container;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.Packet;
 import net.minecraft.server.management.PlayerManager;
 import net.minecraft.server.management.ServerConfigurationManager;
-import net.minecraft.tileentity.*;
-import net.minecraft.util.*;
-import net.minecraft.world.*;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.WeightedRandomChestContent;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraft.world.gen.structure.MapGenStructureIO;
-import net.minecraftforge.client.*;
-import net.minecraftforge.common.*;
-import net.minecraftforge.common.config.*;
-import net.minecraftforge.oredict.*;
+import net.minecraftforge.common.ChestGenHooks;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 
-import cpw.mods.fml.common.*;
-import cpw.mods.fml.common.event.*;
-import cpw.mods.fml.common.network.*;
-import cpw.mods.fml.common.registry.*;
-import cpw.mods.fml.common.registry.VillagerRegistry.*;
-import cpw.mods.fml.relauncher.*;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.network.IGuiHandler;
+import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.registry.EntityRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.registry.VillagerRegistry;
+import cpw.mods.fml.common.registry.VillagerRegistry.IVillageTradeHandler;
 import gcewing.architecture.BaseModClient.IModel;
 
 public class BaseMod<CLIENT extends BaseModClient<? extends BaseMod>> extends BaseSubsystem implements IGuiHandler {
 
-    protected Map<ResourceLocation, IModel> modelCache = new HashMap<ResourceLocation, IModel>();
+    protected final Map<ResourceLocation, IModel> modelCache = new HashMap<>();
 
     interface ITextureConsumer {
 
@@ -50,7 +66,7 @@ public class BaseMod<CLIENT extends BaseModClient<? extends BaseMod>> extends Ba
 
     interface IBlock extends ITextureConsumer {
 
-        public void setRenderType(int id);
+        void setRenderType(int id);
 
         String getQualifiedRendererClassName();
 
@@ -73,12 +89,12 @@ public class BaseMod<CLIENT extends BaseModClient<? extends BaseMod>> extends Ba
 
     interface ITileEntity {
 
-        public void onAddedToWorld();
+        void onAddedToWorld();
     }
 
     interface ISetMod {
 
-        public void setMod(BaseMod mod);
+        void setMod(BaseMod mod);
     }
 
     public void setModOf(Object obj) {
@@ -93,9 +109,9 @@ public class BaseMod<CLIENT extends BaseModClient<? extends BaseMod>> extends Ba
 
     public static class ModelSpec {
 
-        public String modelName;
-        public String[] textureNames;
-        public Vector3 origin;
+        public final String modelName;
+        public final String[] textureNames;
+        public final Vector3 origin;
 
         public ModelSpec(String model, String... textures) {
             this(model, Vector3.zero, textures);
@@ -108,33 +124,33 @@ public class BaseMod<CLIENT extends BaseModClient<? extends BaseMod>> extends Ba
         }
     }
 
-    public String modID;
+    public final String modID;
     public BaseConfiguration config;
-    public String modPackage;
-    public String assetKey;
-    public String blockDomain;
-    public String itemDomain;
-    public String resourceDir; // path to resources directory with leading and trailing slashes
-    public URL resourceURL; // URL to the resources directory
+    public final String modPackage;
+    public final String assetKey;
+    public final String blockDomain;
+    public final String itemDomain;
+    public final String resourceDir; // path to resources directory with leading and trailing slashes
+    public final URL resourceURL; // URL to the resources directory
     public CLIENT client;
     public IGuiHandler proxy;
     public boolean serverSide, clientSide;
-    public CreativeTabs creativeTab;
+    public final CreativeTabs creativeTab;
     public File cfgFile;
-    public List<Block> registeredBlocks = new ArrayList<Block>();
-    public List<Item> registeredItems = new ArrayList<Item>();
-    public List<BaseSubsystem> subsystems = new ArrayList<BaseSubsystem>();
+    public final List<Block> registeredBlocks = new ArrayList<>();
+    public final List<Item> registeredItems = new ArrayList<>();
+    public final List<BaseSubsystem> subsystems = new ArrayList<>();
 
-    public boolean debugGui = false;
-    public boolean debugBlockRegistration = false;
-    public boolean debugCreativeTabs = false;
+    public final boolean debugGui = false;
+    public final boolean debugBlockRegistration = false;
+    public final boolean debugCreativeTabs = false;
 
     public String resourcePath(String fileName) {
         return resourceDir + fileName;
     }
 
     public BaseMod() {
-        Class modClass = getClass();
+        Class<? extends BaseMod> modClass = getClass();
         modPackage = modClass.getPackage().getName();
         // assetKey = modPackage.replace(".", "_");
         modID = getModID(modClass);
@@ -152,7 +168,7 @@ public class BaseMod<CLIENT extends BaseModClient<? extends BaseMod>> extends Ba
         Annotation ann = cls.getAnnotation(Mod.class);
         if (ann instanceof Mod) return ((Mod) ann).modid();
         else {
-            System.out.printf("BaseMod: Mod annotation not found\n");
+            System.out.print("BaseMod: Mod annotation not found\n");
             return "<unknown>";
         }
     }
@@ -370,7 +386,7 @@ public class BaseMod<CLIENT extends BaseModClient<? extends BaseMod>> extends Ba
             // System.out.printf("BaseMod.addBlock: Setting creativeTab to %s\n", creativeTab);
             block.setCreativeTab(creativeTab);
         }
-        if (block instanceof BaseBlock) ((BaseBlock) block).mod = this;
+        if (block instanceof BaseBlock) ((BaseBlock<?>) block).mod = this;
         registeredBlocks.add(block);
         return block;
     }
@@ -496,9 +512,9 @@ public class BaseMod<CLIENT extends BaseModClient<? extends BaseMod>> extends Ba
     // --------------- Villager registration -------------------------------------------------
 
     static class VSBinding extends IDBinding<ResourceLocation> {
-    };
+    }
 
-    public List<VSBinding> registeredVillagers = new ArrayList<VSBinding>();
+    public final List<VSBinding> registeredVillagers = new ArrayList<>();
 
     int addVillager(String name, ResourceLocation skin) {
         int id = config.getVillager(name);
@@ -560,11 +576,10 @@ public class BaseMod<CLIENT extends BaseModClient<? extends BaseMod>> extends Ba
             ServerConfigurationManager cm = FMLCommonHandler.instance().getMinecraftServerInstance()
                     .getConfigurationManager();
             PlayerManager pm = world.getPlayerManager();
-            for (EntityPlayerMP player : (List<EntityPlayerMP>) cm.playerEntityList)
-                if (pm.isPlayerWatchingChunk(player, x, z)) {
-                    // System.out.printf("BaseMod.sendTileEntityUpdate: to %s\n", player);
-                    player.playerNetServerHandler.sendPacket(packet);
-                }
+            for (EntityPlayerMP player : cm.playerEntityList) if (pm.isPlayerWatchingChunk(player, x, z)) {
+                // System.out.printf("BaseMod.sendTileEntityUpdate: to %s\n", player);
+                player.playerNetServerHandler.sendPacket(packet);
+            }
         }
     }
 
@@ -626,7 +641,7 @@ public class BaseMod<CLIENT extends BaseModClient<? extends BaseMod>> extends Ba
 
     // --------------- GUIs - Internal -------------------------------------------------
 
-    Map<Integer, Class<? extends Container>> containerClasses = new HashMap<Integer, Class<? extends Container>>();
+    final Map<Integer, Class<? extends Container>> containerClasses = new HashMap<>();
 
     /**
      * Returns a Container to be displayed to the user. On the client side, this needs to return a instance of GuiScreen
@@ -648,7 +663,7 @@ public class BaseMod<CLIENT extends BaseModClient<? extends BaseMod>> extends Ba
         if (debugGui) System.out.printf("BaseMod.getServerGuiElement: for id 0x%x\n", id);
         int param = id >> 16;
         id = id & 0xffff;
-        Class cls = containerClasses.get(id);
+        Class<? extends Container> cls = containerClasses.get(id);
         Object result;
         if (cls != null) result = createGuiElement(cls, player, world, pos, param);
         else result = getGuiContainer(id, player, world, pos, param);
