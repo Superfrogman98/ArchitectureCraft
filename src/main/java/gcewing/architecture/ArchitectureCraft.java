@@ -6,128 +6,135 @@
 
 package gcewing.architecture;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
+import java.io.File;
 
-import cpw.mods.fml.common.Loader;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.network.Packet;
+import net.minecraft.server.management.PlayerManager;
+import net.minecraft.server.management.ServerConfigurationManager;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.MinecraftForge;
+
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.network.NetworkRegistry;
+import gcewing.architecture.client.render.model.IArchitectureModel;
+import gcewing.architecture.client.render.model.ObjJsonModel;
+import gcewing.architecture.common.config.ArchitectConfiguration;
+import gcewing.architecture.common.network.DataChannel;
 
 @Mod(
-        modid = Info.modID,
-        name = Info.modName,
-        version = Info.versionNumber,
-        acceptedMinecraftVersions = Info.acceptedMinecraftVersions)
+        modid = ArchitectureCraft.MOD_ID,
+        name = ArchitectureCraft.MOD_NAME,
+        version = ArchitectureCraft.VERSION,
+        acceptedMinecraftVersions = "[1.7.10]")
+public class ArchitectureCraft {
 
-public class ArchitectureCraft extends BaseMod<ArchitectureCraftClient> {
+    public static final String MOD_NAME = "ArchitectureCraft";
+    public static final String MOD_ID = "ArchitectureCraft";
+    public static final String VERSION = Tags.VERSION;
+    public static final String ASSET_KEY = MOD_ID.toLowerCase();
+    public static final String REGISTRY_PREFIX = MOD_ID.toLowerCase();
 
+    private File cfgFile;
+    public ArchitectConfiguration config;
+    public static final ArchitectureContent content = new ArchitectureContent();
+    public static ArchitectureCraftClient client;
+
+    @Mod.Instance(MOD_ID)
     public static ArchitectureCraft mod;
-    public static BaseDataChannel channel;
 
-    //
-    // Blocks and Items
-    //
-
-    public static SawbenchBlock blockSawbench;
-    public static BaseBlock blockShape;
-    public static BaseBlock blockShapeSE;
-    public static Item itemSawblade;
-    public static Item itemLargePulley;
-    public static Item itemChisel;
-    public static Item itemHammer;
-    public static CladdingItem itemCladding;
+    public static DataChannel channel;
 
     public ArchitectureCraft() {
         super();
-        mod = this;
-        channel = new BaseDataChannel(modID);
-        // debugCreativeTabs = true;
+        channel = new DataChannel(MOD_ID);
     }
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent e) {
-        super.preInit(e);
+        cfgFile = e.getSuggestedConfigurationFile();
+        loadConfig();
+        configure();
+        content.preInit(e);
+        if (e.getSide().isClient()) {
+            client = initClient();
+        }
+        if (client != null) client.preInit(e);
+
     }
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent e) {
-        super.init(e);
+        MinecraftForge.EVENT_BUS.register(this);
+        FMLCommonHandler.instance().bus().register(this);
+        if (client != null) client.init(e);
     }
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent e) {
-        super.postInit(e);
+        content.postInit(e);
+        if (client != null) client.postInit(e);
+        saveConfig();
+        NetworkRegistry.INSTANCE.registerGuiHandler(this, new ArchitectureGuiHandler());
     }
 
-    @Override
-    ArchitectureCraftClient initClient() {
+    public ArchitectureCraftClient initClient() {
         return new ArchitectureCraftClient(this);
     }
 
-    protected void registerBlocks() {
-        blockSawbench = newBlock("sawbench", SawbenchBlock.class);
-        blockSawbench.setHardness(2.0F);
-        blockShape = newBlock("shape", ShapeBlock.class, ShapeItem.class);
-        blockShapeSE = newBlock("shapeSE", ShapeBlock.class, ShapeItem.class);
+    // -------------------- Configuration ---------------------------------------------------------
+
+    void configure() {}
+
+    void loadConfig() {
+        config = new ArchitectConfiguration(cfgFile);
     }
 
-    protected void registerTileEntities() {
-        GameRegistry.registerTileEntity(SawbenchTE.class, "gcewing.sawbench");
-        GameRegistry.registerTileEntity(ShapeTE.class, "gcewing.shape");
+    void saveConfig() {
+        if (config.extended) config.save();
     }
 
-    protected void registerItems() {
-        itemSawblade = newItem("sawblade");
-        itemLargePulley = newItem("largePulley");
-        itemChisel = newItem("chisel", ChiselItem.class);
-        itemHammer = newItem("hammer", HammerItem.class);
-        itemCladding = newItem("cladding", CladdingItem.class);
+    // --------------- Resources ----------------------------------------------------------
+
+    public static ResourceLocation resourceLocation(String path) {
+        if (path.contains(":")) return new ResourceLocation(path);
+        else return new ResourceLocation(ASSET_KEY, path);
     }
 
-    protected void registerRecipes() {
-        if (!Loader.isModLoaded("dreamcraft")) {
-            ItemStack orangeDye = new ItemStack(Items.dye, 1, 14);
-            newRecipe(
-                    blockSawbench,
-                    1,
-                    "I*I",
-                    "/0/",
-                    "/_/",
-                    'I',
-                    Items.iron_ingot,
-                    '*',
-                    itemSawblade,
-                    '/',
-                    Items.stick,
-                    '_',
-                    Blocks.wooden_pressure_plate,
-                    '0',
-                    itemLargePulley);
-            newRecipe(itemSawblade, 1, " I ", "I/I", " I ", 'I', Items.iron_ingot, '/', Items.stick);
-            newRecipe(itemLargePulley, 1, " W ", "W/W", " W ", 'W', Blocks.planks, '/', Items.stick);
-            newRecipe(itemChisel, 1, "I ", "ds", 'I', Items.iron_ingot, 's', Items.stick, 'd', orangeDye);
-            newRecipe(itemHammer, 1, "II ", "dsI", "ds ", 'I', Items.iron_ingot, 's', Items.stick, 'd', orangeDye);
+    public ResourceLocation modelLocation(String path) {
+        return resourceLocation("models/" + path);
+    }
+
+    public IArchitectureModel getModel(String name) {
+        ResourceLocation loc = modelLocation(name);
+        IArchitectureModel model = content.modelCache.get(loc);
+        if (model == null) {
+            model = ObjJsonModel.fromResource(loc);
+            content.modelCache.put(loc, model);
+        }
+        return model;
+    }
+
+    // ------------------------- Network --------------------------------------------------
+
+    public static void sendTileEntityUpdate(TileEntity te) {
+        Packet packet = te.getDescriptionPacket();
+        if (packet != null) {
+            int x = te.xCoord >> 4;
+            int z = te.zCoord >> 4;
+            WorldServer world = (WorldServer) te.getWorldObj();
+            ServerConfigurationManager cm = FMLCommonHandler.instance().getMinecraftServerInstance()
+                    .getConfigurationManager();
+            PlayerManager pm = world.getPlayerManager();
+            for (EntityPlayerMP player : cm.playerEntityList) if (pm.isPlayerWatchingChunk(player, x, z)) {
+                player.playerNetServerHandler.sendPacket(packet);
+            }
         }
     }
-
-    // --------------- GUIs ----------------------------------------------------------
-
-    public final static int guiSawbench = 1;
-
-    @Override
-    protected void registerContainers() {
-        addContainer(guiSawbench, SawbenchContainer.class);
-    }
-
-    public void openGuiSawbench(World world, BlockPos pos, EntityPlayer player) {
-        openGui(player, guiSawbench, world, pos);
-    }
-
 }
