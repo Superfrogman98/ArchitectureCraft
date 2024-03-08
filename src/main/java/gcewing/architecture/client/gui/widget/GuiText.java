@@ -146,6 +146,7 @@ public enum GuiText {
     SlopeTileC2SE,
     SlopeTileC3SE,
     SlopeTileC4SE,
+    DoubleRoofTile,
 
     // UI Colors
     FontColor(0x404040),

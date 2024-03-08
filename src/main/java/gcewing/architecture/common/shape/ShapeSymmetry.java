@@ -10,6 +10,7 @@ public enum ShapeSymmetry {
 
     Unilateral,
     Bilateral,
-    Quadrilateral
+    Quadrilateral,
+    None
 
 }

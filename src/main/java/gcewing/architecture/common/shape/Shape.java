@@ -13,9 +13,7 @@ import static gcewing.architecture.common.shape.ShapeKind.Banister;
 import static gcewing.architecture.common.shape.ShapeKind.Cladding;
 import static gcewing.architecture.common.shape.ShapeKind.Model;
 import static gcewing.architecture.common.shape.ShapeKind.Roof;
-import static gcewing.architecture.common.shape.ShapeSymmetry.Bilateral;
-import static gcewing.architecture.common.shape.ShapeSymmetry.Quadrilateral;
-import static gcewing.architecture.common.shape.ShapeSymmetry.Unilateral;
+import static gcewing.architecture.common.shape.ShapeSymmetry.*;
 import static gcewing.architecture.common.shape.WindowShapeKinds.CornerWindow;
 import static gcewing.architecture.common.shape.WindowShapeKinds.MullionWindow;
 import static gcewing.architecture.common.shape.WindowShapeKinds.PlainWindow;
@@ -99,7 +97,7 @@ public enum Shape {
     CorniceValley(55, "Cornice Valley", Model("cornice_valley"), Bilateral, 1, 4, 0xcc),
     CorniceBottom(56, "Cornice Bottom", Model("cornice_bottom"), Bilateral, 1, 4, 0x0c),
 
-    CladdingSheet(60, "Cladding", Cladding, null, 1, 1, 0),
+    CladdingSheet(60, "Cladding", Model("cladding"), None, 1, 1, 0x0c),
 
     ArchD1(61, "Arch Diameter 1", Model("arch_d1"), Bilateral, 1, 1, 0xff, ShapeFlags.placeUnderneath),
     ArchD2(62, "Arch Diameter 2", Model("arch_d2"), Bilateral, 1, 2, 0xfc, ShapeFlags.placeUnderneath),
@@ -177,7 +175,8 @@ public enum Shape {
     RoofTileSE(112, "Roof Tile(Glow)", Roof, Bilateral, 1, 2, 0xcf),
     SquareSE(113, "Square(Glow)", Model("square"), Quadrilateral, 1, 1, 0x0),
     SlabSE(114, "Slab(Glow)", Model("slab"), Quadrilateral, 1, 2, 0x0),
-    AngledRoofRidge(115, "Angled Roof Ridge", Model("angled_roof_ridge"), Bilateral, 1, 4, 0x0f),;
+    AngledRoofRidge(115, "Angled Roof Ridge", Model("angled_roof_ridge"), Bilateral, 1, 4, 0x0f),
+    DoubleRoofTile(116, "Double Roof Tile", Model("double_roof_tile"), Bilateral, 1, 2, 0xcf),;
 
     public int id;
     public String title;

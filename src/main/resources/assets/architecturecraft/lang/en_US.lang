@@ -153,3 +153,5 @@ gui.architecturecraft.SlopeTileC1SE=Slope C 1(Glow)
 gui.architecturecraft.SlopeTileC2SE=Slope C 2(Glow)
 gui.architecturecraft.SlopeTileC3SE=Slope C 3(Glow)
 gui.architecturecraft.SlopeTileC4SE=Slope C 4(Glow)
+
+gui.architecturecraft.DoubleRoofTile=Double Roof Tile
