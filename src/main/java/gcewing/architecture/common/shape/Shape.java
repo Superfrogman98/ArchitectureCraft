@@ -177,7 +177,7 @@ public enum Shape {
     RoofTileSE(112, "Roof Tile(Glow)", Roof, Bilateral, 1, 2, 0xcf),
     SquareSE(113, "Square(Glow)", Model("square"), Quadrilateral, 1, 1, 0x0),
     SlabSE(114, "Slab(Glow)", Model("slab"), Quadrilateral, 1, 2, 0x0),
-    AngledRoofRidge(103, "Angled Roof Ridge", Model("angled_roof_ridge"), Bilateral, 1, 4, 0x0f),;
+    AngledRoofRidge(115, "Angled Roof Ridge", Model("angled_roof_ridge"), Bilateral, 1, 4, 0x0f),;
 
     public int id;
     public String title;

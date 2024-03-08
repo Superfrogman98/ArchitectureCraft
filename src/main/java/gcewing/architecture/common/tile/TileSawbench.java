@@ -6,6 +6,7 @@
 
 package gcewing.architecture.common.tile;
 
+import static gcewing.architecture.common.shape.Shape.AngledRoofRidge;
 import static gcewing.architecture.common.shape.Shape.AnticylinderLargeQuarter;
 import static gcewing.architecture.common.shape.Shape.ArchD1;
 import static gcewing.architecture.common.shape.Shape.ArchD2;
