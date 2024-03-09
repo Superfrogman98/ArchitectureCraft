@@ -34,3 +34,4 @@ src/main/resources/mixins.*.json
 /jdks/
 /native/
 /wrapper/dists/
+.shelf
