@@ -10,7 +10,6 @@ import static gcewing.architecture.common.shape.Generic.lrCorner;
 import static gcewing.architecture.common.shape.Generic.lrStraight;
 import static gcewing.architecture.common.shape.Generic.rlCorner;
 import static gcewing.architecture.common.shape.ShapeKind.Banister;
-import static gcewing.architecture.common.shape.ShapeKind.Cladding;
 import static gcewing.architecture.common.shape.ShapeKind.Model;
 import static gcewing.architecture.common.shape.ShapeKind.Roof;
 import static gcewing.architecture.common.shape.ShapeSymmetry.*;

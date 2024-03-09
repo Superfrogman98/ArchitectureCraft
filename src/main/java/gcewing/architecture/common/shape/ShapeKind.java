@@ -90,6 +90,10 @@ public abstract class ShapeKind {
             boolean shaderEmissive) {
         TileShape te = new TileShape(shape, materialBlock, materialMeta);
         int light = materialBlock.getLightValue();
+        if (shape.id == Shape.CladdingSheet.id) {
+            return ArchitectureCraft.content.itemCladding.newStack(materialBlock, materialMeta, stackSize);
+        }
+
         if (shaderEmissive) {
             light = 15;
             ItemStack result = TileArchitecture

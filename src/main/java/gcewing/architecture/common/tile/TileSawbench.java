@@ -11,7 +11,6 @@ import static gcewing.architecture.common.shape.Shape.*;
 import java.util.Arrays;
 import java.util.List;
 
-import gcewing.architecture.common.item.ItemCladding;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.init.Blocks;
@@ -296,17 +295,15 @@ public class TileSawbench extends TileArchitectureInventory implements IRestrict
             if (materialStack != null && materialStack.stackSize >= resultShape.materialUsed) {
                 Item materialItem = materialStack.getItem();
 
-
                 if (materialItem instanceof ItemBlock) {
                     Block materialBlock = Block.getBlockFromItem(materialItem);
-                    if (isAcceptableMaterial(materialBlock))
-                    {
-                            return resultShape.kind.newStack(
-                                    resultShape,
-                                    materialBlock,
-                                    materialStack.getItemDamage(),
-                                    resultShape.itemsProduced,
-                                    shaderEmissive);
+                    if (isAcceptableMaterial(materialBlock)) {
+                        return resultShape.kind.newStack(
+                                resultShape,
+                                materialBlock,
+                                materialStack.getItemDamage(),
+                                resultShape.itemsProduced,
+                                shaderEmissive);
                     }
                 }
             }
