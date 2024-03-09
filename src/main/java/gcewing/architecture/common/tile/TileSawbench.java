@@ -6,6 +6,7 @@
 
 package gcewing.architecture.common.tile;
 
+import static gcewing.architecture.common.shape.Shape.AngledRoofRidge;
 import static gcewing.architecture.common.shape.Shape.AnticylinderLargeQuarter;
 import static gcewing.architecture.common.shape.Shape.ArchD1;
 import static gcewing.architecture.common.shape.Shape.ArchD2;
@@ -55,6 +56,7 @@ import static gcewing.architecture.common.shape.Shape.DoricCapital;
 import static gcewing.architecture.common.shape.Shape.DoricMetope;
 import static gcewing.architecture.common.shape.Shape.DoricTriglyph;
 import static gcewing.architecture.common.shape.Shape.DoricTriglyphCorner;
+import static gcewing.architecture.common.shape.Shape.DoubleRoofTile;
 import static gcewing.architecture.common.shape.Shape.IonicCapital;
 import static gcewing.architecture.common.shape.Shape.Pillar;
 import static gcewing.architecture.common.shape.Shape.PillarBase;
@@ -110,8 +112,6 @@ import static gcewing.architecture.common.shape.Shape.StairsOuterCorner;
 import static gcewing.architecture.common.shape.Shape.WindowCorner;
 import static gcewing.architecture.common.shape.Shape.WindowFrame;
 import static gcewing.architecture.common.shape.Shape.WindowMullion;
-import static gcewing.architecture.common.shape.Shape.AngledRoofRidge;
-import static gcewing.architecture.common.shape.Shape.DoubleRoofTile;
 
 import java.util.Arrays;
 import java.util.List;
