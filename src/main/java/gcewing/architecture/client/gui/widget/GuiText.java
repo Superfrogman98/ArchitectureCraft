@@ -17,6 +17,8 @@ public enum GuiText {
     Railings,
     Other,
 
+    Glow,
+
     // Tiles
     RoofTile,
     RoofOuterCorner,
@@ -130,6 +132,21 @@ public enum GuiText {
     SlopeTileC2,
     SlopeTileC3,
     SlopeTileC4,
+
+    AngledRoofRidge,
+    SquareSE,
+    SlabSE,
+    RoofTileSE,
+    SlopeTileA1SE,
+    SlopeTileA2SE,
+    SlopeTileB1SE,
+    SlopeTileB2SE,
+    SlopeTileB3SE,
+    SlopeTileC1SE,
+    SlopeTileC2SE,
+    SlopeTileC3SE,
+    SlopeTileC4SE,
+    DoubleRoofTile,
 
     // UI Colors
     FontColor(0x404040),

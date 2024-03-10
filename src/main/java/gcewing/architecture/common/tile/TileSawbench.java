@@ -6,6 +6,7 @@
 
 package gcewing.architecture.common.tile;
 
+import static gcewing.architecture.common.shape.Shape.AngledRoofRidge;
 import static gcewing.architecture.common.shape.Shape.AnticylinderLargeQuarter;
 import static gcewing.architecture.common.shape.Shape.ArchD1;
 import static gcewing.architecture.common.shape.Shape.ArchD2;
@@ -55,6 +56,7 @@ import static gcewing.architecture.common.shape.Shape.DoricCapital;
 import static gcewing.architecture.common.shape.Shape.DoricMetope;
 import static gcewing.architecture.common.shape.Shape.DoricTriglyph;
 import static gcewing.architecture.common.shape.Shape.DoricTriglyphCorner;
+import static gcewing.architecture.common.shape.Shape.DoubleRoofTile;
 import static gcewing.architecture.common.shape.Shape.IonicCapital;
 import static gcewing.architecture.common.shape.Shape.Pillar;
 import static gcewing.architecture.common.shape.Shape.PillarBase;
@@ -233,7 +235,9 @@ public class TileSawbench extends TileArchitectureInventory implements IRestrict
                     SlopeTileC1,
                     SlopeTileC2,
                     SlopeTileC3,
-                    SlopeTileC4),
+                    SlopeTileC4,
+                    AngledRoofRidge,
+                    DoubleRoofTile),
             new ShapePage(
                     "Glow",
                     SquareSE,
@@ -395,6 +399,7 @@ public class TileSawbench extends TileArchitectureInventory implements IRestrict
             ItemStack materialStack = getStackInSlot(materialSlot);
             if (materialStack != null && materialStack.stackSize >= resultShape.materialUsed) {
                 Item materialItem = materialStack.getItem();
+
                 if (materialItem instanceof ItemBlock) {
                     Block materialBlock = Block.getBlockFromItem(materialItem);
                     if (isAcceptableMaterial(materialBlock)) {

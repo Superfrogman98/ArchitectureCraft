@@ -20,4 +20,3 @@ plugins {
     id 'com.gtnewhorizons.gtnhsettingsconvention' version '1.0.14'
 }
 
-

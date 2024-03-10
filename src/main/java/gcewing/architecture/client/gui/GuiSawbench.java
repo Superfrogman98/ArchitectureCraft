@@ -133,7 +133,7 @@ public class GuiSawbench extends Screen {
         double w = shapeMenuWidth + 2 * shapeMenuMargin;
         double h = shapeMenuHeight + 2 * shapeMenuMargin;
         drawTexturedRect(-shapeMenuMargin, -shapeMenuMargin, w, h, 0, 0, shapeMenuScale * w, shapeMenuScale * h);
-        bindTexture("gui/shapemenu_items.png", 512, 512);
+
         int p = te.selectedPage;
         if (p >= 0 && p < TileSawbench.pages.length) {
             ShapePage page = TileSawbench.pages[p];
@@ -143,7 +143,9 @@ public class GuiSawbench extends Screen {
                     Shape shape = shapes[i];
                     int mrow = i / shapeMenuCols, mcol = i % shapeMenuCols;
                     int id = shape.id;
-                    int trow = id / 10, tcol = id % 10;
+                    int textureSheet = id / 110;
+                    bindTexture("gui/shapemenu_items_" + textureSheet + ".png", 512, 512);
+                    int trow = (id % 110) / 10, tcol = (id % 110) % 10;
                     drawTexturedRect(
                             (mcol + 0.5) * shapeMenuCellSize - 0.5 * shapeMenuItemWidth,
                             (mrow + 0.5) * shapeMenuCellSize - 0.5 * shapeMenuItemHeight,
