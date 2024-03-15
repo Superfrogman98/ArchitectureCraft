@@ -18,6 +18,7 @@ public enum GuiText {
     Other,
 
     Glow,
+    Curves,
 
     // Tiles
     RoofTile,
@@ -147,6 +148,9 @@ public enum GuiText {
     SlopeTileC3SE,
     SlopeTileC4SE,
     DoubleRoofTile,
+
+    Curve2b2A,
+    Curve2b2B,
 
     // UI Colors
     FontColor(0x404040),

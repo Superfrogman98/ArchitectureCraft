@@ -48,6 +48,8 @@ import static gcewing.architecture.common.shape.Shape.CorniceLH;
 import static gcewing.architecture.common.shape.Shape.CorniceRH;
 import static gcewing.architecture.common.shape.Shape.CorniceRidge;
 import static gcewing.architecture.common.shape.Shape.CorniceValley;
+import static gcewing.architecture.common.shape.Shape.Curve2b2A;
+import static gcewing.architecture.common.shape.Shape.Curve2b2B;
 import static gcewing.architecture.common.shape.Shape.Cylinder;
 import static gcewing.architecture.common.shape.Shape.CylinderHalf;
 import static gcewing.architecture.common.shape.Shape.CylinderLargeQuarter;
@@ -251,7 +253,8 @@ public class TileSawbench extends TileArchitectureInventory implements IRestrict
                     SlopeTileC1SE,
                     SlopeTileC2SE,
                     SlopeTileC3SE,
-                    SlopeTileC4SE) };
+                    SlopeTileC4SE),
+            new ShapePage("Curves", Curve2b2A, Curve2b2B), };
 
     public final IInventory inventory = new InventoryBasic("Items", false, 2);
     public int selectedPage = 0;
