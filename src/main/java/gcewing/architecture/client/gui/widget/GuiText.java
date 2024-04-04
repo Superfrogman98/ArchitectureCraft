@@ -20,6 +20,8 @@ public enum GuiText {
     Glow,
     Curves,
 
+    DoubleSlopes,
+
     // Tiles
     RoofTile,
     RoofOuterCorner,
@@ -151,6 +153,17 @@ public enum GuiText {
 
     Curve2b2A,
     Curve2b2B,
+
+    DoubleSlopeAStart,
+    DoubleSlopeAEnd,
+    DoubleSlopeBStart,
+    DoubleSlopeBMiddle,
+    DoubleSlopeBEnd,
+    DoubleSlopeC1,
+    DoubleSlopeC2,
+    DoubleSlopeC3,
+    DoubleSlopeC4,
+
 
     // UI Colors
     FontColor(0x404040),

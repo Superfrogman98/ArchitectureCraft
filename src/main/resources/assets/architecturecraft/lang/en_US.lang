@@ -26,6 +26,7 @@ gui.architecturecraft.Railings=Railings
 gui.architecturecraft.Other=Other
 gui.architecturecraft.Glow=Glow
 gui.architecturecraft.Curves=Curves
+gui.architecturecraft.DoubleSlopes=Double Slopes
 
 # Shapes
 gui.architecturecraft.RoofTile=Roof Tile
@@ -159,3 +160,12 @@ gui.architecturecraft.DoubleRoofTile=Double Roof Tile
 
 gui.architecturecraft.Curve2b2A=2x2 Cylinder A
 gui.architecturecraft.Curve2b2B=2x2 Cylinder B
+gui.architecturecraft.DoubleSlopeAStart=Double Slope A Start
+gui.architecturecraft.DoubleSlopeAEnd=Double Slope A End
+gui.architecturecraft.DoubleSlopeBStart=Double Slope B Start
+gui.architecturecraft.DoubleSlopeBMiddle=Double Slope B Middle
+gui.architecturecraft.DoubleSlopeBEnd=Double Slope B End
+gui.architecturecraft.DoubleSlopeC1=Double Slope C 1
+gui.architecturecraft.DoubleSlopeC2=Double Slope C 2
+gui.architecturecraft.DoubleSlopeC3=Double Slope C 3
+gui.architecturecraft.DoubleSlopeC4=Double Slope C 4

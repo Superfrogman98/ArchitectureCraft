@@ -181,7 +181,17 @@ public enum Shape {
     DoubleRoofTile(116, "Double Roof Tile", Model("double_roof_tile"), Bilateral, 1, 2, 0xcf),
 
     Curve2b2A(117, "2x2 Cylinder-A", Model("2x2_cylinder-a"), Bilateral, 1, 1, 0xcf),
-    Curve2b2B(118, "2x2 Cylinder-A", Model("2x2_cylinder-b"), Bilateral, 1, 1, 0xcf);
+    Curve2b2B(118, "2x2 Cylinder-A", Model("2x2_cylinder-b"), Bilateral, 1, 1, 0xcf),
+
+    DoubleSlopeAStart(119,"Double Slope A Start",Model("double_slope_a_start"), Bilateral,1,1,0xcf),
+    DoubleSlopeAEnd(120,"Double Slope A End",Model("double_slope_a_end"), Bilateral,1,1,0xcf),
+    DoubleSlopeBStart(121,"Double Slope B Start",Model("double_slope_b_start"), Bilateral,1,1,0xcf),
+    DoubleSlopeBMiddle(122,"Double Slope B Middle",Model("double_slope_b_middle"), Bilateral,1,1,0xcf),
+    DoubleSlopeBEnd(123,"Double Slope B End",Model("double_slope_b_end"), Bilateral,1,1,0xcf),
+    DoubleSlopeC1(124,"Double Slope C 1",Model("double_slope_c_1"), Bilateral,1,1,0xcf),
+    DoubleSlopeC2(125,"Double Slope C 2",Model("double_slope_c_2"), Bilateral,1,1,0xcf),
+    DoubleSlopeC3(126,"Double Slope C 3",Model("double_slope_c_3"), Bilateral,1,1,0xcf),
+    DoubleSlopeC4(127,"Double Slope C 4",Model("double_slope_c_4"), Bilateral,1,1,0xcf);
 
     public int id;
     public String title;

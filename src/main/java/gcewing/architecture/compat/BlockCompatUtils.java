@@ -121,6 +121,16 @@ public class BlockCompatUtils {
         } else return null;
     }
 
+    @SideOnly(Side.CLIENT)
+    public static IIcon getSpriteForBlockState(IBlockState state, int side) {
+        if (state != null) {
+            Block block = state.getBlock();
+            int meta = getMetaFromBlockState(state);
+            return block.getIcon(side, meta);
+        } else return null;
+    }
+
+
     public static void spawnBlockStackAsEntity(World world, BlockPos pos, ItemStack stack) {
         float var6 = 0.7F;
         double var7 = (double) (world.rand.nextFloat() * var6) + (double) (1.0F - var6) * 0.5D;

@@ -6,9 +6,8 @@
 
 package gcewing.architecture.client.render;
 
-import static gcewing.architecture.compat.BlockCompatUtils.blockCanRenderInLayer;
-import static gcewing.architecture.compat.BlockCompatUtils.getSpriteForBlockState;
-
+import gcewing.architecture.compat.*;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
@@ -16,10 +15,8 @@ import net.minecraft.world.IBlockAccess;
 import gcewing.architecture.client.render.target.IRenderTarget;
 import gcewing.architecture.client.texture.ArchitectureTexture;
 import gcewing.architecture.common.tile.TileShape;
-import gcewing.architecture.compat.BlockPos;
-import gcewing.architecture.compat.EnumWorldBlockLayer;
-import gcewing.architecture.compat.IBlockState;
-import gcewing.architecture.compat.Trans3;
+
+import static gcewing.architecture.compat.BlockCompatUtils.*;
 
 public class ShapeRenderDispatch implements ICustomRenderer {
 
@@ -59,6 +56,11 @@ public class ShapeRenderDispatch implements ICustomRenderer {
             if (base != null) {
                 IIcon icon = getSpriteForBlockState(base);
                 IIcon icon2 = getSpriteForBlockState(te.secondaryBlockState);
+                if(icon2 == null && te.shape.title.contains("Double"))
+                {
+                    icon2 = getSpriteForBlockState(getDefaultBlockState(Blocks.planks));
+                    renderSecondary = true;
+                }
                 if (icon != null) {
                     ITexture[] textures = new ITexture[4];
                     if (renderBase) {
@@ -69,14 +71,14 @@ public class ShapeRenderDispatch implements ICustomRenderer {
                         if (icon2 != null) {
                             textures[2] = ArchitectureTexture.fromSprite(icon2);
                             textures[3] = textures[2].projected();
-                        } else renderSecondary = false;
+                        }else renderSecondary = false;
                     }
                     if (renderBase && te.shape.kind.secondaryDefaultsToBase()) {
                         if (icon2 == null || (te.secondaryBlockState != null
                                 && te.secondaryBlockState.getBlock().getRenderBlockPass() != 0)) {
                             textures[2] = textures[0];
                             textures[3] = textures[1];
-                            renderSecondary = renderBase;
+                            renderSecondary = true;
                         }
                     }
                     te.shape.kind.renderShape(te, textures, target, t, renderBase, renderSecondary);

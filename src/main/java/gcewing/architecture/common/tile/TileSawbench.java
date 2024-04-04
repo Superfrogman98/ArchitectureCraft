@@ -6,115 +6,6 @@
 
 package gcewing.architecture.common.tile;
 
-import static gcewing.architecture.common.shape.Shape.AngledRoofRidge;
-import static gcewing.architecture.common.shape.Shape.AnticylinderLargeQuarter;
-import static gcewing.architecture.common.shape.Shape.ArchD1;
-import static gcewing.architecture.common.shape.Shape.ArchD2;
-import static gcewing.architecture.common.shape.Shape.ArchD3A;
-import static gcewing.architecture.common.shape.Shape.ArchD3B;
-import static gcewing.architecture.common.shape.Shape.ArchD3C;
-import static gcewing.architecture.common.shape.Shape.ArchD4A;
-import static gcewing.architecture.common.shape.Shape.ArchD4B;
-import static gcewing.architecture.common.shape.Shape.ArchD4C;
-import static gcewing.architecture.common.shape.Shape.Architrave;
-import static gcewing.architecture.common.shape.Shape.ArchitraveCorner;
-import static gcewing.architecture.common.shape.Shape.BalustradeFancy;
-import static gcewing.architecture.common.shape.Shape.BalustradeFancyCorner;
-import static gcewing.architecture.common.shape.Shape.BalustradeFancyNewel;
-import static gcewing.architecture.common.shape.Shape.BalustradeFancyWithNewel;
-import static gcewing.architecture.common.shape.Shape.BalustradePlain;
-import static gcewing.architecture.common.shape.Shape.BalustradePlainEnd;
-import static gcewing.architecture.common.shape.Shape.BalustradePlainInnerCorner;
-import static gcewing.architecture.common.shape.Shape.BalustradePlainOuterCorner;
-import static gcewing.architecture.common.shape.Shape.BalustradePlainWithNewel;
-import static gcewing.architecture.common.shape.Shape.BanisterFancy;
-import static gcewing.architecture.common.shape.Shape.BanisterFancyBottom;
-import static gcewing.architecture.common.shape.Shape.BanisterFancyEnd;
-import static gcewing.architecture.common.shape.Shape.BanisterFancyNewelTall;
-import static gcewing.architecture.common.shape.Shape.BanisterFancyTop;
-import static gcewing.architecture.common.shape.Shape.BanisterPlain;
-import static gcewing.architecture.common.shape.Shape.BanisterPlainBottom;
-import static gcewing.architecture.common.shape.Shape.BanisterPlainEnd;
-import static gcewing.architecture.common.shape.Shape.BanisterPlainInnerCorner;
-import static gcewing.architecture.common.shape.Shape.BanisterPlainTop;
-import static gcewing.architecture.common.shape.Shape.BevelledInnerCorner;
-import static gcewing.architecture.common.shape.Shape.BevelledOuterCorner;
-import static gcewing.architecture.common.shape.Shape.CladdingSheet;
-import static gcewing.architecture.common.shape.Shape.CorinthianCapital;
-import static gcewing.architecture.common.shape.Shape.CorniceBottom;
-import static gcewing.architecture.common.shape.Shape.CorniceEndLH;
-import static gcewing.architecture.common.shape.Shape.CorniceEndRH;
-import static gcewing.architecture.common.shape.Shape.CorniceLH;
-import static gcewing.architecture.common.shape.Shape.CorniceRH;
-import static gcewing.architecture.common.shape.Shape.CorniceRidge;
-import static gcewing.architecture.common.shape.Shape.CorniceValley;
-import static gcewing.architecture.common.shape.Shape.Curve2b2A;
-import static gcewing.architecture.common.shape.Shape.Curve2b2B;
-import static gcewing.architecture.common.shape.Shape.Cylinder;
-import static gcewing.architecture.common.shape.Shape.CylinderHalf;
-import static gcewing.architecture.common.shape.Shape.CylinderLargeQuarter;
-import static gcewing.architecture.common.shape.Shape.CylinderQuarter;
-import static gcewing.architecture.common.shape.Shape.DoricCapital;
-import static gcewing.architecture.common.shape.Shape.DoricMetope;
-import static gcewing.architecture.common.shape.Shape.DoricTriglyph;
-import static gcewing.architecture.common.shape.Shape.DoricTriglyphCorner;
-import static gcewing.architecture.common.shape.Shape.DoubleRoofTile;
-import static gcewing.architecture.common.shape.Shape.IonicCapital;
-import static gcewing.architecture.common.shape.Shape.Pillar;
-import static gcewing.architecture.common.shape.Shape.PillarBase;
-import static gcewing.architecture.common.shape.Shape.Pole;
-import static gcewing.architecture.common.shape.Shape.Post;
-import static gcewing.architecture.common.shape.Shape.RoofInnerCorner;
-import static gcewing.architecture.common.shape.Shape.RoofOuterCorner;
-import static gcewing.architecture.common.shape.Shape.RoofOverhang;
-import static gcewing.architecture.common.shape.Shape.RoofOverhangGableEndLH;
-import static gcewing.architecture.common.shape.Shape.RoofOverhangGableEndRH;
-import static gcewing.architecture.common.shape.Shape.RoofOverhangGableLH;
-import static gcewing.architecture.common.shape.Shape.RoofOverhangGableRH;
-import static gcewing.architecture.common.shape.Shape.RoofOverhangInnerCorner;
-import static gcewing.architecture.common.shape.Shape.RoofOverhangOuterCorner;
-import static gcewing.architecture.common.shape.Shape.RoofOverhangRidge;
-import static gcewing.architecture.common.shape.Shape.RoofOverhangValley;
-import static gcewing.architecture.common.shape.Shape.RoofRidge;
-import static gcewing.architecture.common.shape.Shape.RoofSmartRidge;
-import static gcewing.architecture.common.shape.Shape.RoofSmartValley;
-import static gcewing.architecture.common.shape.Shape.RoofTile;
-import static gcewing.architecture.common.shape.Shape.RoofTileSE;
-import static gcewing.architecture.common.shape.Shape.RoofValley;
-import static gcewing.architecture.common.shape.Shape.Slab;
-import static gcewing.architecture.common.shape.Shape.SlabSE;
-import static gcewing.architecture.common.shape.Shape.SlopeTileA1;
-import static gcewing.architecture.common.shape.Shape.SlopeTileA1SE;
-import static gcewing.architecture.common.shape.Shape.SlopeTileA2;
-import static gcewing.architecture.common.shape.Shape.SlopeTileA2SE;
-import static gcewing.architecture.common.shape.Shape.SlopeTileB1;
-import static gcewing.architecture.common.shape.Shape.SlopeTileB1SE;
-import static gcewing.architecture.common.shape.Shape.SlopeTileB2;
-import static gcewing.architecture.common.shape.Shape.SlopeTileB2SE;
-import static gcewing.architecture.common.shape.Shape.SlopeTileB3;
-import static gcewing.architecture.common.shape.Shape.SlopeTileB3SE;
-import static gcewing.architecture.common.shape.Shape.SlopeTileC1;
-import static gcewing.architecture.common.shape.Shape.SlopeTileC1SE;
-import static gcewing.architecture.common.shape.Shape.SlopeTileC2;
-import static gcewing.architecture.common.shape.Shape.SlopeTileC2SE;
-import static gcewing.architecture.common.shape.Shape.SlopeTileC3;
-import static gcewing.architecture.common.shape.Shape.SlopeTileC3SE;
-import static gcewing.architecture.common.shape.Shape.SlopeTileC4;
-import static gcewing.architecture.common.shape.Shape.SlopeTileC4SE;
-import static gcewing.architecture.common.shape.Shape.SphereEighth;
-import static gcewing.architecture.common.shape.Shape.SphereEighthLarge;
-import static gcewing.architecture.common.shape.Shape.SphereEighthLargeRev;
-import static gcewing.architecture.common.shape.Shape.SphereFull;
-import static gcewing.architecture.common.shape.Shape.SphereHalf;
-import static gcewing.architecture.common.shape.Shape.SphereQuarter;
-import static gcewing.architecture.common.shape.Shape.SquareSE;
-import static gcewing.architecture.common.shape.Shape.Stairs;
-import static gcewing.architecture.common.shape.Shape.StairsInnerCorner;
-import static gcewing.architecture.common.shape.Shape.StairsOuterCorner;
-import static gcewing.architecture.common.shape.Shape.WindowCorner;
-import static gcewing.architecture.common.shape.Shape.WindowFrame;
-import static gcewing.architecture.common.shape.Shape.WindowMullion;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -132,6 +23,8 @@ import gcewing.architecture.ArchitectureCraft;
 import gcewing.architecture.common.shape.Shape;
 import gcewing.architecture.common.shape.ShapePage;
 import gcewing.architecture.compat.Directions;
+
+import static gcewing.architecture.common.shape.Shape.*;
 
 public class TileSawbench extends TileArchitectureInventory implements IRestrictedDroppingInventory {
 
@@ -238,8 +131,8 @@ public class TileSawbench extends TileArchitectureInventory implements IRestrict
                     SlopeTileC2,
                     SlopeTileC3,
                     SlopeTileC4,
-                    AngledRoofRidge,
-                    DoubleRoofTile),
+                    AngledRoofRidge
+                    ),
             new ShapePage(
                     "Glow",
                     SquareSE,
@@ -254,7 +147,23 @@ public class TileSawbench extends TileArchitectureInventory implements IRestrict
                     SlopeTileC2SE,
                     SlopeTileC3SE,
                     SlopeTileC4SE),
-            new ShapePage("Curves", Curve2b2A, Curve2b2B), };
+            new ShapePage(
+                    "Curves",
+                    Curve2b2A,
+                    Curve2b2B),
+            new ShapePage(
+                    "DoubleSlopes",
+                    DoubleRoofTile,
+                    DoubleSlopeAStart,
+                    DoubleSlopeAEnd,
+                    DoubleSlopeBStart,
+                    DoubleSlopeBMiddle,
+                    DoubleSlopeBEnd,
+                    DoubleSlopeC1,
+                    DoubleSlopeC2,
+                    DoubleSlopeC3,
+                    DoubleSlopeC4
+                    )};
 
     public final IInventory inventory = new InventoryBasic("Items", false, 2);
     public int selectedPage = 0;
