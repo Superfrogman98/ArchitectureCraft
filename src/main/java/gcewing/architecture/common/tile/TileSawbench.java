@@ -6,6 +6,8 @@
 
 package gcewing.architecture.common.tile;
 
+import static gcewing.architecture.common.shape.Shape.*;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -23,8 +25,6 @@ import gcewing.architecture.ArchitectureCraft;
 import gcewing.architecture.common.shape.Shape;
 import gcewing.architecture.common.shape.ShapePage;
 import gcewing.architecture.compat.Directions;
-
-import static gcewing.architecture.common.shape.Shape.*;
 
 public class TileSawbench extends TileArchitectureInventory implements IRestrictedDroppingInventory {
 
@@ -131,8 +131,7 @@ public class TileSawbench extends TileArchitectureInventory implements IRestrict
                     SlopeTileC2,
                     SlopeTileC3,
                     SlopeTileC4,
-                    AngledRoofRidge
-                    ),
+                    AngledRoofRidge),
             new ShapePage(
                     "Glow",
                     SquareSE,
@@ -147,10 +146,7 @@ public class TileSawbench extends TileArchitectureInventory implements IRestrict
                     SlopeTileC2SE,
                     SlopeTileC3SE,
                     SlopeTileC4SE),
-            new ShapePage(
-                    "Curves",
-                    Curve2b2A,
-                    Curve2b2B),
+            new ShapePage("Curves", Curve2b2A, Curve2b2B),
             new ShapePage(
                     "DoubleSlopes",
                     DoubleRoofTile,
@@ -162,8 +158,7 @@ public class TileSawbench extends TileArchitectureInventory implements IRestrict
                     DoubleSlopeC1,
                     DoubleSlopeC2,
                     DoubleSlopeC3,
-                    DoubleSlopeC4
-                    )};
+                    DoubleSlopeC4) };
 
     public final IInventory inventory = new InventoryBasic("Items", false, 2);
     public int selectedPage = 0;

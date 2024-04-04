@@ -6,7 +6,8 @@
 
 package gcewing.architecture.client.render;
 
-import gcewing.architecture.compat.*;
+import static gcewing.architecture.compat.BlockCompatUtils.*;
+
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
@@ -15,8 +16,7 @@ import net.minecraft.world.IBlockAccess;
 import gcewing.architecture.client.render.target.IRenderTarget;
 import gcewing.architecture.client.texture.ArchitectureTexture;
 import gcewing.architecture.common.tile.TileShape;
-
-import static gcewing.architecture.compat.BlockCompatUtils.*;
+import gcewing.architecture.compat.*;
 
 public class ShapeRenderDispatch implements ICustomRenderer {
 
@@ -56,8 +56,7 @@ public class ShapeRenderDispatch implements ICustomRenderer {
             if (base != null) {
                 IIcon icon = getSpriteForBlockState(base);
                 IIcon icon2 = getSpriteForBlockState(te.secondaryBlockState);
-                if(icon2 == null && te.shape.title.contains("Double"))
-                {
+                if (icon2 == null && te.shape.title.contains("Double")) {
                     icon2 = getSpriteForBlockState(getDefaultBlockState(Blocks.planks));
                     renderSecondary = true;
                 }
@@ -71,7 +70,7 @@ public class ShapeRenderDispatch implements ICustomRenderer {
                         if (icon2 != null) {
                             textures[2] = ArchitectureTexture.fromSprite(icon2);
                             textures[3] = textures[2].projected();
-                        }else renderSecondary = false;
+                        } else renderSecondary = false;
                     }
                     if (renderBase && te.shape.kind.secondaryDefaultsToBase()) {
                         if (icon2 == null || (te.secondaryBlockState != null

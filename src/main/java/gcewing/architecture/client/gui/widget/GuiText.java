@@ -164,7 +164,6 @@ public enum GuiText {
     DoubleSlopeC3,
     DoubleSlopeC4,
 
-
     // UI Colors
     FontColor(0x404040),
     SelectedBgColor(0x66CCFF);
