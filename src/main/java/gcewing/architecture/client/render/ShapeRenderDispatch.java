@@ -16,7 +16,10 @@ import net.minecraft.world.IBlockAccess;
 import gcewing.architecture.client.render.target.IRenderTarget;
 import gcewing.architecture.client.texture.ArchitectureTexture;
 import gcewing.architecture.common.tile.TileShape;
-import gcewing.architecture.compat.*;
+import gcewing.architecture.compat.BlockPos;
+import gcewing.architecture.compat.EnumWorldBlockLayer;
+import gcewing.architecture.compat.IBlockState;
+import gcewing.architecture.compat.Trans3;
 
 public class ShapeRenderDispatch implements ICustomRenderer {
 
