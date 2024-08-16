@@ -6,8 +6,6 @@
 
 package gcewing.architecture;
 
-import java.io.File;
-
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.Packet;
 import net.minecraft.server.management.PlayerManager;
