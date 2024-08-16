@@ -40,9 +40,6 @@ public class ArchitectureCraft {
     public static final String VERSION = Tags.VERSION;
     public static final String ASSET_KEY = MOD_ID.toLowerCase();
     public static final String REGISTRY_PREFIX = MOD_ID.toLowerCase();
-
-    private File cfgFile;
-    public ArchitectConfiguration config;
     public static final ArchitectureContent content = new ArchitectureContent();
     public static ArchitectureCraftClient client;
 
@@ -58,9 +55,7 @@ public class ArchitectureCraft {
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent e) {
-        cfgFile = e.getSuggestedConfigurationFile();
-        loadConfig();
-        configure();
+        ArchitectConfiguration.init(e.getSuggestedConfigurationFile());
         content.preInit(e);
         if (e.getSide().isClient()) {
             client = initClient();
@@ -80,24 +75,11 @@ public class ArchitectureCraft {
     public void postInit(FMLPostInitializationEvent e) {
         content.postInit(e);
         if (client != null) client.postInit(e);
-        saveConfig();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new ArchitectureGuiHandler());
     }
 
     public ArchitectureCraftClient initClient() {
         return new ArchitectureCraftClient(this);
-    }
-
-    // -------------------- Configuration ---------------------------------------------------------
-
-    void configure() {}
-
-    void loadConfig() {
-        config = new ArchitectConfiguration(cfgFile);
-    }
-
-    void saveConfig() {
-        if (config.extended) config.save();
     }
 
     // --------------- Resources ----------------------------------------------------------

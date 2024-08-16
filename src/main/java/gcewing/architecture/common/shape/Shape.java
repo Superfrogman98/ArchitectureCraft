@@ -6,6 +6,7 @@
 
 package gcewing.architecture.common.shape;
 
+import static gcewing.architecture.common.config.ArchitectConfiguration.shapeRatioOverides;
 import static gcewing.architecture.common.shape.Generic.lrCorner;
 import static gcewing.architecture.common.shape.Generic.lrStraight;
 import static gcewing.architecture.common.shape.Generic.rlCorner;
@@ -231,8 +232,14 @@ public enum Shape {
         this.title = title;
         this.kind = kind;
         this.symmetry = sym;
-        this.materialUsed = used;
-        this.itemsProduced = made;
+
+        if (shapeRatioOverides.get(title) != null) {
+            this.materialUsed = shapeRatioOverides.get(title)[0];
+            this.itemsProduced = shapeRatioOverides.get(title)[1];
+        } else {
+            this.materialUsed = used;
+            this.itemsProduced = made;
+        }
         this.occlusionMask = occ;
         this.flags = flags;
     }

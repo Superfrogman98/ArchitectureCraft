@@ -8,9 +8,6 @@ package gcewing.architecture.common.tile;
 
 import static gcewing.architecture.common.shape.Shape.*;
 
-import java.util.Arrays;
-import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.init.Blocks;
@@ -22,6 +19,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 import gcewing.architecture.ArchitectureCraft;
+import gcewing.architecture.common.config.ArchitectConfiguration;
 import gcewing.architecture.common.shape.Shape;
 import gcewing.architecture.common.shape.ShapePage;
 import gcewing.architecture.compat.Directions;
@@ -165,15 +163,6 @@ public class TileSawbench extends TileArchitectureInventory implements IRestrict
     public final int[] selectedSlots = new int[pages.length];
     public boolean pendingMaterialUsage = false; // Material for the stack in the result slot
     // has not yet been removed from the material slot
-
-    // Loads the list of acceptable materials from the config file
-    /*
-     * materials { S:UnlocalizedNames < tile.chisel.stained_glass tile.chisel.glass > }
-     */
-    private static final List<String> acceptableMaterialsFromConfig = Arrays.asList(
-            ArchitectureCraft.mod.config
-                    .get("materials", "UnlocalizedNames", new String[] { "tile.chisel.stained_glass" })
-                    .getStringList());
 
     public Shape getSelectedShape() {
         if (isSelectedPageInRange()) {
@@ -326,7 +315,7 @@ public class TileSawbench extends TileArchitectureInventory implements IRestrict
     protected boolean isAcceptableMaterial(Block block) {
         if (block == Blocks.glass || block == Blocks.stained_glass
                 || block instanceof BlockSlab
-                || acceptableMaterialsFromConfig.contains(block.getUnlocalizedName()))
+                || ArchitectConfiguration.acceptableMaterialsFromConfig.contains(block.getUnlocalizedName()))
             return true;
         return block.renderAsNormalBlock() && !block.hasTileEntity();
     }
