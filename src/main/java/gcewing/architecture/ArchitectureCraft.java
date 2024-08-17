@@ -53,7 +53,7 @@ public class ArchitectureCraft {
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent e) {
-        ArchitectConfiguration.init(e.getSuggestedConfigurationFile());
+        ArchitectConfiguration.loadConfig(e.getSuggestedConfigurationFile());
         content.preInit(e);
         if (e.getSide().isClient()) {
             client = initClient();
@@ -72,6 +72,7 @@ public class ArchitectureCraft {
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent e) {
         content.postInit(e);
+        ArchitectConfiguration.loadPostInit();
         if (client != null) client.postInit(e);
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new ArchitectureGuiHandler());
     }

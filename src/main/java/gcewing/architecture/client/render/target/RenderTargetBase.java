@@ -6,6 +6,7 @@
 
 package gcewing.architecture.client.render.target;
 
+import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IIcon;
 
@@ -61,8 +62,15 @@ public abstract class RenderTargetBase implements IRenderTarget {
 
     public void setTexture(ITexture texture) {
         if (!textureOverride) {
-            if (texture == null) throw new IllegalArgumentException("Setting null texture");
-            this.texture = texture;
+            if (texture == null)
+            {
+                //use fallback texture rather than crashing the game
+                this.texture = ArchitectureTexture.fromSprite(Blocks.planks.getBlockTextureFromSide(0));
+            }
+            else
+            {
+                this.texture = texture;
+            }
         }
     }
 
