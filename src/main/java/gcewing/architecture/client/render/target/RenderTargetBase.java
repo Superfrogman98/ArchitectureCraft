@@ -62,13 +62,10 @@ public abstract class RenderTargetBase implements IRenderTarget {
 
     public void setTexture(ITexture texture) {
         if (!textureOverride) {
-            if (texture == null)
-            {
-                //use fallback texture rather than crashing the game
+            if (texture == null) {
+                // use fallback texture rather than crashing the game
                 this.texture = ArchitectureTexture.fromSprite(Blocks.planks.getBlockTextureFromSide(0));
-            }
-            else
-            {
+            } else {
                 this.texture = texture;
             }
         }
