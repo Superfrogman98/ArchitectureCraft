@@ -32,7 +32,7 @@ public class ItemGlowBrush extends ItemArchitecture {
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side,
             float hitX, float hitY, float hitZ) {
         TileShape te = TileShape.get(world, pos);
-        if (te != null) {
+        if (te != null && te instanceof TileShape) {
             NBTTagCompound shape = new NBTTagCompound();
             te.writeToNBT(shape);
             if (!player.isSneaking()) {
