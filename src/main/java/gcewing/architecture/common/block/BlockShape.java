@@ -269,8 +269,7 @@ public class BlockShape extends BlockArchitecture<TileShape> {
 
     @Override
     public int getLightValue(IBlockAccess world, int x, int y, int z) {
-        int result = world.getBlockMetadata(x, y, z);
-        return result;
+        return world.getBlockMetadata(x, y, z);
     }
 
 }
