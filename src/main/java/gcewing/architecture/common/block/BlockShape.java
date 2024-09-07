@@ -184,12 +184,10 @@ public class BlockShape extends BlockArchitecture<TileShape> {
         if (te instanceof TileShape ste) {
             ItemStack stack = ste.shape.kind.newStack(ste.shape, ste.baseBlockState, 1);
 
-            if (ste.shape.title.contains("Glow")) {
+            if (state.getBlock().getUnlocalizedName().contains("shapeSE")) {
                 stack = ste.shape.kind.newStack(ste.shape, ste.baseBlockState, 1, true);
             }
-
             result.add(stack);
-
             if (ste.secondaryBlockState != null) {
                 stack = ste.shape.kind.newSecondaryMaterialStack(ste.secondaryBlockState);
                 result.add(stack);
