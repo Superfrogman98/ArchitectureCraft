@@ -48,9 +48,6 @@ public class ItemGlowBrush extends ItemArchitecture {
             }
             return true;
         }
-            return true;
-        }
         return false;
     }
-
 }
