@@ -182,11 +182,7 @@ public class BlockShape extends BlockArchitecture<TileShape> {
             TileEntity te, int fortune) {
         ArrayList<ItemStack> result = new ArrayList<>();
         if (te instanceof TileShape ste) {
-            ItemStack stack = ste.shape.kind.newStack(ste.shape, ste.baseBlockState, 1);
-
-            if (state.getBlock().getUnlocalizedName().contains("shapeSE")) {
-                stack = ste.shape.kind.newStack(ste.shape, ste.baseBlockState, 1, true);
-            }
+            ItemStack stack = ste.shape.kind.newStack(ste.shape, ste.baseBlockState, 1, state.getBlock().getUnlocalizedName().contains("shapeSE"));
             result.add(stack);
             if (ste.secondaryBlockState != null) {
                 stack = ste.shape.kind.newSecondaryMaterialStack(ste.secondaryBlockState);
