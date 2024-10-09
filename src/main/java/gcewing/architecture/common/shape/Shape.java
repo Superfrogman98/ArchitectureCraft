@@ -37,6 +37,7 @@ import gcewing.architecture.compat.Vector3;
 
 public enum Shape {
 
+    // occ determines the bounding box used, 0x0 makes it use values from the objson
     RoofTile(0, "Roof Tile", Roof, Bilateral, 1, 2, 0xcf),
 
     RoofOuterCorner(1, "Roof Outer Corner", Roof, Unilateral, 1, 3, 0x4f),
@@ -179,20 +180,32 @@ public enum Shape {
     SquareSE(113, "Square(Glow)", Model("square"), Quadrilateral, 1, 1, 0x0),
     SlabSE(114, "Slab(Glow)", Model("slab"), Quadrilateral, 1, 2, 0x0),
     AngledRoofRidge(115, "Angled Roof Ridge", Model("angled_roof_ridge"), Bilateral, 1, 4, 0x0f),
-    DoubleRoofTile(116, "Double Roof Tile", Model("double_roof_tile"), Bilateral, 1, 2, 0xcf),
+    DoubleRoofTile(116, "Double Roof Tile", Model("double_roof_tile"), Bilateral, 1, 2, 0x0),
 
-    Curve2b2A(117, "2x2 Cylinder-A", Model("2x2_cylinder-a"), Bilateral, 1, 1, 0xcf),
-    Curve2b2B(118, "2x2 Cylinder-A", Model("2x2_cylinder-b"), Bilateral, 1, 1, 0xcf),
+    Curve2b2A(117, "2x2 Cylinder-A", Model("2x2_cylinder-a"), Bilateral, 1, 1, 0x0),
+    Curve2b2B(118, "2x2 Cylinder-A", Model("2x2_cylinder-b"), Bilateral, 1, 1, 0x0),
 
-    DoubleSlopeAStart(119, "Double Slope A Start", Model("double_slope_a_start"), Bilateral, 1, 1, 0xcf),
-    DoubleSlopeAEnd(120, "Double Slope A End", Model("double_slope_a_end"), Bilateral, 1, 1, 0xcf),
-    DoubleSlopeBStart(121, "Double Slope B Start", Model("double_slope_b_start"), Bilateral, 1, 1, 0xcf),
-    DoubleSlopeBMiddle(122, "Double Slope B Middle", Model("double_slope_b_middle"), Bilateral, 1, 1, 0xcf),
-    DoubleSlopeBEnd(123, "Double Slope B End", Model("double_slope_b_end"), Bilateral, 1, 1, 0xcf),
-    DoubleSlopeC1(124, "Double Slope C 1", Model("double_slope_c_1"), Bilateral, 1, 1, 0xcf),
-    DoubleSlopeC2(125, "Double Slope C 2", Model("double_slope_c_2"), Bilateral, 1, 1, 0xcf),
-    DoubleSlopeC3(126, "Double Slope C 3", Model("double_slope_c_3"), Bilateral, 1, 1, 0xcf),
-    DoubleSlopeC4(127, "Double Slope C 4", Model("double_slope_c_4"), Bilateral, 1, 1, 0xcf);
+    DoubleSlopeAStart(119, "Double Slope A Start", Model("double_slope_a_start"), Bilateral, 1, 1, 0x0),
+    DoubleSlopeAEnd(120, "Double Slope A End", Model("double_slope_a_end"), Bilateral, 1, 1, 0x0),
+    DoubleSlopeBStart(121, "Double Slope B Start", Model("double_slope_b_start"), Bilateral, 1, 1, 0x0),
+    DoubleSlopeBMiddle(122, "Double Slope B Middle", Model("double_slope_b_middle"), Bilateral, 1, 1, 0x0),
+    DoubleSlopeBEnd(123, "Double Slope B End", Model("double_slope_b_end"), Bilateral, 1, 1, 0x0),
+    DoubleSlopeC1(124, "Double Slope C 1", Model("double_slope_c_1"), Bilateral, 1, 1, 0x0),
+    DoubleSlopeC2(125, "Double Slope C 2", Model("double_slope_c_2"), Bilateral, 1, 1, 0x0),
+    DoubleSlopeC3(126, "Double Slope C 3", Model("double_slope_c_3"), Bilateral, 1, 1, 0x0),
+    DoubleSlopeC4(127, "Double Slope C 4", Model("double_slope_c_4"), Bilateral, 1, 1, 0x0),
+
+    StraightCornerA1(128, "Straight Corner A 1", Model("straight_corner_c1"), Unilateral, 1, 1, 0x0),
+    StraightCornerA2(129, "Straight Corner A 2", Model("straight_corner_c2"), Unilateral, 1, 2, 0x0),
+
+    StraightCornerB1(130, "Straight Corner B 1", Model("straight_corner_c1"), Unilateral, 1, 1, 0x0),
+    StraightCornerB2(131, "Straight Corner B 2", Model("straight_corner_c2"), Unilateral, 1, 2, 0x0),
+    StraightCornerB3(132, "Straight Corner B 3", Model("straight_corner_c3"), Unilateral, 1, 8, 0x0),
+
+    StraightCornerC1(133, "Straight Corner C 1", Model("straight_corner_c1"), Unilateral, 1, 1, 0x0),
+    StraightCornerC2(134, "Straight Corner C 2", Model("straight_corner_c2"), Unilateral, 1, 2, 0x0),
+    StraightCornerC3(135, "Straight Corner C 3", Model("straight_corner_c3"), Unilateral, 1, 8, 0x0),
+    StraightCornerC4(136, "Straight Corner C 4", Model("straight_corner_c4"), Unilateral, 1, 48, 0x0);
 
     public int id;
     public String title;

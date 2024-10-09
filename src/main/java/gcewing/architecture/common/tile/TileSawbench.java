@@ -156,7 +156,8 @@ public class TileSawbench extends TileArchitectureInventory implements IRestrict
                     DoubleSlopeC1,
                     DoubleSlopeC2,
                     DoubleSlopeC3,
-                    DoubleSlopeC4) };
+                    DoubleSlopeC4),
+            new ShapePage("CornerSlopes", StraightCornerC1, StraightCornerC2, StraightCornerC3, StraightCornerC4) };
 
     public final IInventory inventory = new InventoryBasic("Items", false, 2);
     public int selectedPage = 0;

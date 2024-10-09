@@ -22,6 +22,8 @@ public enum GuiText {
 
     DoubleSlopes,
 
+    CornerSlopes,
+
     // Tiles
     RoofTile,
     RoofOuterCorner,
@@ -163,6 +165,12 @@ public enum GuiText {
     DoubleSlopeC2,
     DoubleSlopeC3,
     DoubleSlopeC4,
+
+    // Slope Corners
+    StraightCornerC1,
+    StraightCornerC2,
+    StraightCornerC3,
+    StraightCornerC4,
 
     // UI Colors
     FontColor(0x404040),

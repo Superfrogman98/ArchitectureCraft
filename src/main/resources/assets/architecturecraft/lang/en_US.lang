@@ -28,6 +28,7 @@ gui.architecturecraft.Other=Other
 gui.architecturecraft.Glow=Glow
 gui.architecturecraft.Curves=Curves
 gui.architecturecraft.DoubleSlopes=Double Slopes
+gui.architecturecraft.CornerSlopes=Corner Slopes
 
 # Shapes
 gui.architecturecraft.RoofTile=Roof Tile
@@ -170,3 +171,9 @@ gui.architecturecraft.DoubleSlopeC1=Double Slope C 1
 gui.architecturecraft.DoubleSlopeC2=Double Slope C 2
 gui.architecturecraft.DoubleSlopeC3=Double Slope C 3
 gui.architecturecraft.DoubleSlopeC4=Double Slope C 4
+
+
+gui.architecturecraft.StraightCornerC1=Straight Corner C 1
+gui.architecturecraft.StraightCornerC2=Straight Corner C 2
+gui.architecturecraft.StraightCornerC3=Straight Corner C 3
+gui.architecturecraft.StraightCornerC4=Straight Corner C 4
