@@ -57,7 +57,7 @@ public enum Shape {
     CylinderHalf(11, "Half Cylinder", Model("cylinder_half_r8h16"), Bilateral, 1, 1, 0xcc),
     CylinderQuarter(12, "Quarter Cylinder", Model("cylinder_quarter_r8h16"), Unilateral, 1, 1, 0x44),
     CylinderLargeQuarter(13, "Round Outer Corner", Model("cylinder_quarter_r16h16"), Unilateral, 1, 1, 0xff),
-    AnticylinderLargeQuarter(14, "Round Inner Corner", Model("round_inner_corner"), Unilateral, 1, 2, 0xdd),
+    AnticylinderLargeQuarter(14, "Round Inner Corner", Model("round_inner_corner"), Unilateral, 1, 2, 0x0),
     Pillar(15, "Round Pillar", Model("cylinder_r6h16"), Quadrilateral, 1, 1, 0x106),
     Post(16, "Round Post", Model("cylinder_r4h16"), Quadrilateral, 1, 4, 0x104),
     Pole(17, "Round Pole", Model("cylinder_r2h16"), Quadrilateral, 1, 16, 0x102),
