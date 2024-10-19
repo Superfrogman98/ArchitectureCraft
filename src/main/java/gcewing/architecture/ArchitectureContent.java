@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import net.minecraft.block.Block;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -22,6 +21,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import gcewing.architecture.client.render.model.IArchitectureModel;
+import gcewing.architecture.common.CreativeTab;
 import gcewing.architecture.common.block.BlockSawbench;
 import gcewing.architecture.common.block.BlockShape;
 import gcewing.architecture.common.item.ArchitectureItemBlock;
@@ -45,16 +45,16 @@ public class ArchitectureContent {
     // TODO: Heavy read, less heavy write - look into alternative data structures for this
     protected final Map<ResourceLocation, IArchitectureModel> modelCache = new ConcurrentHashMap<>();
 
-    public BlockSawbench blockSawbench;
-    public BlockShape blockShape;
-    public BlockShape blockShapeSE;
-    public Item itemSawblade;
-    public Item itemLargePulley;
-    public Item itemChisel;
-    public Item itemHammer;
+    public static BlockSawbench blockSawbench;
+    public static BlockShape blockShape;
+    public static BlockShape blockShapeSE;
+    public static Item itemSawblade;
+    public static Item itemLargePulley;
+    public static Item itemChisel;
+    public static Item itemHammer;
 
-    public Item itemGlowBrush;
-    public ItemCladding itemCladding;
+    public static Item itemGlowBrush;
+    public static ItemCladding itemCladding;
 
     public void preInit(FMLPreInitializationEvent e) {
         registerBlocks();
@@ -144,7 +144,7 @@ public class ArchitectureContent {
         block.setBlockName(qualName);
         block.setBlockTextureName(REGISTRY_PREFIX + ":" + name);
         GameRegistry.registerBlock(block, itemClass, name);
-        block.setCreativeTab(CreativeTabs.tabMisc);
+        block.setCreativeTab(CreativeTab.AC_TAB);
         registeredBlocks.add(block);
         return block;
     }
@@ -156,7 +156,7 @@ public class ArchitectureContent {
         item.setUnlocalizedName(qualName);
         item.setTextureName(REGISTRY_PREFIX + ":" + name);
         GameRegistry.registerItem(item, name);
-        item.setCreativeTab(CreativeTabs.tabMisc);
+        item.setCreativeTab(CreativeTab.AC_TAB);
         registeredItems.add(item);
         return item;
     }

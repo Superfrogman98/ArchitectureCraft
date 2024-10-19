@@ -22,7 +22,9 @@ public enum GuiText {
 
     DoubleSlopes,
 
-    CornerSlopes,
+    SlopesA,
+    SlopesB,
+    SlopesC,
 
     // Tiles
     RoofTile,
@@ -167,6 +169,11 @@ public enum GuiText {
     DoubleSlopeC4,
 
     // Slope Corners
+    StraightCornerA1,
+    StraightCornerA2,
+    StraightCornerB1,
+    StraightCornerB2,
+    StraightCornerB3,
     StraightCornerC1,
     StraightCornerC2,
     StraightCornerC3,

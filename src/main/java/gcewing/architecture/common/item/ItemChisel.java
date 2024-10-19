@@ -23,6 +23,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
+import gcewing.architecture.common.CreativeTab;
 import gcewing.architecture.common.tile.TileShape;
 import gcewing.architecture.compat.BlockPos;
 import gcewing.architecture.compat.IBlockState;
@@ -35,7 +36,7 @@ public class ItemChisel extends ItemArchitecture {
 
     @Override
     public CreativeTabs getCreativeTab() {
-        return CreativeTabs.tabTools;
+        return CreativeTab.AC_TAB;
     }
 
     @Override

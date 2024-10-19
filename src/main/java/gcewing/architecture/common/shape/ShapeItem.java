@@ -21,6 +21,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 import gcewing.architecture.client.gui.widget.GuiText;
@@ -84,6 +85,8 @@ public class ShapeItem extends ArchitectureItemBlock {
             Block baseBlock = Block.getBlockFromName(tag.getString("BaseName"));
             int baseMetadata = tag.getInteger("BaseData");
             if (baseBlock != null) lines.add(Utils.displayNameOfBlock(baseBlock, baseMetadata));
+            if (shape.title.toLowerCase().contains("double"))
+                lines.add(StatCollector.translateToLocal("tooltip.doubleslope"));
         }
     }
 

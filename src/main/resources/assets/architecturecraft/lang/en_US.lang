@@ -1,3 +1,6 @@
+#Creative Tab
+itemGroup.ArchitectureCraft= ArchitectureCraft
+
 # Items
 tile.architecturecraft:sawbench.name=Architect's Sawbench
 tile.architecturecraft:shape.name=Architectural Block
@@ -28,7 +31,9 @@ gui.architecturecraft.Other=Other
 gui.architecturecraft.Glow=Glow
 gui.architecturecraft.Curves=Curves
 gui.architecturecraft.DoubleSlopes=Double Slopes
-gui.architecturecraft.CornerSlopes=Corner Slopes
+gui.architecturecraft.SlopesA=Slopes-A
+gui.architecturecraft.SlopesB=Slopes-B
+gui.architecturecraft.SlopesC=Slopes-C
 
 # Shapes
 gui.architecturecraft.RoofTile=Roof Tile
@@ -177,3 +182,9 @@ gui.architecturecraft.StraightCornerC1=Straight Corner C 1
 gui.architecturecraft.StraightCornerC2=Straight Corner C 2
 gui.architecturecraft.StraightCornerC3=Straight Corner C 3
 gui.architecturecraft.StraightCornerC4=Straight Corner C 4
+
+#tooltips
+tooltip.glowbrush_1=Use on a shape to enable light emission
+tooltip.glowbrush_2=Sneak + use to disable light emission
+
+tooltip.doubleslope=Use Cladding to set the second material

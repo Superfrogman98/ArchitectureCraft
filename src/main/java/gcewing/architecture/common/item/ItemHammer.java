@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
+import gcewing.architecture.common.CreativeTab;
 import gcewing.architecture.common.tile.TileShape;
 import gcewing.architecture.compat.BlockPos;
 
@@ -23,7 +24,7 @@ public class ItemHammer extends ItemArchitecture {
 
     @Override
     public CreativeTabs getCreativeTab() {
-        return CreativeTabs.tabTools;
+        return CreativeTab.AC_TAB;
     }
 
     @Override

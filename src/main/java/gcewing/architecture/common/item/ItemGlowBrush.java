@@ -6,14 +6,18 @@
 
 package gcewing.architecture.common.item;
 
+import java.util.List;
+
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 import gcewing.architecture.ArchitectureCraft;
+import gcewing.architecture.common.CreativeTab;
 import gcewing.architecture.common.tile.TileShape;
 import gcewing.architecture.compat.BlockPos;
 
@@ -25,7 +29,7 @@ public class ItemGlowBrush extends ItemArchitecture {
 
     @Override
     public CreativeTabs getCreativeTab() {
-        return CreativeTabs.tabTools;
+        return CreativeTab.AC_TAB;
     }
 
     @Override
@@ -49,4 +53,9 @@ public class ItemGlowBrush extends ItemArchitecture {
         return false;
     }
 
+    @Override
+    public void addInformation(ItemStack stack, EntityPlayer player, List lines, boolean par4) {
+        lines.add(StatCollector.translateToLocal("tooltip.glowbrush_1"));
+        lines.add(StatCollector.translateToLocal("tooltip.glowbrush_2"));
+    }
 }

@@ -7,9 +7,11 @@
 package gcewing.architecture.client.render;
 
 import static gcewing.architecture.compat.BlockCompatUtils.getBlockStateFromMeta;
+import static gcewing.architecture.compat.BlockCompatUtils.getDefaultBlockState;
 import static gcewing.architecture.compat.BlockCompatUtils.getSpriteForBlockState;
 
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
@@ -46,6 +48,11 @@ public class RendererCladding implements ICustomRenderer {
                     }
                 }
             }
+        } else {
+            ITexture texture = ArchitectureTexture
+                    .fromSprite(getSpriteForBlockState(getDefaultBlockState(Blocks.planks)));
+            IArchitectureModel model = ArchitectureCraft.mod.getModel("shape/cladding.objson");
+            model.render(t, target, texture);
         }
     }
 

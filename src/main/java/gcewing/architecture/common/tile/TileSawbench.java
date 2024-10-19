@@ -113,23 +113,7 @@ public class TileSawbench extends TileArchitectureInventory implements IRestrict
                     BanisterFancyBottom,
                     BanisterFancyEnd,
                     BanisterFancyNewelTall),
-            new ShapePage(
-                    "Other",
-                    CladdingSheet,
-                    Slab,
-                    Stairs,
-                    StairsOuterCorner,
-                    StairsInnerCorner,
-                    SlopeTileA1,
-                    SlopeTileA2,
-                    SlopeTileB1,
-                    SlopeTileB2,
-                    SlopeTileB3,
-                    SlopeTileC1,
-                    SlopeTileC2,
-                    SlopeTileC3,
-                    SlopeTileC4,
-                    AngledRoofRidge),
+            new ShapePage("Other", CladdingSheet, Slab, Stairs, StairsOuterCorner, StairsInnerCorner, AngledRoofRidge),
             new ShapePage(
                     "Glow",
                     SquareSE,
@@ -157,7 +141,25 @@ public class TileSawbench extends TileArchitectureInventory implements IRestrict
                     DoubleSlopeC2,
                     DoubleSlopeC3,
                     DoubleSlopeC4),
-            new ShapePage("CornerSlopes", StraightCornerC1, StraightCornerC2, StraightCornerC3, StraightCornerC4) };
+            new ShapePage("SlopesA", SlopeTileA1, SlopeTileA2, StraightCornerA1, StraightCornerA2),
+            new ShapePage(
+                    "SlopesB",
+                    SlopeTileB1,
+                    SlopeTileB2,
+                    SlopeTileB3,
+                    StraightCornerB1,
+                    StraightCornerB2,
+                    StraightCornerB3),
+            new ShapePage(
+                    "SlopesC",
+                    SlopeTileC1,
+                    SlopeTileC2,
+                    SlopeTileC3,
+                    SlopeTileC4,
+                    StraightCornerC1,
+                    StraightCornerC2,
+                    StraightCornerC3,
+                    StraightCornerC4) };
 
     public final IInventory inventory = new InventoryBasic("Items", false, 2);
     public int selectedPage = 0;
