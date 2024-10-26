@@ -205,7 +205,19 @@ public enum Shape {
     StraightCornerC1(133, "Straight Corner C 1", Model("straight_corner_c1"), Unilateral, 1, 1, 0x0),
     StraightCornerC2(134, "Straight Corner C 2", Model("straight_corner_c2"), Unilateral, 1, 2, 0x0),
     StraightCornerC3(135, "Straight Corner C 3", Model("straight_corner_c3"), Unilateral, 1, 8, 0x0),
-    StraightCornerC4(136, "Straight Corner C 4", Model("straight_corner_c4"), Unilateral, 1, 48, 0x0);
+    StraightCornerC4(136, "Straight Corner C 4", Model("straight_corner_c4"), Unilateral, 1, 48, 0x0),
+
+    DiagonalCornerA1(137, "Diagonal Corner A 1", Model("straight_corner_c1"), Unilateral, 1, 1, 0x0),
+    DiagonalCornerA2(138, "Diagonal Corner A 2", Model("straight_corner_c2"), Unilateral, 1, 2, 0x0),
+
+    DiagonalCornerB1(139, "Diagonal Corner B 1", Model("straight_corner_c1"), Unilateral, 1, 1, 0x0),
+    DiagonalCornerB2(140, "Diagonal Corner B 2", Model("straight_corner_c2"), Unilateral, 1, 2, 0x0),
+    DiagonalCornerB3(141, "Diagonal Corner B 3", Model("straight_corner_c3"), Unilateral, 1, 8, 0x0),
+
+    DiagonalCornerC1(142, "Diagonal Corner C 1", Model("diagonal_corner_c1"), Unilateral, 1, 1, 0x0),
+    DiagonalCornerC2(143, "Diagonal Corner C 2", Model("diagonal_corner_c2"), Unilateral, 1, 2, 0x0),
+    DiagonalCornerC3(144, "Diagonal Corner C 3", Model("straight_corner_c3"), Unilateral, 1, 8, 0x0),
+    DiagonalCornerC4(145, "Diagonal Corner C 4", Model("straight_corner_c4"), Unilateral, 1, 48, 0x0);
 
     public int id;
     public String title;

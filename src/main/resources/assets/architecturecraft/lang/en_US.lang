@@ -178,10 +178,31 @@ gui.architecturecraft.DoubleSlopeC3=Double Slope C 3
 gui.architecturecraft.DoubleSlopeC4=Double Slope C 4
 
 
+gui.architecturecraft.StraightCornerA1=Straight Corner A 1
+gui.architecturecraft.StraightCornerA2=Straight Corner A 2
+
+gui.architecturecraft.StraightCornerB1=Straight Corner B 1
+gui.architecturecraft.StraightCornerB2=Straight Corner B 2
+gui.architecturecraft.StraightCornerB3=Straight Corner B 3
+
 gui.architecturecraft.StraightCornerC1=Straight Corner C 1
 gui.architecturecraft.StraightCornerC2=Straight Corner C 2
 gui.architecturecraft.StraightCornerC3=Straight Corner C 3
 gui.architecturecraft.StraightCornerC4=Straight Corner C 4
+
+gui.architecturecraft.DiagonalCornerA1=Diagonal Corner A 1
+gui.architecturecraft.DiagonalCornerA2=Diagonal Corner A 2
+
+gui.architecturecraft.DiagonalCornerB1=Diagonal Corner B 1
+gui.architecturecraft.DiagonalCornerB2=Diagonal Corner B 2
+gui.architecturecraft.DiagonalCornerB3=Diagonal Corner B 3
+
+gui.architecturecraft.DiagonalCornerC1=Diagonal Corner C 1
+gui.architecturecraft.DiagonalCornerC2=Diagonal Corner C 2
+gui.architecturecraft.DiagonalCornerC3=Diagonal Corner C 3
+gui.architecturecraft.DiagonalCornerC4=Diagonal Corner C 4
+
+
 
 #tooltips
 tooltip.glowbrush_1=Use on a shape to enable light emission
