@@ -217,7 +217,7 @@ public enum Shape {
     DiagonalCornerC1(142, "Diagonal Corner C 1", Model("diagonal_corner_c1"), Unilateral, 1, 3, 0x0),
     DiagonalCornerC2(143, "Diagonal Corner C 2", Model("diagonal_corner_c2"), Unilateral, 1, 5, 0x0),
     DiagonalCornerC3(144, "Diagonal Corner C 3", Model("diagonal_corner_c3"), Unilateral, 1, 14, 0x0),
-    DiagonalCornerC4(145, "Diagonal Corner C 4", Model("straight_corner_c4"), Unilateral, 1, 64, 0x0);
+    DiagonalCornerC4(145, "Diagonal Corner C 4", Model("diagonal_corner_c4"), Unilateral, 1, 64, 0x0);
 
     public int id;
     public String title;
