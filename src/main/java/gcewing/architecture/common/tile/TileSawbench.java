@@ -37,6 +37,15 @@ import static gcewing.architecture.common.shape.Shape.BanisterPlainBottom;
 import static gcewing.architecture.common.shape.Shape.BanisterPlainEnd;
 import static gcewing.architecture.common.shape.Shape.BanisterPlainInnerCorner;
 import static gcewing.architecture.common.shape.Shape.BanisterPlainTop;
+import static gcewing.architecture.common.shape.Shape.BevelledCornerA1;
+import static gcewing.architecture.common.shape.Shape.BevelledCornerA2;
+import static gcewing.architecture.common.shape.Shape.BevelledCornerB1;
+import static gcewing.architecture.common.shape.Shape.BevelledCornerB2;
+import static gcewing.architecture.common.shape.Shape.BevelledCornerB3;
+import static gcewing.architecture.common.shape.Shape.BevelledCornerC1;
+import static gcewing.architecture.common.shape.Shape.BevelledCornerC2;
+import static gcewing.architecture.common.shape.Shape.BevelledCornerC3;
+import static gcewing.architecture.common.shape.Shape.BevelledCornerC4;
 import static gcewing.architecture.common.shape.Shape.BevelledInnerCorner;
 import static gcewing.architecture.common.shape.Shape.BevelledOuterCorner;
 import static gcewing.architecture.common.shape.Shape.CladdingSheet;
@@ -279,27 +288,41 @@ public class TileSawbench extends TileArchitectureInventory implements IRestrict
                     "SlopesA",
                     SlopeTileA1,
                     SlopeTileA2,
+                    DoubleSlopeAStart,
+                    DoubleSlopeAEnd,
                     StraightCornerA1,
                     StraightCornerA2,
                     DiagonalCornerA1,
-                    DiagonalCornerA2),
+                    DiagonalCornerA2,
+                    BevelledCornerA1,
+                    BevelledCornerA2),
             new ShapePage(
                     "SlopesB",
                     SlopeTileB1,
                     SlopeTileB2,
                     SlopeTileB3,
+                    DoubleSlopeBStart,
+                    DoubleSlopeBMiddle,
+                    DoubleSlopeBEnd,
                     StraightCornerB1,
                     StraightCornerB2,
                     StraightCornerB3,
                     DiagonalCornerB1,
                     DiagonalCornerB2,
-                    DiagonalCornerB3),
+                    DiagonalCornerB3,
+                    BevelledCornerB1,
+                    BevelledCornerB2,
+                    BevelledCornerB3),
             new ShapePage(
                     "SlopesC",
                     SlopeTileC1,
                     SlopeTileC2,
                     SlopeTileC3,
                     SlopeTileC4,
+                    DoubleSlopeC1,
+                    DoubleSlopeC2,
+                    DoubleSlopeC3,
+                    DoubleSlopeC4,
                     StraightCornerC1,
                     StraightCornerC2,
                     StraightCornerC3,
@@ -307,7 +330,11 @@ public class TileSawbench extends TileArchitectureInventory implements IRestrict
                     DiagonalCornerC1,
                     DiagonalCornerC2,
                     DiagonalCornerC3,
-                    DiagonalCornerC4) };
+                    DiagonalCornerC4,
+                    BevelledCornerC1,
+                    BevelledCornerC2,
+                    BevelledCornerC3,
+                    BevelledCornerC4) };
 
     public final IInventory inventory = new InventoryBasic("Items", false, 2);
     public int selectedPage = 0;

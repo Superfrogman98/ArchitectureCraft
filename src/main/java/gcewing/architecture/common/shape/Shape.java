@@ -217,7 +217,21 @@ public enum Shape {
     DiagonalCornerC1(142, "Diagonal Corner C 1", Model("diagonal_corner_c1"), Unilateral, 1, 3, 0x0),
     DiagonalCornerC2(143, "Diagonal Corner C 2", Model("diagonal_corner_c2"), Unilateral, 1, 5, 0x0),
     DiagonalCornerC3(144, "Diagonal Corner C 3", Model("diagonal_corner_c3"), Unilateral, 1, 14, 0x0),
-    DiagonalCornerC4(145, "Diagonal Corner C 4", Model("diagonal_corner_c4"), Unilateral, 1, 64, 0x0);
+    DiagonalCornerC4(145, "Diagonal Corner C 4", Model("diagonal_corner_c4"), Unilateral, 1, 64, 0x0),
+
+    BevelledCornerA1(146, "Bevelled Corner A 1", Model("straight_corner_c1"), Unilateral, 1, 1, 0x0),
+    BevelledCornerA2(147, "Bevelled Corner A 2", Model("straight_corner_c2"), Unilateral, 1, 2, 0x0),
+
+    BevelledCornerB1(148, "Bevelled Corner B 1", Model("straight_corner_c1"), Unilateral, 1, 1, 0x0),
+    BevelledCornerB2(149, "Bevelled Corner B 2", Model("straight_corner_c2"), Unilateral, 1, 2, 0x0),
+    BevelledCornerB3(150, "Bevelled Corner B 3", Model("straight_corner_c3"), Unilateral, 1, 8, 0x0),
+
+    BevelledCornerC1(151, "Bevelled Corner C 1", Model("bevelled_corner_c1"), Unilateral, 1, 3, 0x0),
+    BevelledCornerC2(152, "Bevelled Corner C 2", Model("bevelled_corner_c2"), Unilateral, 1, 5, 0x0),
+    BevelledCornerC3(153, "Bevelled Corner C 3", Model("bevelled_corner_c3"), Unilateral, 1, 14, 0x0),
+    BevelledCornerC4(154, "Bevelled Corner C 4", Model("bevelled_corner_c4"), Unilateral, 1, 64, 0x0);
+    
+    
 
     public int id;
     public String title;

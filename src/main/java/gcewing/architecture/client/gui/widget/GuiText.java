@@ -189,6 +189,17 @@ public enum GuiText {
     DiagonalCornerC3,
     DiagonalCornerC4,
 
+    BevelledCornerA1,
+    BevelledCornerA2,
+    BevelledCornerB1,
+    BevelledCornerB2,
+    BevelledCornerB3,
+    BevelledCornerC1,
+    BevelledCornerC2,
+    BevelledCornerC3,
+    BevelledCornerC4,
+
+
     // UI Colors
     FontColor(0x404040),
     SelectedBgColor(0x66CCFF);

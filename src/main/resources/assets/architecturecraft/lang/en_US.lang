@@ -202,6 +202,18 @@ gui.architecturecraft.DiagonalCornerC2=Diagonal Corner C 2
 gui.architecturecraft.DiagonalCornerC3=Diagonal Corner C 3
 gui.architecturecraft.DiagonalCornerC4=Diagonal Corner C 4
 
+gui.architecturecraft.BevelledCornerA1=Bevelled Corner A 1
+gui.architecturecraft.BevelledCornerA2=Bevelled Corner A 2
+
+gui.architecturecraft.BevelledCornerB1=Bevelled Corner B 1
+gui.architecturecraft.BevelledCornerB2=Bevelled Corner B 2
+gui.architecturecraft.BevelledCornerB3=Bevelled Corner B 3
+
+gui.architecturecraft.BevelledCornerC1=Bevelled Corner C 1
+gui.architecturecraft.BevelledCornerC2=Bevelled Corner C 2
+gui.architecturecraft.BevelledCornerC3=Bevelled Corner C 3
+gui.architecturecraft.BevelledCornerC4=Bevelled Corner C 4
+
 
 
 #tooltips
