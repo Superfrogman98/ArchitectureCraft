@@ -199,7 +199,6 @@ public enum GuiText {
     BevelledCornerC3,
     BevelledCornerC4,
 
-
     // UI Colors
     FontColor(0x404040),
     SelectedBgColor(0x66CCFF);

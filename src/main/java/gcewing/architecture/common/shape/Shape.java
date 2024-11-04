@@ -230,8 +230,6 @@ public enum Shape {
     BevelledCornerC2(152, "Bevelled Corner C 2", Model("bevelled_corner_c2"), Unilateral, 1, 5, 0x0),
     BevelledCornerC3(153, "Bevelled Corner C 3", Model("bevelled_corner_c3"), Unilateral, 1, 14, 0x0),
     BevelledCornerC4(154, "Bevelled Corner C 4", Model("bevelled_corner_c4"), Unilateral, 1, 64, 0x0);
-    
-    
 
     public int id;
     public String title;
