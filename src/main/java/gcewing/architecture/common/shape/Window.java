@@ -77,14 +77,13 @@ public abstract class Window extends ShapeKind {
         return true;
     }
 
-    // final static ThreadLocal<RenderWindow> renderWindow = ThreadLocal.withInitial(RenderWindow::new);
+    final static ThreadLocal<RenderWindow> renderWindow = ThreadLocal.withInitial(RenderWindow::new);
 
     public void renderShape(TileShape te, ITexture[] textures, IRenderTarget target, Trans3 t, boolean renderBase,
             boolean renderSecondary) {
-        // final RenderWindow renderWindow = Window.renderWindow.get();
-        // renderWindow.prepare(te, textures, t, target, renderBase, renderSecondary, this);
-        // renderWindow.render();
-        new RenderWindow(te, textures, t, target, renderBase, renderSecondary).render();
+        final RenderWindow renderWindow = Window.renderWindow.get();
+        renderWindow.prepare(te, textures, t, target, renderBase, renderSecondary, this);
+        renderWindow.render();
     }
 
     @Override
