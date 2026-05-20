@@ -6,6 +6,8 @@
 
 package gcewing.architecture;
 
+import java.io.File;
+
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.Packet;
 import net.minecraft.server.management.PlayerManager;
@@ -13,11 +15,11 @@ import net.minecraft.server.management.ServerConfigurationManager;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.WorldServer;
-import net.minecraftforge.common.MinecraftForge;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
@@ -64,9 +66,9 @@ public class ArchitectureCraft {
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent e) {
-        MinecraftForge.EVENT_BUS.register(this);
-        FMLCommonHandler.instance().bus().register(this);
         if (client != null) client.init(e);
+        FMLInterModComms
+                .sendMessage("Waila", "register", "gcewing.architecture.compat.integration.WailaIntegration.register");
     }
 
     @Mod.EventHandler

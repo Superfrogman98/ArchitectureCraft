@@ -9,6 +9,7 @@ package gcewing.architecture;
 // import cpw.mods.fml.client.registry.RenderingRegistry;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 import net.minecraft.block.Block;
@@ -18,6 +19,7 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.launchwrapper.Launch;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
@@ -26,10 +28,13 @@ import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
 
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.registry.GameRegistry;
+import gcewing.architecture.client.render.AngelicaCompat;
 import gcewing.architecture.client.render.BlockRenderDispatcher;
 import gcewing.architecture.client.render.ICustomRenderer;
 import gcewing.architecture.client.render.ITexture;
@@ -57,7 +62,10 @@ import gcewing.architecture.compat.Trans3;
 public class ArchitectureCraftClient {
 
     public static final ShapeRenderDispatch shapeRenderDispatch = new ShapeRenderDispatch();
-    public static final PreviewRenderer previewRenderer = new PreviewRenderer();
+    final HashSet<Block> emissiveBlocks = new HashSet<>();
+    public static AngelicaCompat angelicaCompat;
+    public static final boolean enabledHodgepodgeBottomFaceUVFix = (boolean) Launch.blackboard
+            .getOrDefault("hodgepodge.FixesConfig.fixBottomFaceUV", Boolean.FALSE);
 
     public void preInit(FMLPreInitializationEvent e) {
         registerBlockRenderers();
@@ -71,8 +79,15 @@ public class ArchitectureCraftClient {
     }
 
     public void postInit(FMLPostInitializationEvent e) {
+        final PreviewRenderer previewRenderer = new PreviewRenderer();
         MinecraftForge.EVENT_BUS.register(previewRenderer);
         FMLCommonHandler.instance().bus().register(previewRenderer);
+
+        initializeEmissiveBlocksSet();
+
+        if (Loader.isModLoaded("angelica")) {
+            angelicaCompat = new AngelicaCompat();
+        }
     }
 
     public ArchitectureCraftClient(ArchitectureCraft mod) {
@@ -334,4 +349,27 @@ public class ArchitectureCraftClient {
             }
         }
     }
+
+    // ------------------------------------------------------------------------------------------------
+
+    private void initializeEmissiveBlocksSet() {
+        String[] emissiveBlockIds = ArchitectureCraft.mod.config.getStringList(
+                "EmissiveItemIDs",
+                "materials",
+                new String[] { "ExtraUtilities:greenscreen", "chisel:antiBlock", "chisel:neonite" },
+                "Blocks that will be rendered with full brightness");
+        for (String id : emissiveBlockIds) {
+            String[] parts = id.split(":");
+            if (parts.length >= 2) {
+                Block b = GameRegistry.findBlock(parts[0], parts[1]);
+
+                if (b != null) emissiveBlocks.add(b);
+            }
+        }
+    }
+
+    public boolean isBlockAndMetaEmissive(Block block, int meta) {
+        return emissiveBlocks.contains(block);
+    }
+
 }
