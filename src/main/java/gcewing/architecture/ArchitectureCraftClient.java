@@ -8,6 +8,8 @@ package gcewing.architecture;
 
 // import cpw.mods.fml.client.registry.RenderingRegistry;
 
+import static gcewing.architecture.common.config.ArchitectConfiguration.emissiveBlockIds;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -58,8 +60,6 @@ import gcewing.architecture.compat.BlockPos;
 import gcewing.architecture.compat.EnumWorldBlockLayer;
 import gcewing.architecture.compat.IBlockState;
 import gcewing.architecture.compat.Trans3;
-
-import static gcewing.architecture.common.config.ArchitectConfiguration.emissiveBlockIds;
 
 public class ArchitectureCraftClient {
 
