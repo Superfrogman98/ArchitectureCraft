@@ -7,10 +7,12 @@
 package gcewing.architecture.client.render;
 
 import static gcewing.architecture.compat.BlockCompatUtils.blockCanRenderInLayer;
+import static gcewing.architecture.compat.BlockCompatUtils.getDefaultBlockState;
 import static gcewing.architecture.compat.BlockCompatUtils.getMetaFromBlockState;
 import static gcewing.architecture.compat.BlockCompatUtils.getSpriteForBlockState;
 
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
@@ -80,6 +82,12 @@ public class ShapeRenderDispatch implements ICustomRenderer {
                             textures[2] = checkBlendAndEmissive(te.secondaryBlockState, textures[2]);
                             textures[3] = textures[2].projected();
                         } else renderSecondary = false;
+                    } else if (icon2 == null && te.shape.title.toLowerCase().contains("double")) {
+                        icon2 = getSpriteForBlockState(getDefaultBlockState(Blocks.planks));
+                        textures[2] = ArchitectureTexture.fromSpriteAndBlockPlusMeta(icon2, Blocks.planks, 0);
+                        textures[2] = checkBlendAndEmissive(getDefaultBlockState(Blocks.planks), textures[2]);
+                        textures[3] = textures[2].projected();
+                        renderSecondary = true;
                     }
                     if (renderBase && te.shape.kind.secondaryDefaultsToBase()) {
                         if (icon2 == null || (te.secondaryBlockState != null

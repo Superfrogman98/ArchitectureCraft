@@ -59,6 +59,8 @@ import gcewing.architecture.compat.EnumWorldBlockLayer;
 import gcewing.architecture.compat.IBlockState;
 import gcewing.architecture.compat.Trans3;
 
+import static gcewing.architecture.common.config.ArchitectConfiguration.emissiveBlockIds;
+
 public class ArchitectureCraftClient {
 
     public static final ShapeRenderDispatch shapeRenderDispatch = new ShapeRenderDispatch();
@@ -353,11 +355,6 @@ public class ArchitectureCraftClient {
     // ------------------------------------------------------------------------------------------------
 
     private void initializeEmissiveBlocksSet() {
-        String[] emissiveBlockIds = ArchitectureCraft.mod.config.getStringList(
-                "EmissiveItemIDs",
-                "materials",
-                new String[] { "ExtraUtilities:greenscreen", "chisel:antiBlock", "chisel:neonite" },
-                "Blocks that will be rendered with full brightness");
         for (String id : emissiveBlockIds) {
             String[] parts = id.split(":");
             if (parts.length >= 2) {

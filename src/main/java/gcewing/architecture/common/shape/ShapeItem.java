@@ -93,6 +93,8 @@ public class ShapeItem extends ArchitectureItemBlock {
     public void addInformation(ItemStack stack, EntityPlayer player, List lines, boolean par4) {
         NBTTagCompound tag = stack.getTagCompound();
         if (tag != null) {
+            int id = tag.getInteger("Shape");
+            Shape shape = Shape.forId(id);
             Block baseBlock = Block.getBlockFromName(tag.getString("BaseName"));
             int baseMetadata = tag.getInteger("BaseData");
             if (baseBlock != null) lines.add(Utils.displayNameOfBlock(baseBlock, baseMetadata));

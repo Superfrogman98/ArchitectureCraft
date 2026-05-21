@@ -42,6 +42,9 @@ public class ArchitectConfiguration {
             "tile.chisel.stained_glass_magenta",
             "tile.chisel.stained_glass_orange",
             "tile.chisel.stained_glass_white");
+
+    public static List<String> emissiveBlockIds = Arrays
+            .asList("ExtraUtilities:greenscreen", "chisel:antiBlock", "chisel:neonite");
     public static Map<String, int[]> shapeRatioOverides = new HashMap<>();
 
     private static final String[] defaultRatioOverrride = new String[] { "Cladding|1|1" };
@@ -62,6 +65,13 @@ public class ArchitectConfiguration {
                         CATEGORY_MATERIALS,
                         acceptableMaterialsFromConfig.toArray(new String[0]),
                         "Allows adding additional allowed materials for shapes"));
+
+        emissiveBlockIds = Arrays.asList(
+                config.getStringList(
+                        "EmissiveItemIDs",
+                        CATEGORY_MATERIALS,
+                        emissiveBlockIds.toArray(new String[0]),
+                        "Blocks that will be rendered with full brightness"));
 
         String[] CraftingRatios = config.getStringList(
                 "MaterialRatios",
