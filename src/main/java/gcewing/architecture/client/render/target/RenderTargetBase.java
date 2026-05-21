@@ -10,6 +10,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IIcon;
 
+import gcewing.architecture.ArchitectureCraftClient;
 import gcewing.architecture.client.render.ITexture;
 import gcewing.architecture.client.texture.ArchitectureTexture;
 import gcewing.architecture.compat.Vector3;
@@ -142,34 +143,38 @@ public abstract class RenderTargetBase implements IRenderTarget {
         double z = p.z - blockZ;
 
         double u, v;
-        v = switch (face) {
-            case DOWN -> {
-                u = x;
-                yield 1 - z;
-            }
+        switch (face) {
             case UP -> {
                 u = x;
-                yield z;
+                v = z;
+            }
+            case DOWN -> {
+                if (ArchitectureCraftClient.enabledHodgepodgeBottomFaceUVFix) {
+                    u = 1 - x;
+                } else {
+                    u = x;
+                }
+                v = z;
             }
             case NORTH -> {
                 u = 1 - x;
-                yield 1 - y;
+                v = 1 - y;
             }
             case SOUTH -> {
                 u = x;
-                yield 1 - y;
+                v = 1 - y;
             }
             case WEST -> {
                 u = 1 - z;
-                yield 1 - y;
+                v = 1 - y;
             }
             case EAST -> {
                 u = z;
-                yield 1 - y;
+                v = 1 - y;
             }
             default -> {
                 u = 0;
-                yield 0;
+                v = 0;
             }
         };
         addUVVertex(p, u, v);
